@@ -62,80 +62,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
-        name: 'function_cascader',
-        path: '/function/cascader',
-        component: 'view.function_cascader',
-        meta: {
-          title: 'function_cascader',
-          i18nKey: 'route.function_cascader'
-        }
-      },
-      {
-        name: 'function_directive',
-        path: '/function/directive',
-        component: 'view.function_directive',
-        meta: {
-          title: 'function_directive',
-          i18nKey: 'route.function_directive'
-        }
-      },
-      {
-        name: 'function_drag',
-        path: '/function/drag',
-        component: 'view.function_drag',
-        meta: {
-          title: 'function_drag',
-          i18nKey: 'route.function_drag'
-        }
-      },
-      {
-        name: 'function_editor',
-        path: '/function/editor',
-        meta: {
-          title: 'function_editor',
-          i18nKey: 'route.function_editor'
-        },
-        children: [
-          {
-            name: 'function_editor_md',
-            path: '/function/editor/md',
-            component: 'view.function_editor_md',
-            meta: {
-              title: 'function_editor_md',
-              i18nKey: 'route.function_editor_md'
-            }
-          },
-          {
-            name: 'function_editor_rich',
-            path: '/function/editor/rich',
-            component: 'view.function_editor_rich',
-            meta: {
-              title: 'function_editor_rich',
-              i18nKey: 'route.function_editor_rich'
-            }
-          }
-        ]
-      },
-      {
-        name: 'function_form',
-        path: '/function/form',
-        meta: {
-          title: 'function_form',
-          i18nKey: 'route.function_form'
-        },
-        children: [
-          {
-            name: 'function_form_step-form',
-            path: '/function/form/step-form',
-            component: 'view.function_form_step-form',
-            meta: {
-              title: 'function_form_step-form',
-              i18nKey: 'route.function_form_step-form'
-            }
-          }
-        ]
-      },
-      {
         name: 'function_hide-child',
         path: '/function/hide-child',
         meta: {
@@ -181,15 +107,6 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           }
         ]
-      },
-      {
-        name: 'function_map',
-        path: '/function/map',
-        component: 'view.function_map',
-        meta: {
-          title: 'function_map',
-          i18nKey: 'route.function_map'
-        }
       },
       {
         name: 'function_multi-tab',
@@ -446,6 +363,198 @@ export const generatedRoutes: GeneratedRoute[] = [
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    name: 'plugin',
+    path: '/plugin',
+    component: 'layout.base',
+    meta: {
+      title: '插件示例',
+      i18nKey: 'route.plugin',
+      order: 7,
+      icon: 'clarity:plugin-line'
+    },
+    children: [
+      {
+        name: 'plugin_barcode',
+        path: '/plugin/barcode',
+        component: 'view.plugin_barcode',
+        meta: {
+          title: 'plugin_barcode',
+          i18nKey: 'route.plugin_barcode',
+          icon: 'ic:round-barcode'
+        }
+      },
+      {
+        name: 'plugin_cascader',
+        path: '/plugin/cascader',
+        component: 'view.plugin_cascader',
+        meta: {
+          title: 'plugin_cascader',
+          i18nKey: 'route.plugin_cascader'
+        }
+      },
+      {
+        name: 'plugin_charts',
+        path: '/plugin/charts',
+        meta: {
+          title: 'plugin_charts',
+          i18nKey: 'route.plugin_charts',
+          icon: 'mdi:chart-areaspline'
+        },
+        children: [
+          {
+            name: 'plugin_charts_echarts',
+            path: '/plugin/charts/echarts',
+            component: 'view.plugin_charts_echarts',
+            meta: {
+              title: 'plugin_charts_echarts',
+              i18nKey: 'route.plugin_charts_echarts',
+              icon: 'simple-icons:apacheecharts'
+            }
+          }
+        ]
+      },
+      {
+        name: 'plugin_copy',
+        path: '/plugin/copy',
+        component: 'view.plugin_copy',
+        meta: {
+          title: 'plugin_copy',
+          i18nKey: 'route.plugin_copy',
+          icon: 'mdi:clipboard-outline'
+        }
+      },
+      {
+        name: 'plugin_drag',
+        path: '/plugin/drag',
+        component: 'view.plugin_drag',
+        meta: {
+          title: 'plugin_drag',
+          i18nKey: 'route.plugin_drag'
+        }
+      },
+      {
+        name: 'plugin_editor',
+        path: '/plugin/editor',
+        meta: {
+          title: 'plugin_editor',
+          i18nKey: 'route.plugin_editor',
+          icon: 'icon-park-outline:editor'
+        },
+        children: [
+          {
+            name: 'plugin_editor_markdown',
+            path: '/plugin/editor/markdown',
+            component: 'view.plugin_editor_markdown',
+            meta: {
+              title: 'plugin_editor_markdown',
+              i18nKey: 'route.plugin_editor_markdown',
+              icon: 'ri:markdown-line'
+            }
+          },
+          {
+            name: 'plugin_editor_md',
+            path: '/plugin/editor/md',
+            component: 'view.plugin_editor_md',
+            meta: {
+              title: 'plugin_editor_md',
+              i18nKey: 'route.plugin_editor_md'
+            }
+          },
+          {
+            name: 'plugin_editor_quill',
+            path: '/plugin/editor/quill',
+            component: 'view.plugin_editor_quill',
+            meta: {
+              title: 'plugin_editor_quill',
+              i18nKey: 'route.plugin_editor_quill',
+              icon: 'mdi:file-document-edit-outline'
+            }
+          }
+        ]
+      },
+      {
+        name: 'plugin_excel',
+        path: '/plugin/excel',
+        component: 'view.plugin_excel',
+        meta: {
+          title: 'plugin_excel',
+          i18nKey: 'route.plugin_excel',
+          icon: 'ri:file-excel-2-line',
+          keepAlive: true
+        }
+      },
+      {
+        name: 'plugin_icon',
+        path: '/plugin/icon',
+        component: 'view.plugin_icon',
+        meta: {
+          title: 'plugin_icon',
+          i18nKey: 'route.plugin_icon',
+          localIcon: 'custom-icon'
+        }
+      },
+      {
+        name: 'plugin_map',
+        path: '/plugin/map',
+        component: 'view.plugin_map',
+        meta: {
+          title: 'plugin_map',
+          i18nKey: 'route.plugin_map',
+          icon: 'mdi:map'
+        }
+      },
+      {
+        name: 'plugin_pinyin',
+        path: '/plugin/pinyin',
+        component: 'view.plugin_pinyin',
+        meta: {
+          title: 'plugin_pinyin',
+          i18nKey: 'route.plugin_pinyin',
+          icon: 'entypo-social:google-hangouts'
+        }
+      },
+      {
+        name: 'plugin_print',
+        path: '/plugin/print',
+        component: 'view.plugin_print',
+        meta: {
+          title: 'plugin_print',
+          i18nKey: 'route.plugin_print',
+          icon: 'mdi:printer'
+        }
+      },
+      {
+        name: 'plugin_stepform',
+        path: '/plugin/stepform',
+        component: 'view.plugin_stepform',
+        meta: {
+          title: 'plugin_stepform',
+          i18nKey: 'route.plugin_stepform'
+        }
+      },
+      {
+        name: 'plugin_swiper',
+        path: '/plugin/swiper',
+        component: 'view.plugin_swiper',
+        meta: {
+          title: 'plugin_swiper',
+          i18nKey: 'route.plugin_swiper',
+          icon: 'simple-icons:swiper'
+        }
+      },
+      {
+        name: 'plugin_video',
+        path: '/plugin/video',
+        component: 'view.plugin_video',
+        meta: {
+          title: 'plugin_video',
+          i18nKey: 'route.plugin_video',
+          icon: 'mdi:video'
+        }
       }
     ]
   },

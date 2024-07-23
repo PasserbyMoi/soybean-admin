@@ -23,6 +23,7 @@ const local: App.I18n.Schema = {
     deleteSuccess: '删除成功',
     confirmDelete: '确认删除吗？',
     edit: '编辑',
+    warning: '警告',
     error: '错误',
     index: '序号',
     keywordSearch: '请输入关键词搜索',
@@ -66,13 +67,14 @@ const local: App.I18n.Schema = {
       dark: '暗黑模式',
       auto: '跟随系统'
     },
-    grayscale: '灰度模式',
+    grayscale: '灰色模式',
     layoutMode: {
       title: '布局模式',
       vertical: '左侧菜单模式',
       'vertical-mix': '左侧菜单混合模式',
       horizontal: '顶部菜单模式',
-      'horizontal-mix': '顶部菜单混合模式'
+      'horizontal-mix': '顶部菜单混合模式',
+      reverseHorizontalMix: '一级菜单与子级菜单位置反转'
     },
     recommendColor: '应用推荐算法的颜色',
     recommendColorDesc: '推荐颜色的算法参照',
@@ -186,14 +188,6 @@ const local: App.I18n.Schema = {
     function_request: '请求',
     'function_toggle-auth': '切换权限',
     'function_super-page': '超级管理员可见',
-    function_cascader: '城市级联',
-    function_map: '地图',
-    function_editor: '富文本',
-    function_editor_md: 'Markdown',
-    function_editor_rich: 'RichText',
-    function_form: '表单',
-    function_form_detail: '表单详情',
-    function_form_stepform: '分步表单',
     manage: '系统管理',
     manage_user: '用户管理',
     'manage_user-detail': '用户详情',
@@ -211,7 +205,26 @@ const local: App.I18n.Schema = {
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    plugin: '插件示例',
+    plugin_cascader: '城市级联',
+    plugin_drag: '拖拽移动',
+    plugin_stepform: '分步表单',
+    plugin_copy: '剪贴板',
+    plugin_charts: '图表',
+    plugin_charts_echarts: 'ECharts',
+    plugin_editor: '编辑器',
+    plugin_editor_md: 'MDEditorV3',
+    plugin_editor_quill: 'Quill',
+    plugin_editor_markdown: 'Vditor ',
+    plugin_icon: '图标',
+    plugin_map: '地图',
+    plugin_print: '打印',
+    plugin_swiper: 'Swiper',
+    plugin_video: '视频',
+    plugin_barcode: '条形码',
+    plugin_pinyin: '拼音',
+    plugin_excel: 'Excel'
   },
   page: {
     login: {
@@ -274,6 +287,8 @@ const local: App.I18n.Schema = {
       devDep: '开发依赖'
     },
     home: {
+      branchDesc:
+        '为了方便大家开发和更新合并，我们对main分支的代码进行了精简，只保留了首页菜单，其余内容已移至example分支进行维护。预览地址显示的内容即为example分支的内容。',
       greeting: '早安，{userName}, 今天又是充满活力的一天!',
       weatherDesc: '今日多云转晴，20℃ - 25℃!',
       projectCount: '项目数',

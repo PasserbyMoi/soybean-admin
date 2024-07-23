@@ -23,6 +23,7 @@ const local: App.I18n.Schema = {
     deleteSuccess: 'Delete Success',
     confirmDelete: 'Are you sure you want to delete?',
     edit: 'Edit',
+    warning: 'Warning',
     error: 'Error',
     index: 'Index',
     keywordSearch: 'Please enter keyword',
@@ -69,7 +70,8 @@ const local: App.I18n.Schema = {
       vertical: 'Vertical Menu Mode',
       horizontal: 'Horizontal Menu Mode',
       'vertical-mix': 'Vertical Mix Menu Mode',
-      'horizontal-mix': 'Horizontal Mix menu Mode'
+      'horizontal-mix': 'Horizontal Mix menu Mode',
+      reverseHorizontalMix: 'Reverse first level menus and child level menus position'
     },
     recommendColor: 'Apply Recommended Color Algorithm',
     recommendColorDesc: 'The recommended color algorithm refers to',
@@ -144,7 +146,6 @@ const local: App.I18n.Schema = {
       tableTitle: 'Table Space',
       themeTitle: 'Theme Space',
       tableSize: {
-        tiny: 'Tiny',
         small: 'Small',
         medium: 'Medium',
         large: 'Large'
@@ -189,6 +190,8 @@ const local: App.I18n.Schema = {
     function_editor: 'RichText',
     function_editor_md: 'Markdown',
     function_editor_rich: 'RichText',
+    function_form: 'Form',
+    function_form_detail: 'Form Detail',
     manage: 'System Manage',
     manage_user: 'User Manage',
     'manage_user-detail': 'User Detail',
@@ -206,7 +209,26 @@ const local: App.I18n.Schema = {
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    plugin: 'Plugin',
+    plugin_cascader: 'City Cascader',
+    plugin_drag: 'Drag',
+    plugin_stepform: 'Step Form',
+    plugin_copy: 'Copy',
+    plugin_charts: 'Charts',
+    plugin_charts_echarts: 'ECharts',
+    plugin_editor: 'Editor',
+    plugin_editor_md: 'MDEditorV3',
+    plugin_editor_quill: 'Quill',
+    plugin_editor_markdown: 'Vditor ',
+    plugin_icon: 'Icon',
+    plugin_map: 'Map',
+    plugin_print: 'Print',
+    plugin_swiper: 'Swiper',
+    plugin_video: 'Video',
+    plugin_barcode: 'Barcode',
+    plugin_pinyin: 'pinyin',
+    plugin_excel: 'Excel'
   },
   page: {
     login: {
@@ -269,6 +291,8 @@ const local: App.I18n.Schema = {
       devDep: 'Development Dependency'
     },
     home: {
+      branchDesc:
+        'For the convenience of everyone in developing and updating the merge, we have streamlined the code of the main branch, only retaining the homepage menu, and the rest of the content has been moved to the example branch for maintenance. The preview address displays the content of the example branch.',
       greeting: 'Good morning, {userName}, today is another day full of vitality!',
       weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
       projectCount: 'Project Count',
@@ -380,7 +404,8 @@ const local: App.I18n.Schema = {
         editUser: 'Edit User',
         gender: {
           male: 'Male',
-          female: 'Female'
+          female: 'Female',
+          unknow: 'Unknow'
         }
       },
       menu: {

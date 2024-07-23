@@ -1,7 +1,7 @@
 <script setup>
-import Step1 from './step1';
-import Step2 from './step2';
-import Step3 from './step3';
+import Step1 from './module/step1';
+import Step2 from './module/step2';
+import Step3 from './module/step3';
 
 const currentTab = ref(1);
 const currentStatus = ref('process');

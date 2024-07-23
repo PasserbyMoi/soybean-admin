@@ -34,19 +34,10 @@ declare module "@elegant-router/types" {
     "500": "/500";
     "about": "/about";
     "function": "/function";
-    "function_cascader": "/function/cascader";
-    "function_directive": "/function/directive";
-    "function_drag": "/function/drag";
-    "function_editor": "/function/editor";
-    "function_editor_md": "/function/editor/md";
-    "function_editor_rich": "/function/editor/rich";
-    "function_form": "/function/form";
-    "function_form_step-form": "/function/form/step-form";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
     "function_hide-child_three": "/function/hide-child/three";
     "function_hide-child_two": "/function/hide-child/two";
-    "function_map": "/function/map";
     "function_multi-tab": "/function/multi-tab";
     "function_request": "/function/request";
     "function_super-page": "/function/super-page";
@@ -70,6 +61,25 @@ declare module "@elegant-router/types" {
     "multi-menu_second": "/multi-menu/second";
     "multi-menu_second_child": "/multi-menu/second/child";
     "multi-menu_second_child_home": "/multi-menu/second/child/home";
+    "plugin": "/plugin";
+    "plugin_barcode": "/plugin/barcode";
+    "plugin_cascader": "/plugin/cascader";
+    "plugin_charts": "/plugin/charts";
+    "plugin_charts_echarts": "/plugin/charts/echarts";
+    "plugin_copy": "/plugin/copy";
+    "plugin_drag": "/plugin/drag";
+    "plugin_editor": "/plugin/editor";
+    "plugin_editor_markdown": "/plugin/editor/markdown";
+    "plugin_editor_md": "/plugin/editor/md";
+    "plugin_editor_quill": "/plugin/editor/quill";
+    "plugin_excel": "/plugin/excel";
+    "plugin_icon": "/plugin/icon";
+    "plugin_map": "/plugin/map";
+    "plugin_pinyin": "/plugin/pinyin";
+    "plugin_print": "/plugin/print";
+    "plugin_stepform": "/plugin/stepform";
+    "plugin_swiper": "/plugin/swiper";
+    "plugin_video": "/plugin/video";
     "user-center": "/user-center";
   };
 
@@ -124,6 +134,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "manage"
     | "multi-menu"
+    | "plugin"
     | "user-center"
   >;
 
@@ -149,16 +160,9 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "login"
     | "about"
-    | "function_cascader"
-    | "function_directive"
-    | "function_drag"
-    | "function_editor_md"
-    | "function_editor_rich"
-    | "function_form_step-form"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
-    | "function_map"
     | "function_multi-tab"
     | "function_request"
     | "function_super-page"
@@ -175,6 +179,22 @@ declare module "@elegant-router/types" {
     | "manage_user1"
     | "multi-menu_first_child"
     | "multi-menu_second_child_home"
+    | "plugin_barcode"
+    | "plugin_cascader"
+    | "plugin_charts_echarts"
+    | "plugin_copy"
+    | "plugin_drag"
+    | "plugin_editor_markdown"
+    | "plugin_editor_md"
+    | "plugin_editor_quill"
+    | "plugin_excel"
+    | "plugin_icon"
+    | "plugin_map"
+    | "plugin_pinyin"
+    | "plugin_print"
+    | "plugin_stepform"
+    | "plugin_swiper"
+    | "plugin_video"
     | "user-center"
   >;
 
