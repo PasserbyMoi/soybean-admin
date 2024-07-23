@@ -4,6 +4,16 @@ declare namespace App {
   namespace Theme {
     type ColorPaletteNumber = import('@sa/color').ColorPaletteNumber;
 
+    /** Theme token */
+    type ThemeToken = {
+      colors: ThemeTokenColor;
+      boxShadow: {
+        header: string;
+        sider: string;
+        tab: string;
+      };
+    };
+
     /** Theme setting */
     interface ThemeSetting {
       /** Theme scheme */
@@ -24,12 +34,6 @@ declare namespace App {
         mode: UnionKey.ThemeLayoutMode;
         /** Scroll mode */
         scrollMode: UnionKey.ThemeScrollMode;
-        /**
-         * Whether to reverse the horizontal mix
-         *
-         * if true, the vertical child level menus in left and horizontal first level menus in top
-         */
-        reverseHorizontalMix?: boolean;
       };
       /** Page */
       page: {
@@ -93,12 +97,10 @@ declare namespace App {
         /** Whether float the footer to the right when the layout is 'horizontal-mix' */
         right: boolean;
       };
-      /** define some theme settings tokens, will transform to css variables */
-      tokens: {
-        light: ThemeSettingToken;
-        dark?: {
-          [K in keyof ThemeSettingToken]?: Partial<ThemeSettingToken[K]>;
-        };
+      /** Space */
+      space: {
+        tableSpace: UnionKey.TableSpaceSize;
+        themeSpace: UnionKey.ThemeSpaceSize;
       };
     }
 
@@ -121,33 +123,14 @@ declare namespace App {
 
     type BaseToken = Record<string, Record<string, string>>;
 
-    interface ThemeSettingTokenColor {
-      /** the progress bar color, if not set, will use the primary color */
-      nprogress?: string;
+    interface ThemeTokenColor extends ThemePaletteColor {
+      nprogress: string;
       container: string;
       layout: string;
       inverted: string;
-      'base-text': string;
+      base_text: string;
+      [key: string]: string;
     }
-
-    interface ThemeSettingTokenBoxShadow {
-      header: string;
-      sider: string;
-      tab: string;
-    }
-
-    interface ThemeSettingToken {
-      colors: ThemeSettingTokenColor;
-      boxShadow: ThemeSettingTokenBoxShadow;
-    }
-
-    type ThemeTokenColor = ThemePaletteColor & ThemeSettingTokenColor;
-
-    /** Theme token CSS variables */
-    type ThemeTokenCSSVars = {
-      colors: ThemeTokenColor & { [key: string]: string };
-      boxShadow: ThemeSettingTokenBoxShadow & { [key: string]: string };
-    };
   }
 
   /** Global namespace */
@@ -170,7 +153,7 @@ declare namespace App {
     }
 
     /** The global menu */
-    type Menu = {
+    interface Menu {
       /**
        * The menu key
        *
@@ -189,7 +172,7 @@ declare namespace App {
       icon?: () => VNode;
       /** The menu children */
       children?: Menu[];
-    };
+    }
 
     type Breadcrumb = Omit<Menu, 'children'> & {
       options?: Breadcrumb[];
@@ -295,7 +278,6 @@ declare namespace App {
         deleteSuccess: string;
         confirmDelete: string;
         edit: string;
-        warning: string;
         error: string;
         index: string;
         keywordSearch: string;
@@ -316,6 +298,9 @@ declare namespace App {
         update: string;
         updateSuccess: string;
         userCenter: string;
+        export: string;
+        exportSuccess: string;
+        confirmExport: string;
         yesOrNo: {
           yes: string;
           no: string;
@@ -332,7 +317,7 @@ declare namespace App {
       theme: {
         themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
         grayscale: string;
-        layoutMode: { title: string; reverseHorizontalMix: string } & Record<UnionKey.ThemeLayoutMode, string>;
+        layoutMode: { title: string } & Record<UnionKey.ThemeLayoutMode, string>;
         recommendColor: string;
         recommendColorDesc: string;
         themeColor: {
@@ -379,6 +364,12 @@ declare namespace App {
           copySuccessMsg: string;
           resetConfig: string;
           resetSuccessMsg: string;
+        };
+        space: {
+          tableTitle: string;
+          themeTitle: string;
+          tableSize: Record<UnionKey.TableSpaceSize, string>;
+          themeSize: Record<UnionKey.ThemeSpaceSize, string>;
         };
       };
       route: Record<I18nRouteKey, string>;
@@ -429,8 +420,20 @@ declare namespace App {
             title: string;
           };
         };
+        about: {
+          title: string;
+          introduction: string;
+          projectInfo: {
+            title: string;
+            version: string;
+            latestBuildTime: string;
+            githubLink: string;
+            previewLink: string;
+          };
+          prdDep: string;
+          devDep: string;
+        };
         home: {
-          branchDesc: string;
           greeting: string;
           weatherDesc: string;
           projectCount: string;
@@ -457,6 +460,258 @@ declare namespace App {
           };
           creativity: string;
         };
+        function: {
+          tab: {
+            tabOperate: {
+              title: string;
+              addTab: string;
+              addTabDesc: string;
+              closeTab: string;
+              closeCurrentTab: string;
+              closeAboutTab: string;
+              addMultiTab: string;
+              addMultiTabDesc1: string;
+              addMultiTabDesc2: string;
+            };
+            tabTitle: {
+              title: string;
+              changeTitle: string;
+              change: string;
+              resetTitle: string;
+              reset: string;
+            };
+          };
+          multiTab: {
+            routeParam: string;
+            backTab: string;
+          };
+          toggleAuth: {
+            toggleAccount: string;
+            authHook: string;
+            superAdminVisible: string;
+            adminVisible: string;
+            adminOrUserVisible: string;
+          };
+          request: {
+            repeatedErrorOccurOnce: string;
+            repeatedError: string;
+            repeatedErrorMsg1: string;
+            repeatedErrorMsg2: string;
+          };
+        };
+        manage: {
+          common: {
+            status: {
+              enable: string;
+              disable: string;
+              unknow: string;
+            };
+          };
+          role: {
+            title: string;
+            roleName: string;
+            roleCode: string;
+            roleStatus: string;
+            roleDesc: string;
+            form: {
+              roleName: string;
+              roleCode: string;
+              roleStatus: string;
+              roleDesc: string;
+            };
+            addRole: string;
+            editRole: string;
+            menuAuth: string;
+            buttonAuth: string;
+          };
+          user: {
+            title: string;
+            userName: string;
+            userGender: string;
+            nickName: string;
+            userPhone: string;
+            userEmail: string;
+            userStatus: string;
+            userRole: string;
+            form: {
+              userName: string;
+              userGender: string;
+              nickName: string;
+              userPhone: string;
+              userEmail: string;
+              userStatus: string;
+              userRole: string;
+            };
+            addUser: string;
+            editUser: string;
+            gender: {
+              male: string;
+              female: string;
+              unknow: string;
+            };
+          };
+          menu: {
+            home: string;
+            title: string;
+            id: string;
+            parentId: string;
+            menuType: string;
+            menuName: string;
+            routeName: string;
+            routePath: string;
+            pathParam: string;
+            layout: string;
+            page: string;
+            i18nKey: string;
+            icon: string;
+            localIcon: string;
+            iconTypeTitle: string;
+            order: string;
+            constant: string;
+            keepAlive: string;
+            href: string;
+            hideInMenu: string;
+            activeMenu: string;
+            multiTab: string;
+            fixedIndexInTab: string;
+            query: string;
+            button: string;
+            buttonCode: string;
+            buttonDesc: string;
+            menuStatus: string;
+            form: {
+              home: string;
+              menuType: string;
+              menuName: string;
+              routeName: string;
+              routePath: string;
+              pathParam: string;
+              layout: string;
+              page: string;
+              i18nKey: string;
+              icon: string;
+              localIcon: string;
+              order: string;
+              keepAlive: string;
+              href: string;
+              hideInMenu: string;
+              activeMenu: string;
+              multiTab: string;
+              fixedInTab: string;
+              fixedIndexInTab: string;
+              queryKey: string;
+              queryValue: string;
+              button: string;
+              buttonCode: string;
+              buttonDesc: string;
+              menuStatus: string;
+            };
+            addMenu: string;
+            editMenu: string;
+            addChildMenu: string;
+            type: {
+              directory: string;
+              menu: string;
+            };
+            iconType: {
+              iconify: string;
+              local: string;
+            };
+          };
+          log: {
+            title: string;
+            logType: string;
+            logUser: string;
+            logDetailType: string;
+            requestUrl: string;
+            createTime: string;
+            responseCode: string;
+            form: {
+              logType: string;
+              logUser: string;
+              logDetailType: string;
+              requestUrl: string;
+              createTime: string;
+              responseCode: string;
+            };
+            viewLog: string;
+            logDetailTypes: {
+              SystemStart: string;
+              SystemStop: string;
+              UserLoginSuccess: string;
+              UserAuthRefreshTokenSuccess: string;
+              UserLoginGetUserInfo: string;
+              UserLoginUserNameVaild: string;
+              UserLoginErrorPassword: string;
+              UserLoginForbid: string;
+              ApiGetList: string;
+              ApiGetTree: string;
+              ApiRefresh: string;
+              ApiGetOne: string;
+              ApiCreateOne: string;
+              ApiUpdateOne: string;
+              ApiDeleteOne: string;
+              ApiBatchDelete: string;
+              MenuGetList: string;
+              MenuGetTree: string;
+              MenuGetPages: string;
+              MenuGetButtonsTree: string;
+              MenuGetOne: string;
+              MenuCreateOne: string;
+              MenuUpdateOne: string;
+              MenuDeleteOne: string;
+              MenuBatchDeleteOne: string;
+              RoleGetList: string;
+              RoleGetMenus: string;
+              RoleUpdateMenus: string;
+              RoleGetButtons: string;
+              RoleUpdateButtons: string;
+              RoleGetApis: string;
+              RoleUpdateApis: string;
+              RoleGetOne: string;
+              RoleCreateOne: string;
+              RoleUpdateOne: string;
+              RoleDeleteOne: string;
+              RoleBatchDeleteOne: string;
+              UserGetList: string;
+              UserGetOne: string;
+              UserCreateOne: string;
+              UserUpdateOne: string;
+              UserDeleteOne: string;
+              UserBatchDeleteOne: string;
+            };
+            logTypes: {
+              ApiLog: string;
+              UserLog: string;
+              AdminLog: string;
+              SystemLog: string;
+            };
+          };
+          api: {
+            title: string;
+            path: string;
+            method: string;
+            summary: string;
+            tags: string;
+            status: string;
+            form: {
+              path: string;
+              method: string;
+              summary: string;
+              tags: string;
+              status: string;
+            };
+            addApi: string;
+            editApi: string;
+            methods: {
+              GET: string;
+              POST: string;
+              PUT: string;
+              PATCH: string;
+              DELETE: string;
+            };
+          };
+        };
       };
       form: {
         required: string;
@@ -479,9 +734,15 @@ declare namespace App {
         expand: string;
         pin: string;
         unpin: string;
+        notifications: string;
       };
       datatable: {
         itemCount: string;
+      };
+      notifications: {
+        notice: string;
+        message: string;
+        todo: string;
       };
     };
 
@@ -542,6 +803,8 @@ declare namespace App {
       msg: string;
       /** The backend service response data */
       data: T;
+      /** The backend service response timestamp */
+      timestamp: Date | string | number;
     };
 
     /** The demo backend service response data */
@@ -552,6 +815,8 @@ declare namespace App {
       message: string;
       /** The backend service response data */
       result: T;
+      /** The backend service response timestamp */
+      timestamp: Date | string | number;
     };
   }
 }

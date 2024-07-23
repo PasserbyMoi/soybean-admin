@@ -20,7 +20,7 @@ declare namespace UnionKey {
    * - vertical: the vertical menu in left
    * - horizontal: the horizontal menu in top
    * - vertical-mix: two vertical mixed menus in left
-   * - horizontal-mix: the vertical first level menus in left and horizontal child level menus in top
+   * - horizontal-mix: the vertical menu in left and horizontal menu in top
    */
   type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix';
 
@@ -42,6 +42,12 @@ declare namespace UnionKey {
    * - button: button style
    */
   type ThemeTabMode = import('@sa/materials').PageTabMode;
+
+  /** Theme Space Size */
+  type ThemeSpaceSize = import('naive-ui/es/tag/src/Tag').TagProps['size'];
+
+  /** Table Space Size */
+  type TableSpaceSize = 'small' | 'medium' | 'large';
 
   /** Unocss animate key */
   type UnoCssAnimateKey =

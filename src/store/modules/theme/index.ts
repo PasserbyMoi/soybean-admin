@@ -6,7 +6,7 @@ import { getPaletteColorByNumber } from '@sa/color';
 import { SetupStoreId } from '@/enum';
 import { localStg } from '@/utils/storage';
 import {
-  addThemeVarsToGlobal,
+  addThemeVarsToHtml,
   createThemeToken,
   getNaiveTheme,
   initThemeSettings,
@@ -123,22 +123,10 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     settings.value.layout.mode = mode;
   }
 
-  /** Setup theme vars to global */
-  function setupThemeVarsToGlobal() {
-    const { themeTokens, darkThemeTokens } = createThemeToken(
-      themeColors.value,
-      settings.value.tokens,
-      settings.value.recommendColor
-    );
-    addThemeVarsToGlobal(themeTokens, darkThemeTokens);
-  }
-  /**
-   * Set layout reverse horizontal mix
-   *
-   * @param reverse Reverse horizontal mix
-   */
-  function setLayoutReverseHorizontalMix(reverse: boolean) {
-    settings.value.layout.reverseHorizontalMix = reverse;
+  /** Setup theme vars to html */
+  function setupThemeVarsToHtml() {
+    const { themeTokens, darkThemeTokens } = createThemeToken(themeColors.value, settings.value.recommendColor);
+    addThemeVarsToHtml(themeTokens, darkThemeTokens);
   }
 
   /** Cache theme settings */
@@ -178,7 +166,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     watch(
       themeColors,
       val => {
-        setupThemeVarsToGlobal();
+        setupThemeVarsToHtml();
         localStg.set('themeColor', val.primary);
       },
       { immediate: true }
@@ -201,7 +189,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     setThemeScheme,
     toggleThemeScheme,
     updateThemeColors,
-    setThemeLayout,
-    setLayoutReverseHorizontalMix
+    setThemeLayout
   };
 });

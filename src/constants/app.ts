@@ -1,9 +1,5 @@
 import { transformRecordToOption } from '@/utils/common';
 
-export const GLOBAL_HEADER_MENU_ID = '__GLOBAL_HEADER_MENU__';
-
-export const GLOBAL_SIDER_MENU_ID = '__GLOBAL_SIDER_MENU__';
-
 export const themeSchemaRecord: Record<UnionKey.ThemeScheme, App.I18n.I18nKey> = {
   light: 'theme.themeSchema.light',
   dark: 'theme.themeSchema.dark',
@@ -41,7 +37,21 @@ export const themeTabModeRecord: Record<UnionKey.ThemeTabMode, App.I18n.I18nKey>
   button: 'theme.tab.mode.button'
 };
 
+export const themeThemeSpaceRecord: Record<UnionKey.ThemeSpaceSize, App.I18n.I18nKey> = {
+  small: 'theme.space.themeSize.small',
+  medium: 'theme.space.themeSize.medium',
+  large: 'theme.space.themeSize.large'
+};
+export const themeTableSpaceRecord: Record<UnionKey.TableSpaceSize, App.I18n.I18nKey> = {
+  small: 'theme.space.tableSize.small',
+  medium: 'theme.space.tableSize.medium',
+  large: 'theme.space.tableSize.large'
+};
+
 export const themeTabModeOptions = transformRecordToOption(themeTabModeRecord);
+
+export const themeTableSpaceOptions = transformRecordToOption(themeTableSpaceRecord);
+export const themeThemeSpaceOptions = transformRecordToOption(themeThemeSpaceRecord);
 
 export const themePageAnimationModeRecord: Record<UnionKey.ThemePageAnimateMode, App.I18n.I18nKey> = {
   'fade-slide': 'theme.page.mode.fade-slide',

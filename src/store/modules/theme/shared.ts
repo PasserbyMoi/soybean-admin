@@ -30,40 +30,39 @@ export function initThemeSettings() {
 }
 
 /**
- * create theme token css vars value by theme settings
+ * Create theme token
  *
  * @param colors Theme colors
- * @param tokens Theme setting tokens
  * @param [recommended=false] Use recommended color. Default is `false`
  */
-export function createThemeToken(
-  colors: App.Theme.ThemeColor,
-  tokens?: App.Theme.ThemeSetting['tokens'],
-  recommended = false
-) {
+export function createThemeToken(colors: App.Theme.ThemeColor, recommended = false) {
   const paletteColors = createThemePaletteColors(colors, recommended);
 
-  const { light, dark } = tokens || themeSettings.tokens;
-
-  const themeTokens: App.Theme.ThemeTokenCSSVars = {
+  const themeTokens: App.Theme.ThemeToken = {
     colors: {
       ...paletteColors,
       nprogress: paletteColors.primary,
-      ...light.colors
+      container: 'rgb(255, 255, 255)',
+      layout: 'rgb(247, 250, 252)',
+      inverted: 'rgb(0, 20, 40)',
+      base_text: 'rgb(31, 31, 31)'
     },
     boxShadow: {
-      ...light.boxShadow
+      header: '0 1px 2px rgb(0, 21, 41, 0.08)',
+      sider: '2px 0 8px 0 rgb(29, 35, 41, 0.05)',
+      tab: '0 1px 2px rgb(0, 21, 41, 0.08)'
     }
   };
 
-  const darkThemeTokens: App.Theme.ThemeTokenCSSVars = {
+  const darkThemeTokens: App.Theme.ThemeToken = {
     colors: {
       ...themeTokens.colors,
-      ...dark?.colors
+      container: 'rgb(28, 28, 28)',
+      layout: 'rgb(18, 18, 18)',
+      base_text: 'rgb(224, 224, 224)'
     },
     boxShadow: {
-      ...themeTokens.boxShadow,
-      ...dark?.boxShadow
+      ...themeTokens.boxShadow
     }
   };
 
@@ -133,16 +132,16 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
 }
 
 /**
- * Add theme vars to global
+ * Add theme vars to html
  *
  * @param tokens
  */
-export function addThemeVarsToGlobal(tokens: App.Theme.BaseToken, darkTokens: App.Theme.BaseToken) {
+export function addThemeVarsToHtml(tokens: App.Theme.BaseToken, darkTokens: App.Theme.BaseToken) {
   const cssVarStr = getCssVarByTokens(tokens);
   const darkCssVarStr = getCssVarByTokens(darkTokens);
 
   const css = `
-    :root {
+    html {
       ${cssVarStr}
     }
   `;

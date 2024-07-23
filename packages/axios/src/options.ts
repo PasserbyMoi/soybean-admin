@@ -20,7 +20,7 @@ export function createDefaultOptions<ResponseData = any>(options?: Partial<Reque
 
 export function createRetryOptions(config?: Partial<CreateAxiosDefaults>) {
   const retryConfig: IAxiosRetryConfig = {
-    retries: 0
+    retries: 3
   };
 
   Object.assign(retryConfig, config);

@@ -23,7 +23,6 @@ const local: App.I18n.Schema = {
     deleteSuccess: '删除成功',
     confirmDelete: '确认删除吗？',
     edit: '编辑',
-    warning: '警告',
     error: '错误',
     index: '序号',
     keywordSearch: '请输入关键词搜索',
@@ -43,6 +42,9 @@ const local: App.I18n.Schema = {
     trigger: '触发',
     update: '更新',
     updateSuccess: '更新成功',
+    export: '导出',
+    exportSuccess: '导出成功',
+    confirmExport: '确认导出吗？',
     userCenter: '个人中心',
     yesOrNo: {
       yes: '是',
@@ -64,14 +66,13 @@ const local: App.I18n.Schema = {
       dark: '暗黑模式',
       auto: '跟随系统'
     },
-    grayscale: '灰色模式',
+    grayscale: '灰度模式',
     layoutMode: {
       title: '布局模式',
       vertical: '左侧菜单模式',
       'vertical-mix': '左侧菜单混合模式',
       horizontal: '顶部菜单模式',
-      'horizontal-mix': '顶部菜单混合模式',
-      reverseHorizontalMix: '一级菜单与子级菜单位置反转'
+      'horizontal-mix': '顶部菜单混合模式'
     },
     recommendColor: '应用推荐算法的颜色',
     recommendColorDesc: '推荐颜色的算法参照',
@@ -141,6 +142,21 @@ const local: App.I18n.Schema = {
       copySuccessMsg: '复制成功，请替换 src/theme/settings.ts 中的变量 themeSettings',
       resetConfig: '重置配置',
       resetSuccessMsg: '重置成功'
+    },
+    space: {
+      tableTitle: '表格间距',
+      themeTitle: '全局间距',
+      tableSize: {
+        small: '紧凑',
+        medium: '普通',
+        large: '宽松'
+      },
+      themeSize: {
+        small: '紧凑',
+        medium: '普通',
+        large: '宽松',
+        tiny: '极小'
+      }
     }
   },
   route: {
@@ -149,7 +165,53 @@ const local: App.I18n.Schema = {
     404: '页面不存在',
     500: '服务器错误',
     'iframe-page': '外链页面',
-    home: '首页'
+    home: '首页',
+    document: '文档',
+    document_project: '项目文档',
+    'document_project-link': '项目文档(外链)',
+    document_vue: 'Vue文档',
+    document_vite: 'Vite文档',
+    document_unocss: 'UnoCSS文档',
+    document_naive: 'Naive UI文档',
+    document_antd: 'Ant Design Vue文档',
+    'user-center': '个人中心',
+    about: '关于',
+    function: '系统功能',
+    function_tab: '标签页',
+    'function_multi-tab': '多标签页',
+    'function_hide-child': '隐藏子菜单',
+    'function_hide-child_one': '隐藏子菜单',
+    'function_hide-child_two': '菜单二',
+    'function_hide-child_three': '菜单三',
+    function_request: '请求',
+    'function_toggle-auth': '切换权限',
+    'function_super-page': '超级管理员可见',
+    function_cascader: '城市级联',
+    function_map: '地图',
+    function_editor: '富文本',
+    function_editor_md: 'Markdown',
+    function_editor_rich: 'RichText',
+    function_form: '表单',
+    function_form_detail: '表单详情',
+    function_form_stepform: '分步表单',
+    manage: '系统管理',
+    manage_user: '用户管理',
+    'manage_user-detail': '用户详情',
+    manage_role: '角色管理',
+    manage_menu: '菜单管理',
+    manage_log: '日志管理',
+    manage_api: 'API 管理',
+    manage_dictionary: '字典管理',
+    'multi-menu': '多级菜单',
+    'multi-menu_first': '菜单一',
+    'multi-menu_first_child': '菜单一子菜单',
+    'multi-menu_second': '菜单二',
+    'multi-menu_second_child': '菜单二子菜单',
+    'multi-menu_second_child_home': '菜单二子菜单首页',
+    exception: '异常页',
+    exception_403: '403',
+    exception_404: '404',
+    exception_500: '500'
   },
   page: {
     login: {
@@ -198,9 +260,20 @@ const local: App.I18n.Schema = {
         title: '绑定微信'
       }
     },
+    about: {
+      title: '关于',
+      introduction: `SoybeanAdmin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite5, TypeScript, Pinia 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。SoybeanAdmin 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。`,
+      projectInfo: {
+        title: '项目信息',
+        version: '版本',
+        latestBuildTime: '最新构建时间',
+        githubLink: 'Github 地址',
+        previewLink: '预览地址'
+      },
+      prdDep: '生产依赖',
+      devDep: '开发依赖'
+    },
     home: {
-      branchDesc:
-        '为了方便大家开发和更新合并，我们对main分支的代码进行了精简，只保留了首页菜单，其余内容已移至example分支进行维护。预览地址显示的内容即为example分支的内容。',
       greeting: '早安，{userName}, 今天又是充满活力的一天!',
       weatherDesc: '今日多云转晴，20℃ - 25℃!',
       projectCount: '项目数',
@@ -226,6 +299,258 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       },
       creativity: '创意'
+    },
+    function: {
+      tab: {
+        tabOperate: {
+          title: '标签页操作',
+          addTab: '添加标签页',
+          addTabDesc: '跳转到关于页面',
+          closeTab: '关闭标签页',
+          closeCurrentTab: '关闭当前标签页',
+          closeAboutTab: '关闭"关于"标签页',
+          addMultiTab: '添加多标签页',
+          addMultiTabDesc1: '跳转到多标签页页面',
+          addMultiTabDesc2: '跳转到多标签页页面(带有查询参数)'
+        },
+        tabTitle: {
+          title: '标签页标题',
+          changeTitle: '修改标题',
+          change: '修改',
+          resetTitle: '重置标题',
+          reset: '重置'
+        }
+      },
+      multiTab: {
+        routeParam: '路由参数',
+        backTab: '返回 function_tab'
+      },
+      toggleAuth: {
+        toggleAccount: '切换账号',
+        authHook: '权限钩子函数 `hasAuth`',
+        superAdminVisible: '超级管理员可见',
+        adminVisible: '管理员可见',
+        adminOrUserVisible: '管理员和用户可见'
+      },
+      request: {
+        repeatedErrorOccurOnce: '重复请求错误只出现一次',
+        repeatedError: '重复请求错误',
+        repeatedErrorMsg1: '自定义请求错误 1',
+        repeatedErrorMsg2: '自定义请求错误 2'
+      }
+    },
+    manage: {
+      common: {
+        status: {
+          enable: '启用',
+          disable: '禁用',
+          unknow: '未知'
+        }
+      },
+      role: {
+        title: '角色列表',
+        roleName: '角色名称',
+        roleCode: '角色编码',
+        roleStatus: '角色状态',
+        roleDesc: '角色描述',
+        menuAuth: '菜单权限',
+        buttonAuth: '按钮权限',
+        form: {
+          roleName: '请输入角色名称',
+          roleCode: '请输入角色编码',
+          roleStatus: '请选择角色状态',
+          roleDesc: '请输入角色描述'
+        },
+        addRole: '新增角色',
+        editRole: '编辑角色'
+      },
+      user: {
+        title: '用户列表',
+        userName: '用户名',
+        userGender: '性别',
+        nickName: '昵称',
+        userPhone: '手机号',
+        userEmail: '邮箱',
+        userStatus: '用户状态',
+        userRole: '用户角色',
+        form: {
+          userName: '请输入用户名',
+          userGender: '请选择性别',
+          nickName: '请输入昵称',
+          userPhone: '请输入手机号',
+          userEmail: '请输入邮箱',
+          userStatus: '请选择用户状态',
+          userRole: '请选择用户角色'
+        },
+        addUser: '新增用户',
+        editUser: '编辑用户',
+        gender: {
+          male: '男',
+          female: '女',
+          unknow: '未知'
+        }
+      },
+      menu: {
+        home: '首页',
+        title: '菜单列表',
+        id: 'ID',
+        parentId: '父级菜单ID',
+        menuType: '菜单类型',
+        menuName: '菜单名称',
+        routeName: '路由名称',
+        routePath: '路由路径',
+        pathParam: '路径参数',
+        layout: '布局',
+        page: '页面组件',
+        i18nKey: '国际化key',
+        icon: '图标',
+        localIcon: '本地图标',
+        iconTypeTitle: '图标类型',
+        order: '排序',
+        constant: '常量路由',
+        keepAlive: '缓存路由',
+        href: '外链',
+        hideInMenu: '隐藏菜单',
+        activeMenu: '高亮的菜单',
+        multiTab: '支持多页签',
+        fixedIndexInTab: '固定在页签中的序号',
+        query: '路由参数',
+        button: '按钮',
+        buttonCode: '按钮编码',
+        buttonDesc: '按钮描述',
+        menuStatus: '菜单状态',
+        form: {
+          home: '请选择首页',
+          menuType: '请选择菜单类型',
+          menuName: '请输入菜单名称',
+          routeName: '请输入路由名称',
+          routePath: '请输入路由路径',
+          pathParam: '请输入路径参数',
+          page: '请选择页面组件',
+          layout: '请选择布局组件',
+          i18nKey: '请输入国际化key',
+          icon: '请输入图标',
+          localIcon: '请选择本地图标',
+          order: '请输入排序',
+          keepAlive: '请选择是否缓存路由',
+          href: '请输入外链',
+          hideInMenu: '请选择是否隐藏菜单',
+          activeMenu: '请选择高亮的菜单的路由名称',
+          multiTab: '请选择是否支持多标签',
+          fixedInTab: '请选择是否固定在页签中',
+          fixedIndexInTab: '请输入固定在页签中的序号',
+          queryKey: '请输入路由参数Key',
+          queryValue: '请输入路由参数Value',
+          button: '请选择是否按钮',
+          buttonCode: '请输入按钮编码',
+          buttonDesc: '请输入按钮描述',
+          menuStatus: '请选择菜单状态'
+        },
+        addMenu: '新增菜单',
+        editMenu: '编辑菜单',
+        addChildMenu: '新增子菜单',
+        type: {
+          directory: '目录',
+          menu: '菜单'
+        },
+        iconType: {
+          iconify: 'iconify图标',
+          local: '本地图标'
+        }
+      },
+      log: {
+        title: '日志列表',
+        logType: '日志类型',
+        logUser: '操作人员',
+        logDetailType: '日志详细',
+        requestUrl: '请求URL',
+        createTime: '创建时间',
+        responseCode: '响应业务码',
+        form: {
+          logType: '请选择日志类型',
+          logUser: '请输入操作人员',
+          logDetailType: '请选择日志详细',
+          requestUrl: '请输入请求URL',
+          createTime: '请选择创建时间',
+          responseCode: '请输入响应业务码'
+        },
+        viewLog: '查看日志',
+        logDetailTypes: {
+          SystemStart: '系统启动',
+          SystemStop: '系统关闭',
+          UserLoginSuccess: '用户登录成功',
+          UserAuthRefreshTokenSuccess: '用户认证刷新令牌成功',
+          UserLoginGetUserInfo: '用户登录获取用户信息',
+          UserLoginUserNameVaild: '用户登录用户名有效',
+          UserLoginErrorPassword: '用户登录密码错误',
+          UserLoginForbid: '用户登录禁止',
+          ApiGetList: '获取接口列表',
+          ApiGetTree: '获取接口树',
+          ApiRefresh: '刷新接口',
+          ApiGetOne: '获取单个接口',
+          ApiCreateOne: '创建单个接口',
+          ApiUpdateOne: '更新单个接口',
+          ApiDeleteOne: '删除单个接口',
+          ApiBatchDelete: '批量删除接口',
+          MenuGetList: '获取菜单列表',
+          MenuGetTree: '获取菜单树',
+          MenuGetPages: '获取菜单页面',
+          MenuGetButtonsTree: '获取菜单按钮树',
+          MenuGetOne: '获取单个菜单',
+          MenuCreateOne: '创建单个菜单',
+          MenuUpdateOne: '更新单个菜单',
+          MenuDeleteOne: '删除单个菜单',
+          MenuBatchDeleteOne: '批量删除菜单',
+          RoleGetList: '获取角色列表',
+          RoleGetMenus: '获取角色菜单',
+          RoleUpdateMenus: '更新角色菜单',
+          RoleGetButtons: '获取角色按钮',
+          RoleUpdateButtons: '更新角色按钮',
+          RoleGetApis: '获取角色接口',
+          RoleUpdateApis: '更新角色接口',
+          RoleGetOne: '获取单个角色',
+          RoleCreateOne: '创建单个角色',
+          RoleUpdateOne: '更新单个角色',
+          RoleDeleteOne: '删除单个角色',
+          RoleBatchDeleteOne: '批量删除角色',
+          UserGetList: '获取用户列表',
+          UserGetOne: '获取单个用户',
+          UserCreateOne: '创建单个用户',
+          UserUpdateOne: '更新单个用户',
+          UserDeleteOne: '删除单个用户',
+          UserBatchDeleteOne: '批量删除用户'
+        },
+        logTypes: {
+          ApiLog: 'API日志',
+          UserLog: '用户日志',
+          AdminLog: '管理日志',
+          SystemLog: '系统日志'
+        }
+      },
+      api: {
+        title: 'API列表',
+        path: 'API路径',
+        method: '请求方式',
+        summary: 'API简介',
+        tags: 'Tags',
+        status: 'API状态',
+        form: {
+          path: '请输入API路径',
+          method: '请选择请求方式',
+          summary: '请输入API简介',
+          tags: '请输入Tags',
+          status: '请选择API状态'
+        },
+        addApi: '新增API',
+        editApi: '编辑API',
+        methods: {
+          GET: 'GET',
+          POST: 'POST',
+          PUT: 'PUT',
+          PATCH: 'PATCH',
+          DELETE: 'DELETE'
+        }
+      }
     }
   },
   form: {
@@ -272,10 +597,16 @@ const local: App.I18n.Schema = {
     collapse: '折叠菜单',
     expand: '展开菜单',
     pin: '固定',
-    unpin: '取消固定'
+    unpin: '取消固定',
+    notifications: '消息通知'
   },
   datatable: {
     itemCount: '共 {total} 条'
+  },
+  notifications: {
+    notice: '通知',
+    message: '消息',
+    todo: '待办'
   }
 };
 

@@ -30,6 +30,9 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
 
   /** Is mobile layout */
   const isMobile = breakpoints.smaller('sm');
+  const isStriped = ref(true);
+  const tableSize = ref(themeStore.space.tableSpace);
+  const themeSize = ref(themeStore.space.themeSpace);
 
   /**
    * Reload page
@@ -126,6 +129,27 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
       // set dayjs locale
       setDayjsLocale(locale.value);
     });
+
+    // table sync side
+    watch(
+      () => themeStore.space.tableSpace,
+      newValue => {
+        tableSize.value = newValue;
+      }
+    );
+    watch(
+      () => themeStore.space.themeSpace,
+      newValue => {
+        themeSize.value = newValue;
+      }
+    );
+    // table sync side
+    watch(tableSize, newValue => {
+      themeStore.space.tableSpace = newValue;
+    });
+    watch(themeSize, newValue => {
+      themeStore.space.themeSpace = newValue;
+    });
   });
 
   // cache mixSiderFixed
@@ -143,6 +167,9 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
 
   return {
     isMobile,
+    isStriped,
+    tableSize,
+    themeSize,
     reloadFlag,
     reloadPage,
     fullContent,

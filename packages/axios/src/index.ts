@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import type { AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosResponse, CancelTokenSource, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 import axiosRetry from 'axios-retry';
 import { nanoid } from '@sa/utils';
 import { createAxiosConfig, createDefaultOptions, createRetryOptions } from './options';
@@ -22,7 +22,7 @@ function createCommonRequest<ResponseData = any>(
   const axiosConf = createAxiosConfig(axiosConfig);
   const instance = axios.create(axiosConf);
 
-  const abortControllerMap = new Map<string, AbortController>();
+  const cancelTokenSourceMap = new Map<string, CancelTokenSource>();
 
   // config axios retry
   const retryOptions = createRetryOptions(axiosConf);
@@ -35,12 +35,10 @@ function createCommonRequest<ResponseData = any>(
     const requestId = nanoid();
     config.headers.set(REQUEST_ID_KEY, requestId);
 
-    // config abort controller
-    if (!config.signal) {
-      const abortController = new AbortController();
-      config.signal = abortController.signal;
-      abortControllerMap.set(requestId, abortController);
-    }
+    // config cancel token
+    const cancelTokenSource = axios.CancelToken.source();
+    config.cancelToken = cancelTokenSource.token;
+    cancelTokenSourceMap.set(requestId, cancelTokenSource);
 
     // handle config by hook
     const handledConfig = opts.onRequest?.(config) || config;
@@ -81,18 +79,18 @@ function createCommonRequest<ResponseData = any>(
   );
 
   function cancelRequest(requestId: string) {
-    const abortController = abortControllerMap.get(requestId);
-    if (abortController) {
-      abortController.abort();
-      abortControllerMap.delete(requestId);
+    const cancelTokenSource = cancelTokenSourceMap.get(requestId);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+      cancelTokenSourceMap.delete(requestId);
     }
   }
 
   function cancelAllRequest() {
-    abortControllerMap.forEach(abortController => {
-      abortController.abort();
+    cancelTokenSourceMap.forEach(cancelTokenSource => {
+      cancelTokenSource.cancel();
     });
-    abortControllerMap.clear();
+    cancelTokenSourceMap.clear();
   }
 
   return {

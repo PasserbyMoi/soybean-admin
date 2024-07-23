@@ -4,6 +4,7 @@ import type { PluginOption } from 'vite';
 import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import Components from 'unplugin-vue-components/vite';
+import AutoImport from 'unplugin-auto-import/vite';
 import { AntDesignVueResolver, NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
@@ -26,6 +27,21 @@ export function setupUnplugin(viteEnv: Env.ImportMeta) {
       },
       scale: 1,
       defaultClass: 'inline-block'
+    }),
+    // auto import api of lib
+    AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+        'pinia',
+        '@vueuse/core',
+        'vue-i18n',
+        {
+          'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar', 'useModal']
+        }
+      ],
+      include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
+      dts: 'src/typings/auto-imports.d.ts'
     }),
     Components({
       dts: 'src/typings/components.d.ts',

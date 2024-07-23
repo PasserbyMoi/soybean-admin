@@ -13,8 +13,9 @@ declare namespace CommonType {
    *
    * @property value: The option value
    * @property label: The option label
+   * @property code: The option code
    */
-  type Option<K = string> = { value: K; label: string };
+  type Option<K = string | number> = { value: K; label: string; code?: string };
 
   type YesOrNo = 'Y' | 'N';
 

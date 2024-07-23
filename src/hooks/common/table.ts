@@ -1,7 +1,7 @@
 import { computed, effectScope, onScopeDispose, reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import type { PaginationProps } from 'naive-ui';
-import { jsonClone } from '@sa/utils';
+import { cloneDeep } from 'lodash-es';
 import { useBoolean, useHookTable } from '@sa/hooks';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
@@ -40,20 +40,17 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     transformer: res => {
       const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
 
-      // Ensure that the size is greater than 0, If it is less than 0, it will cause paging calculation errors.
-      const pageSize = size <= 0 ? 10 : size;
-
       const recordsWithIndex = records.map((item, index) => {
         return {
           ...item,
-          index: (current - 1) * pageSize + index + 1
+          index: (current - 1) * size + index + 1
         };
       });
 
       return {
         data: recordsWithIndex,
         pageNum: current,
-        pageSize,
+        pageSize: size,
         total
       };
     },
@@ -228,7 +225,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
   function handleEdit(id: T['id']) {
     operateType.value = 'edit';
     const findItem = data.value.find(item => item.id === id) || null;
-    editingData.value = jsonClone(findItem);
+    editingData.value = cloneDeep(findItem);
 
     openDrawer();
   }

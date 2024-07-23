@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { $t } from '@/locales';
 import { useThemeStore } from '@/store/modules/theme';
-import { themePageAnimationModeOptions, themeScrollModeOptions, themeTabModeOptions } from '@/constants/app';
+import {
+  themePageAnimationModeOptions,
+  themeScrollModeOptions,
+  themeTabModeOptions,
+  themeTableSpaceOptions,
+  themeThemeSpaceOptions
+} from '@/constants/app';
 import { translateOptions } from '@/utils/common';
 import SettingItem from '../components/setting-item.vue';
 
@@ -100,6 +105,22 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
       :label="$t('theme.footer.right')"
     >
       <NSwitch v-model:value="themeStore.footer.right" />
+    </SettingItem>
+    <SettingItem v-if="themeStore.space.themeSpace" key="7-5" :label="$t('theme.space.themeTitle')">
+      <NSelect
+        v-model:value="themeStore.space.themeSpace"
+        :options="translateOptions(themeThemeSpaceOptions)"
+        size="small"
+        class="w-120px"
+      />
+    </SettingItem>
+    <SettingItem v-if="themeStore.space.tableSpace" key="7-6" :label="$t('theme.space.tableTitle')">
+      <NSelect
+        v-model:value="themeStore.space.tableSpace"
+        :options="translateOptions(themeTableSpaceOptions)"
+        size="small"
+        class="w-120px"
+      />
     </SettingItem>
   </TransitionGroup>
 </template>
