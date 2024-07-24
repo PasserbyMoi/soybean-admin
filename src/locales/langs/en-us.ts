@@ -156,8 +156,7 @@ const local: App.I18n.Schema = {
       themeSize: {
         small: 'Small',
         medium: 'medium',
-        large: 'Large',
-        tiny: 'Tiny'
+        large: 'Large'
       }
     }
   },
@@ -168,14 +167,6 @@ const local: App.I18n.Schema = {
     500: 'Server Error',
     'iframe-page': 'Iframe',
     home: 'Home',
-    document: 'Document',
-    document_project: 'Project Document',
-    'document_project-link': 'Project Document(External Link)',
-    document_vue: 'Vue Document',
-    document_vite: 'Vite Document',
-    document_unocss: 'UnoCSS Document',
-    document_naive: 'Naive UI Document',
-    document_antd: 'Ant Design Vue Document',
     'user-center': 'User Center',
     about: 'About',
     function: 'System Function',
@@ -361,7 +352,8 @@ const local: App.I18n.Schema = {
       common: {
         status: {
           enable: 'Enable',
-          disable: 'Disable'
+          disable: 'Disable',
+          unknow: 'Unknow'
         }
       },
       role: {

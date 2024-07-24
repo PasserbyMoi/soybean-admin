@@ -17,6 +17,10 @@ declare module "@elegant-router/types" {
   export type RouteMap = {
     "root": "/";
     "not-found": "/:pathMatch(.*)*";
+    "exception": "/exception";
+    "exception_403": "/exception/403";
+    "exception_404": "/exception/404";
+    "exception_500": "/exception/500";
     "403": "/403";
     "404": "/404";
     "500": "/500";
@@ -90,6 +94,10 @@ declare module "@elegant-router/types" {
     RouteKey,
     | "root"
     | "not-found"
+    | "exception"
+    | "exception_403"
+    | "exception_404"
+    | "exception_500"
   >;
 
   /**
@@ -123,6 +131,7 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
+    | "exception"
   >;
 
   /**
@@ -181,6 +190,9 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
+    | "exception_403"
+    | "exception_404"
+    | "exception_500"
   >;
 
   /**

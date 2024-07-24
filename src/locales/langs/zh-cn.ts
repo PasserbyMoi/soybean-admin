@@ -156,8 +156,7 @@ const local: App.I18n.Schema = {
       themeSize: {
         small: '紧凑',
         medium: '普通',
-        large: '宽松',
-        tiny: '极小'
+        large: '宽松'
       }
     }
   },
@@ -168,14 +167,6 @@ const local: App.I18n.Schema = {
     500: '服务器错误',
     'iframe-page': '外链页面',
     home: '首页',
-    document: '文档',
-    document_project: '项目文档',
-    'document_project-link': '项目文档(外链)',
-    document_vue: 'Vue文档',
-    document_vite: 'Vite文档',
-    document_unocss: 'UnoCSS文档',
-    document_naive: 'Naive UI文档',
-    document_antd: 'Ant Design Vue文档',
     'user-center': '个人中心',
     about: '关于',
     function: '系统功能',

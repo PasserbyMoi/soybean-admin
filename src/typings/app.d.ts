@@ -758,9 +758,15 @@ declare namespace App {
         expand: string;
         pin: string;
         unpin: string;
+        notifications: string;
       };
       datatable: {
         itemCount: string;
+      };
+      notifications: {
+        notice: string;
+        message: string;
+        todo: string;
       };
     };
 

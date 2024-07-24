@@ -44,7 +44,7 @@ declare namespace UnionKey {
   type ThemeTabMode = import('@sa/materials').PageTabMode;
 
   /** Theme Space Size */
-  type ThemeSpaceSize = import('naive-ui/es/tag/src/Tag').TagProps['size'];
+  type ThemeSpaceSize = 'small' | 'medium' | 'large';
 
   /** Table Space Size */
   type TableSpaceSize = 'small' | 'medium' | 'large';
