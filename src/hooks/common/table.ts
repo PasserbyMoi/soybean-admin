@@ -226,7 +226,6 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     operateType.value = 'edit';
     const findItem = data.value.find(item => item.id === id) || null;
     editingData.value = cloneDeep(findItem);
-
     openDrawer();
   }
 

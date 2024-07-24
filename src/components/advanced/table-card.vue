@@ -1,9 +1,11 @@
 <script setup lang="tsx">
-import type { DataTableInst } from 'naive-ui';
-import { NButton, NPopconfirm } from 'naive-ui';
-import { $t } from '@/locales';
-import { useAppStore } from '@/store/modules/app';
-import { useTable, useTableOperate } from '@/hooks/common/table';
+import type {DataTableInst} from 'naive-ui';
+import {NButton, NPopconfirm} from 'naive-ui';
+import {utils, writeFile} from 'xlsx';
+import {$t} from '@/locales';
+import {useAppStore} from '@/store/modules/app';
+import {useTable, useTableOperate} from '@/hooks/common/table';
+import {enableStatusRecord, userGenderRecord} from '@/constants/business';
 
 const appStore = useAppStore();
 
@@ -18,12 +20,15 @@ interface Props {
   apiParams: Api.SystemManage.CommonSearchParams;
   columns: NaiveUI.TableColumn<any>[];
 }
+
 const props = defineProps<Props>();
 
 interface Emits {
   (e: 'delete', id: string | number): void;
+
   (e: 'batchDelete', ids: string[] | number[]): void;
 }
+
 const emit = defineEmits<Emits>();
 
 const tableRef = ref<DataTableInst | null>(null);
@@ -43,6 +48,17 @@ const {
   showTotal: props.showTotal,
   apiParams: props.apiParams,
   columns: () => [
+    {
+      type: 'selection',
+      align: 'center',
+      width: 48
+    },
+    {
+      key: 'index',
+      title: $t('common.index'),
+      align: 'center',
+      width: 64
+    },
     ...props.columns,
     {
       key: 'operate',
@@ -79,14 +95,12 @@ const {
   handleEdit,
   checkedRowKeys,
   onBatchDeleted,
-  onDeleted,
-  onExported
-  // closeDrawer
+  onDeleted
 } = useTableOperate(data, getData);
 
 async function handleBatchDelete() {
   emit('batchDelete', checkedRowKeys.value);
-  onBatchDeleted();
+  await onBatchDeleted();
 }
 
 function handleDelete(id: string | number) {
@@ -95,13 +109,63 @@ function handleDelete(id: string | number) {
 }
 
 function handleExport() {
-  // emit('export');
-  tableRef.value?.downloadCsv({ fileName: props.title, keepOriginalData: false });
-  onExported();
+  // tableRef.value?.downloadCsv({ fileName: props.title, keepOriginalData: false });
+  exportExcel();
 }
 
 function edit(id: number) {
   handleEdit(id);
+}
+
+function exportExcel() {
+  const exportColumns = columns.value.slice(2);
+  const excelList = data.value.map(item => exportColumns.map(col => getTableValue(col, item)));
+  const titleList = exportColumns.map(col => (isTableColumnHasTitle(col) && col.title) || null);
+  excelList.unshift(titleList);
+  const workBook = utils.book_new();
+  const workSheet = utils.aoa_to_sheet(excelList);
+  workSheet['!cols'] = exportColumns.map(item => ({
+    width: Math.round(Number(item.width) / 10 || 20)
+  }));
+  utils.book_append_sheet(workBook, workSheet, props.title);
+  writeFile(workBook, `${props.title}.xlsx`);
+}
+
+/**
+ * convert enum data, value to label
+ * @param col columns
+ * @param item Item
+ */
+function getTableValue(
+  col: NaiveUI.TableColumn<NaiveUI.TableDataWithIndex<any>>,
+  item: NaiveUI.TableDataWithIndex<any>
+) {
+  if (!isTableColumnHasKey(col)) {
+    return null;
+  }
+  const {key} = col;
+  console.log(`1-------------${JSON.stringify(col)}`);
+  console.log(`2-------------${JSON.stringify(item)}`);
+  if (key === 'operate') {
+    return null;
+  } else if (key === 'userRoles') {
+    return item.userRoles.map(role => role).join(',');
+  } else if (key === 'status') {
+    return (item.status && $t(enableStatusRecord[item.status])) || null;
+  } else if (key === 'userGender') {
+    return (item.userGender && $t(userGenderRecord[item.userGender])) || null;
+  }
+  return item[key];
+}
+
+function isTableColumnHasKey<T>(column: NaiveUI.TableColumn<T>): column is NaiveUI.TableColumnWithKey<T> {
+  return Boolean((column as NaiveUI.TableColumnWithKey<T>).key);
+}
+
+function isTableColumnHasTitle<T>(column: NaiveUI.TableColumn<T>): column is NaiveUI.TableColumnWithKey<T> & {
+  title: string;
+} {
+  return Boolean((column as NaiveUI.TableColumnWithKey<T>).title);
 }
 </script>
 

@@ -1,7 +1,7 @@
 <script setup>
-import Step1 from './module/step1';
-import Step2 from './module/step2';
-import Step3 from './module/step3';
+import Step1 from './modules/Step1.vue';
+import Step2 from './modules/Step2.vue';
+import Step3 from './modules/Step3.vue';
 
 const currentTab = ref(1);
 const currentStatus = ref('process');

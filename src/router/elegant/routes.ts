@@ -292,15 +292,6 @@ export const generatedRoutes: GeneratedRoute[] = [
           roles: ['R_ADMIN'],
           activeMenu: 'manage_user'
         }
-      },
-      {
-        name: 'manage_user1',
-        path: '/manage/user1',
-        component: 'view.manage_user1',
-        meta: {
-          title: 'manage_user1',
-          i18nKey: 'route.manage_user1'
-        }
       }
     ]
   },
@@ -488,6 +479,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'plugin_form',
+        path: '/plugin/form',
+        meta: {
+          title: 'plugin_form',
+          i18nKey: 'route.plugin_form'
+        },
+        children: [
+          {
+            name: 'plugin_form_stepform',
+            path: '/plugin/form/stepform',
+            component: 'view.plugin_form_stepform',
+            meta: {
+              title: 'plugin_form_stepform',
+              i18nKey: 'route.plugin_form_stepform'
+            }
+          }
+        ]
+      },
+      {
         name: 'plugin_icon',
         path: '/plugin/icon',
         component: 'view.plugin_icon',
@@ -528,15 +538,6 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
-        name: 'plugin_stepform',
-        path: '/plugin/stepform',
-        component: 'view.plugin_stepform',
-        meta: {
-          title: 'plugin_stepform',
-          i18nKey: 'route.plugin_stepform'
-        }
-      },
-      {
         name: 'plugin_swiper',
         path: '/plugin/swiper',
         component: 'view.plugin_swiper',
@@ -545,6 +546,25 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.plugin_swiper',
           icon: 'simple-icons:swiper'
         }
+      },
+      {
+        name: 'plugin_table',
+        path: '/plugin/table',
+        meta: {
+          title: 'plugin_table',
+          i18nKey: 'route.plugin_table'
+        },
+        children: [
+          {
+            name: 'plugin_table_edittable',
+            path: '/plugin/table/edittable',
+            component: 'view.plugin_table_edittable',
+            meta: {
+              title: 'plugin_table_edittable',
+              i18nKey: 'route.plugin_table_edittable'
+            }
+          }
+        ]
       },
       {
         name: 'plugin_video',

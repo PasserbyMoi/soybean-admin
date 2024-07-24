@@ -528,6 +528,7 @@ declare namespace App {
             status: {
               enable: string;
               disable: string;
+              unknow: string;
             };
           };
           role: {
