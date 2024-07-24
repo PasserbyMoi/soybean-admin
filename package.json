@@ -61,6 +61,7 @@
     "dayjs": "1.11.12",
     "dompurify": "3.1.6",
     "echarts": "5.5.1",
+    "klona": "2.0.6",
     "jsbarcode": "3.11.6",
     "lodash-es": "4.17.21",
     "md-editor-v3": "^4.17.4",
