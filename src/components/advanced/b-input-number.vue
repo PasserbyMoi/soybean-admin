@@ -47,10 +47,10 @@ const handleChange = (isChange: boolean): void => {
       @keyup.enter="handleChange(true)"
     />
     <NButton text type="success" class="font-size-20px" @click="handleChange(true)">
-      <icon-ic-round-check/>
+      <icon-ic-round-check />
     </NButton>
     <NButton text class="font-size-20px" @click="handleChange(false)">
-      <icon-ic-round-clear/>
+      <icon-ic-round-clear />
     </NButton>
   </div>
   <NP v-if="!isEdit" @dblclick="isEdit = true">

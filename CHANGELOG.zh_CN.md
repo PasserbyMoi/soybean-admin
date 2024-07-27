@@ -1,7 +1,10 @@
 # 更新日志
-https://quilljs.com/docs/installation
-https://imzbf.github.io/md-editor-v3/zh-CN/docs
-https://github.com/imzbf/md-editor-v3
+查询字符串拼接： https://quilljs.com/docs/installation
+富文本：https://imzbf.github.io/md-editor-v3/zh-CN/docs
+富文本：https://github.com/imzbf/md-editor-v3
+格式化：https://vocajs.pages.dev/
+数字格式化：http://numeraljs.com/
+pinia持久化插件：https://prazdevs.github.io/pinia-plugin-persistedstate/zh/guide/
 
 
 ## [v1.2.5](https://github.com/soybeanjs/soybean-admin/compare/v1.2.4...v1.2.5) (2024-06-15)

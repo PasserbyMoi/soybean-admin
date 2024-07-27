@@ -1,12 +1,12 @@
 import { ref, toValue } from 'vue';
 import type { ComputedRef, Ref } from 'vue';
 import type { FormInst } from 'naive-ui';
-import { REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
+import { REG_CAPTCHA_FOUR, REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
 
 export function useFormRules() {
   const patternRules = {
-    userName: {
+    username: {
       pattern: REG_USER_NAME,
       message: $t('form.userName.invalid'),
       trigger: 'change'
@@ -21,6 +21,11 @@ export function useFormRules() {
       message: $t('form.pwd.invalid'),
       trigger: 'change'
     },
+    captcha: {
+      pattern: REG_CAPTCHA_FOUR,
+      message: $t('form.code.invalid'),
+      trigger: 'change'
+    },
     code: {
       pattern: REG_CODE_SIX,
       message: $t('form.code.invalid'),
@@ -28,17 +33,20 @@ export function useFormRules() {
     },
     email: {
       pattern: REG_EMAIL,
-      message: $t('form.email.invalid'),
+      message: $t('form.required'),
       trigger: 'change'
-    }
+    },
+    uuid: {}
   } satisfies Record<string, App.Global.FormRule>;
 
   const formRules = {
-    userName: [createRequiredRule($t('form.userName.required')), patternRules.userName],
+    username: [createRequiredRule($t('form.userName.required')), patternRules.username],
     phone: [createRequiredRule($t('form.phone.required')), patternRules.phone],
     pwd: [createRequiredRule($t('form.pwd.required')), patternRules.pwd],
+    captcha: [createRequiredRule($t('form.code.required')), patternRules.captcha],
     code: [createRequiredRule($t('form.code.required')), patternRules.code],
-    email: [createRequiredRule($t('form.email.required')), patternRules.email]
+    email: [createRequiredRule($t('form.email.required')), patternRules.email],
+    uuid: [createRequiredRule($t('form.required'))]
   } satisfies Record<string, App.Global.FormRule[]>;
 
   /** the default required rule */

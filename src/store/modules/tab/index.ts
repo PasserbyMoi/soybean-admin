@@ -55,6 +55,15 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
+   * Set active tab id
+   *
+   * @param id Tab id
+   */
+  function getActiveTab(): App.Global.Tab {
+    return tabs.value.filter(o => o.id === activeTabId.value)[0];
+  }
+
+  /**
    * Init tab store
    *
    * @param currentRoute Current route
@@ -276,6 +285,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     /** All tabs */
     tabs: allTabs,
     activeTabId,
+    getActiveTab,
     initHomeTab,
     initTabStore,
     addTab,

@@ -18,7 +18,7 @@ function createColorPaletteVars() {
 const colorPaletteVars = createColorPaletteVars();
 
 /** Theme vars */
-export const themeVars: App.Theme.ThemeToken = {
+export const themeVars: App.Theme.ThemeSettingToken = {
   colors: {
     ...colorPaletteVars,
     nprogress: 'rgb(var(--nprogress-color))',

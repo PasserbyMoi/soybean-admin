@@ -190,6 +190,9 @@ const routeMap: RouteMap = {
   "manage_role": "/manage/role",
   "manage_user": "/manage/user",
   "manage_user-detail": "/manage/user-detail/:id",
+  "monitor": "/monitor",
+  "monitor_log": "/monitor/log",
+  "monitor_online": "/monitor/online",
   "multi-menu": "/multi-menu",
   "multi-menu_first": "/multi-menu/first",
   "multi-menu_first_child": "/multi-menu/first/child",
@@ -218,7 +221,19 @@ const routeMap: RouteMap = {
   "plugin_table": "/plugin/table",
   "plugin_table_edittable": "/plugin/table/edittable",
   "plugin_video": "/plugin/video",
-  "user-center": "/user-center"
+  "system": "/system",
+  "system_config": "/system/config",
+  "system_dept": "/system/dept",
+  "system_dict": "/system/dict",
+  "system_dict_item": "/system/dict/item",
+  "system_file": "/system/file",
+  "system_menu": "/system/menu",
+  "system_notice": "/system/notice",
+  "system_role": "/system/role",
+  "system_storage": "/system/storage",
+  "system_user": "/system/user",
+  "tool": "/tool",
+  "tool_generator": "/tool/generator"
 };
 
 /**

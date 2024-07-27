@@ -8,6 +8,10 @@ declare namespace CommonType {
     callback: () => void;
   }
 
+  type YesOrNo = 'Y' | 'N';
+
+  type YesOrNoNum = 1 | 0;
+
   /**
    * The option type
    *
@@ -15,9 +19,16 @@ declare namespace CommonType {
    * @property label: The option label
    * @property code: The option code
    */
-  type Option<K = string | number> = { value: K; label: string; code?: string };
+  type Option<V = string | number> = { value: V; label: string };
 
-  type YesOrNo = 'Y' | 'N';
+  /** 键值对类型 */
+  type EOption<V = any, L = string | number> = { label: L; value: V; code?: string; extend?: string };
+
+  /** 字典类型 */
+  type DictState = { code: string; items: Array<Option> };
+
+  /** 字典类型 */
+  type EDictState = { code: string; items: Array<EOption> };
 
   /** add null to all properties */
   type RecordNullable<T> = {

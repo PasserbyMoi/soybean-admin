@@ -5,10 +5,25 @@
  */
 declare namespace Api {
   namespace Common {
+    /** common search params */
+    export type SearchParams = Pick<Common.PaginatingCommonParams, 'page' | 'size'>;
+
+    export type EPaginatingSearchParams<T = any> = Pick<Common.PaginatingCommonParams, 'page' | 'size'> & T;
+
+    /** common page search params */
+    export type PaginatingSearchParams = Pick<Common.PaginatingCommonParams, 'page' | 'size'>;
+
+    /** common delete params */
+    export type DeleteParams = { id: number | string };
+
+    /** common batch delete params */
+    export type BatchDeleteParams = { ids: number[] | string[] };
+
     /** common params of paginating */
     interface PaginatingCommonParams {
       /** current page number */
       current: number;
+      page: number;
       /** page size */
       size: number;
       /** total count */
@@ -18,30 +33,37 @@ declare namespace Api {
     /** common params of paginating query list data */
     interface PaginatingQueryRecord<T = any> extends PaginatingCommonParams {
       records: T[];
+      /** 适配 Continew */
+      list: T[];
     }
 
     /**
      * enable status
      *
+     * - "0": disabled
      * - "1": enabled
-     * - "2": disabled
+     * - "2": unknow
      */
     type EnableStatus = '0' | '1' | '2';
+    type DeleteStatus = '0' | '1';
 
     /** common record */
     type CommonRecord<T = any> = {
       /** record id */
-      id: number;
+      id?: number | string;
       /** record creator */
       createBy?: string;
+      createUser?: string;
       /** record create time */
       createTime?: string;
       /** record updater */
       updateBy?: string;
+      updateUser?: string;
       /** record update time */
       updateTime?: string;
       /** record status */
-      status: EnableStatus | null;
+      status?: EnableStatus | null;
+      isDelete?: DeleteStatus | null;
     } & T;
   }
 
@@ -57,11 +79,11 @@ declare namespace Api {
     }
 
     interface UserInfo {
-      id: string;
-      avatar: string;
-      userId: string;
+      id?: string;
+      avatar?: string;
+      userId?: string;
       userName: string;
-      nickname: string;
+      nickname?: string;
       roles: string[];
       buttons: string[];
     }
@@ -91,14 +113,6 @@ declare namespace Api {
    * backend api module: "systemManage"
    */
   namespace SystemManage {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
-
-    /** common delete params */
-    type CommonDeleteParams = { id: number };
-
-    /** common batch delete params */
-    type CommonBatchDeleteParams = { ids: string[] };
-
     /** role */
     type Role = Common.CommonRecord<{
       /** role name */
@@ -119,7 +133,7 @@ declare namespace Api {
 
     /** role search params */
     type RoleSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & CommonSearchParams
+      Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & Api.Common.PaginatingSearchParams
     >;
 
     /** role list */
@@ -173,7 +187,7 @@ declare namespace Api {
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
-        CommonSearchParams
+        Api.Common.PaginatingSearchParams
     >;
 
     /** user list */
@@ -301,7 +315,8 @@ declare namespace Api {
     }>;
 
     type MessageSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Message, 'title' | 'type' | 'tagTitle' | 'tagType' | 'isRead' | 'date'> & CommonSearchParams
+      Pick<Api.SystemManage.Message, 'title' | 'type' | 'tagTitle' | 'tagType' | 'isRead' | 'date'> &
+        Api.Common.PaginatingSearchParams
     >;
 
     type MessageList = Common.PaginatingQueryRecord<Message>;
@@ -317,7 +332,7 @@ declare namespace Api {
     }>;
 
     type DictSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Dict, 'code' | 'label' | 'isRoot'> & CommonSearchParams
+      Pick<Api.SystemManage.Dict, 'code' | 'label' | 'isRoot'> & Api.Common.PaginatingSearchParams
     >;
 
     type DictList = Common.PaginatingQueryRecord<Dict>;
@@ -353,7 +368,7 @@ declare namespace Api {
 
     /** api search params */
     type ApiSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Api, 'path' | 'method' | 'summary' | 'tags' | 'status'> & CommonSearchParams
+      Pick<Api.SystemManage.Api, 'path' | 'method' | 'summary' | 'tags' | 'status'> & Api.Common.PaginatingSearchParams
     >;
 
     /** api list */
@@ -454,7 +469,7 @@ declare namespace Api {
         Api.SystemManage.Log,
         'logType' | 'logUser' | 'logDetailType' | 'requestUrl' | 'createTime' | 'responseCode'
       > &
-        CommonSearchParams & { timeRange: string }
+        Api.Common.PaginatingSearchParams & { timeRange: string }
     >;
 
     /** log list */

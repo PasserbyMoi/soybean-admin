@@ -1,3 +1,4 @@
+import { $t } from '@/locales';
 import { transformRecordToOption } from '@/utils/common';
 
 export const enableStatusRecord: Record<Api.Common.EnableStatus, App.I18n.I18nKey> = {
@@ -96,3 +97,16 @@ export const apiMethodRecord: Record<Api.SystemManage.methods, App.I18n.I18nKey>
 };
 
 export const apiMethodOptions = transformRecordToOption(apiMethodRecord);
+
+export const tableSelectionColumns: NaiveUI.TableColumn<any> = {
+  type: 'selection',
+  align: 'center',
+  width: 48
+};
+
+export const tableIndexColumns: NaiveUI.TableColumn<any> = {
+  key: 'index',
+  title: $t('common.index'),
+  align: 'center',
+  width: 64
+};

@@ -49,6 +49,9 @@ declare namespace UnionKey {
   /** Table Space Size */
   type TableSpaceSize = 'small' | 'medium' | 'large';
 
+  /** Table button type */
+  type TableButtonType = 'view' | 'add' | 'edit' | 'remove';
+
   /** Unocss animate key */
   type UnoCssAnimateKey =
     | 'pulse'

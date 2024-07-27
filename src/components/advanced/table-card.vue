@@ -1,11 +1,11 @@
 <script setup lang="tsx">
-import type {DataTableInst} from 'naive-ui';
-import {NButton, NPopconfirm} from 'naive-ui';
-import {utils, writeFile} from 'xlsx';
-import {$t} from '@/locales';
-import {useAppStore} from '@/store/modules/app';
-import {useTable, useTableOperate} from '@/hooks/common/table';
-import {enableStatusRecord, userGenderRecord} from '@/constants/business';
+import type { DataTableInst } from 'naive-ui';
+import { NButton, NPopconfirm } from 'naive-ui';
+import { utils, writeFile } from 'xlsx';
+import { $t } from '@/locales';
+import { useAppStore } from '@/store/modules/app';
+import { useContiNewTable, useTableOperate } from '@/hooks/common/table';
+import { enableStatusRecord, userGenderRecord } from '@/constants/business';
 
 const appStore = useAppStore();
 
@@ -17,7 +17,8 @@ interface Props {
   title?: string;
   showTotal?: boolean;
   apiFn: NaiveUI.TableApiFn;
-  apiParams: Api.SystemManage.CommonSearchParams;
+  // apiParams: Api.SystemManage.CommonSearchParams;
+  apiParams: any;
   columns: NaiveUI.TableColumn<any>[];
 }
 
@@ -25,7 +26,6 @@ const props = defineProps<Props>();
 
 interface Emits {
   (e: 'delete', id: string | number): void;
-
   (e: 'batchDelete', ids: string[] | number[]): void;
 }
 
@@ -43,7 +43,7 @@ const {
   mobilePagination,
   searchParams,
   resetSearchParams
-} = useTable({
+} = useContiNewTable({
   apiFn: props.apiFn,
   showTotal: props.showTotal,
   apiParams: props.apiParams,
@@ -66,6 +66,7 @@ const {
       align: 'center',
       width: 180,
       resizable: true,
+      fixed: 'right',
       render: row => (
         <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
@@ -87,16 +88,8 @@ const {
   ]
 });
 
-const {
-  drawerVisible,
-  operateType,
-  editingData,
-  handleAdd,
-  handleEdit,
-  checkedRowKeys,
-  onBatchDeleted,
-  onDeleted
-} = useTableOperate(data, getData);
+const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedRowKeys, onBatchDeleted, onDeleted } =
+  useTableOperate(data, getData);
 
 async function handleBatchDelete() {
   emit('batchDelete', checkedRowKeys.value);
@@ -109,15 +102,6 @@ function handleDelete(id: string | number) {
 }
 
 function handleExport() {
-  // tableRef.value?.downloadCsv({ fileName: props.title, keepOriginalData: false });
-  exportExcel();
-}
-
-function edit(id: number) {
-  handleEdit(id);
-}
-
-function exportExcel() {
   const exportColumns = columns.value.slice(2);
   const excelList = data.value.map(item => exportColumns.map(col => getTableValue(col, item)));
   const titleList = exportColumns.map(col => (isTableColumnHasTitle(col) && col.title) || null);
@@ -131,8 +115,13 @@ function exportExcel() {
   writeFile(workBook, `${props.title}.xlsx`);
 }
 
+function edit(id: number) {
+  handleEdit(id);
+}
+
 /**
  * convert enum data, value to label
+ *
  * @param col columns
  * @param item Item
  */
@@ -143,9 +132,7 @@ function getTableValue(
   if (!isTableColumnHasKey(col)) {
     return null;
   }
-  const {key} = col;
-  console.log(`1-------------${JSON.stringify(col)}`);
-  console.log(`2-------------${JSON.stringify(item)}`);
+  const { key } = col;
   if (key === 'operate') {
     return null;
   } else if (key === 'userRoles') {
@@ -212,4 +199,3 @@ function isTableColumnHasTitle<T>(column: NaiveUI.TableColumn<T>): column is Nai
 </template>
 
 <style scoped></style>
-<!-- v-model:visible="drawerVisible" :operate-type="operateType" :row-data="editingData" @submitted="getDataByPage" -->

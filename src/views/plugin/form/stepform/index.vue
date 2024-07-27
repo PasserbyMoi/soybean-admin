@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Step1 from './modules/Step1.vue';
 import Step2 from './modules/Step2.vue';
 import Step3 from './modules/Step3.vue';

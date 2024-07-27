@@ -9,34 +9,31 @@ export const generatedRoutes: GeneratedRoute[] = [
   {
     name: '403',
     path: '/403',
-    component: 'layout.blank$view.403',
+    component: 'layout.base$view.403',
     meta: {
       title: '403',
       i18nKey: 'route.403',
-      constant: true,
-      hideInMenu: true
+      constant: true
     }
   },
   {
     name: '404',
     path: '/404',
-    component: 'layout.blank$view.404',
+    component: 'layout.base$view.404',
     meta: {
       title: '404',
       i18nKey: 'route.404',
-      constant: true,
-      hideInMenu: true
+      constant: true
     }
   },
   {
     name: '500',
     path: '/500',
-    component: 'layout.blank$view.500',
+    component: 'layout.base$view.500',
     meta: {
       title: '500',
       i18nKey: 'route.500',
-      constant: true,
-      hideInMenu: true
+      constant: true
     }
   },
   {
@@ -174,9 +171,7 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.home',
     meta: {
       title: 'home',
-      i18nKey: 'route.home',
-      icon: 'mdi:monitor-dashboard',
-      order: 1
+      i18nKey: 'route.home'
     }
   },
   {
@@ -186,22 +181,18 @@ export const generatedRoutes: GeneratedRoute[] = [
     props: true,
     meta: {
       title: 'iframe-page',
-      i18nKey: 'route.iframe-page',
-      constant: true,
-      hideInMenu: true,
-      keepAlive: true
+      i18nKey: 'route.iframe-page'
     }
   },
   {
     name: 'login',
     path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
-    component: 'layout.blank$view.login',
+    component: 'layout.base$view.login',
     props: true,
     meta: {
       title: 'login',
       i18nKey: 'route.login',
-      constant: true,
-      hideInMenu: true
+      constant: true
     }
   },
   {
@@ -291,6 +282,35 @@ export const generatedRoutes: GeneratedRoute[] = [
           hideInMenu: true,
           roles: ['R_ADMIN'],
           activeMenu: 'manage_user'
+        }
+      }
+    ]
+  },
+  {
+    name: 'monitor',
+    path: '/monitor',
+    component: 'layout.base',
+    meta: {
+      title: 'monitor',
+      i18nKey: 'route.monitor'
+    },
+    children: [
+      {
+        name: 'monitor_log',
+        path: '/monitor/log',
+        component: 'view.monitor_log',
+        meta: {
+          title: 'monitor_log',
+          i18nKey: 'route.monitor_log'
+        }
+      },
+      {
+        name: 'monitor_online',
+        path: '/monitor/online',
+        component: 'view.monitor_online',
+        meta: {
+          title: 'monitor_online',
+          i18nKey: 'route.monitor_online'
         }
       }
     ]
@@ -579,13 +599,125 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
-    name: 'user-center',
-    path: '/user-center',
-    component: 'layout.base$view.user-center',
+    name: 'system',
+    path: '/system',
+    component: 'layout.base',
     meta: {
-      title: 'user-center',
-      i18nKey: 'route.user-center',
-      hideInMenu: true
-    }
+      title: 'system',
+      i18nKey: 'route.system'
+    },
+    children: [
+      {
+        name: 'system_config',
+        path: '/system/config',
+        component: 'view.system_config',
+        meta: {
+          title: 'system_config',
+          i18nKey: 'route.system_config'
+        }
+      },
+      {
+        name: 'system_dept',
+        path: '/system/dept',
+        component: 'view.system_dept',
+        meta: {
+          title: 'system_dept',
+          i18nKey: 'route.system_dept'
+        }
+      },
+      {
+        name: 'system_dict',
+        path: '/system/dict',
+        meta: {
+          title: 'system_dict',
+          i18nKey: 'route.system_dict'
+        },
+        children: [
+          {
+            name: 'system_dict_item',
+            path: '/system/dict/item',
+            component: 'view.system_dict_item',
+            meta: {
+              title: 'system_dict_item',
+              i18nKey: 'route.system_dict_item'
+            }
+          }
+        ]
+      },
+      {
+        name: 'system_file',
+        path: '/system/file',
+        component: 'view.system_file',
+        meta: {
+          title: 'system_file',
+          i18nKey: 'route.system_file'
+        }
+      },
+      {
+        name: 'system_menu',
+        path: '/system/menu',
+        component: 'view.system_menu',
+        meta: {
+          title: 'system_menu',
+          i18nKey: 'route.system_menu'
+        }
+      },
+      {
+        name: 'system_notice',
+        path: '/system/notice',
+        component: 'view.system_notice',
+        meta: {
+          title: 'system_notice',
+          i18nKey: 'route.system_notice'
+        }
+      },
+      {
+        name: 'system_role',
+        path: '/system/role',
+        component: 'view.system_role',
+        meta: {
+          title: 'system_role',
+          i18nKey: 'route.system_role'
+        }
+      },
+      {
+        name: 'system_storage',
+        path: '/system/storage',
+        component: 'view.system_storage',
+        meta: {
+          title: 'system_storage',
+          i18nKey: 'route.system_storage'
+        }
+      },
+      {
+        name: 'system_user',
+        path: '/system/user',
+        component: 'view.system_user',
+        meta: {
+          title: 'system_user',
+          i18nKey: 'route.system_user'
+        }
+      }
+    ]
+  },
+  {
+    name: 'tool',
+    path: '/tool',
+    component: 'layout.base',
+    meta: {
+      title: 'tool',
+      i18nKey: 'route.tool'
+    },
+    children: [
+      {
+        name: 'tool_generator',
+        path: '/tool/generator',
+        component: 'view.tool_generator',
+        meta: {
+          title: 'tool_generator',
+          i18nKey: 'route.tool_generator'
+        }
+      }
+    ]
   }
 ];

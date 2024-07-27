@@ -251,7 +251,7 @@ export function getNaiveTheme(colors: App.Theme.ThemeColor, recommended = false)
       colorLoading
     },
     Tag: {
-      borderRadius: '6px'
+      borderRadius: '2px'
     }
   };
 

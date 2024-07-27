@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { DashboardNoticeResp } from '@/apis/common/type';
+
 interface Props {
-  list?: Api.SystemManage.Message[];
+  list?: DashboardNoticeResp[];
 }
 const props = defineProps<Props>();
 
@@ -11,21 +13,23 @@ interface Emits {
 </script>
 
 <template>
-  <NScrollbar style="height: 400px">
+  <NScrollbar class="h-400px">
     <NList hoverable clickable>
       <NListItem v-for="item in props.list" :key="item.id" @click="emit('read', item.id)">
-        <NThing content-indented :class="{ 'opacity-30': item.isRead }">
+        <NThing content-indented :class="{ 'opacity-30': item.id > 10 }">
           <template #header>
             <NEllipsis :line-clamp="1">
               {{ item.title }}
             </NEllipsis>
           </template>
-          <template #avatar>
-            <NovaIcon :icon="item.icon" :size="30" class="c-primary" />
-          </template>
-          <template v-if="item.tagTitle" #header-extra>
-            <NTag :bordered="false" :type="item.tagType" size="small">
-              {{ item.tagTitle }}
+          <!--
+ <template v-if="item.type" #header-extra>
+            <NTag
+              :bordered="false"
+              :type="{{ item.type === 1 'primary' : item.type === 2 ? 'waring' : '' }}"
+              size="small"
+            >
+              {{ item.type }}
             </NTag>
           </template>
           <template v-if="item.description" #description>
@@ -36,6 +40,7 @@ interface Emits {
           <template #footer>
             {{ item.date }}
           </template>
+-->
         </NThing>
       </NListItem>
     </NList>

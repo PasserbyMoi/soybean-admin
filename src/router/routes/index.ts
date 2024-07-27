@@ -1,4 +1,4 @@
-import type { CustomRoute, ElegantConstRoute, ElegantRoute } from '@elegant-router/types';
+import type { CustomRoute, ElegantConstRoute, ElegantRoute, GeneratedRoute } from '@elegant-router/types';
 import { generatedRoutes } from '../elegant/routes';
 import { layouts, views } from '../elegant/imports';
 import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
@@ -54,13 +54,113 @@ const customRoutes: CustomRoute[] = [
   }
 ];
 
+// @chenbeiyu: 通用 Route。抽取公共部分，静态路由和动态路由同时使用
+const commonRoutes: GeneratedRoute[] = [
+  {
+    name: '403',
+    path: '/403',
+    component: 'layout.blank$view.403',
+    meta: {
+      title: '403',
+      i18nKey: 'route.403',
+      constant: true,
+      hideInMenu: true
+    }
+  },
+  {
+    name: '404',
+    path: '/404',
+    component: 'layout.blank$view.404',
+    meta: {
+      title: '404',
+      i18nKey: 'route.404',
+      constant: true,
+      hideInMenu: true
+    }
+  },
+  {
+    name: '500',
+    path: '/500',
+    component: 'layout.blank$view.500',
+    meta: {
+      title: '500',
+      i18nKey: 'route.500',
+      constant: true,
+      hideInMenu: true
+    }
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: 'layout.base$view.home',
+    meta: {
+      title: 'home',
+      i18nKey: 'route.home',
+      icon: 'mdi:monitor-dashboard',
+      order: 1
+    }
+  },
+  {
+    name: 'iframe-page',
+    path: '/iframe-page/:url',
+    component: 'layout.base$view.iframe-page',
+    props: true,
+    meta: {
+      title: 'iframe-page',
+      i18nKey: 'route.iframe-page',
+      constant: true,
+      hideInMenu: true,
+      keepAlive: true
+    }
+  },
+  {
+    name: 'login',
+    path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
+    component: 'layout.blank$view.login',
+    props: true,
+    meta: {
+      title: 'login',
+      i18nKey: 'route.login',
+      constant: true,
+      hideInMenu: true
+    }
+  }
+];
+
 /** create routes when the auth route mode is static */
 export function createStaticRoutes() {
   const constantRoutes: ElegantRoute[] = [];
 
   const authRoutes: ElegantRoute[] = [];
 
-  [...customRoutes, ...generatedRoutes].forEach(item => {
+  [...customRoutes, ...generatedRoutes, ...commonRoutes].forEach(item => {
+    if (item.meta?.constant) {
+      constantRoutes.push(item);
+    } else {
+      authRoutes.push(item);
+    }
+  });
+
+  return {
+    constantRoutes,
+    authRoutes
+  };
+}
+
+/** create routes when the auth route mode is dynamic */
+export function createDynamicRoutes(
+  fetchedRoutes: ElegantRoute[] | ElegantConstRoute[],
+  includeGenerated: boolean = false
+) {
+  const constantRoutes: ElegantConstRoute[] = [];
+
+  const authRoutes: ElegantConstRoute[] = [];
+
+  const allRoutes: ElegantConstRoute[] = includeGenerated
+    ? [...customRoutes, ...generatedRoutes, ...commonRoutes, ...fetchedRoutes]
+    : [...commonRoutes, ...fetchedRoutes];
+
+  allRoutes.forEach(item => {
     if (item.meta?.constant) {
       constantRoutes.push(item);
     } else {

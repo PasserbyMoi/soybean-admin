@@ -46,6 +46,8 @@ const local: App.I18n.Schema = {
     export: '导出',
     exportSuccess: '导出成功',
     confirmExport: '确认导出吗？',
+    dataList: '数据列表',
+    list: '列表',
     userCenter: '个人中心',
     yesOrNo: {
       yes: '是',
@@ -227,6 +229,7 @@ const local: App.I18n.Schema = {
         userNamePlaceholder: '请输入用户名',
         phonePlaceholder: '请输入手机号',
         codePlaceholder: '请输入验证码',
+        codeExpired: '已过期，请刷新',
         passwordPlaceholder: '请输入密码',
         confirmPasswordPlaceholder: '请再次输入密码',
         codeLogin: '验证码登录',

@@ -46,6 +46,8 @@ const local: App.I18n.Schema = {
     export: 'Export',
     exportSuccess: 'Export Success',
     confirmExport: 'Are you sure you want to export',
+    dataList: 'Data list',
+    list: 'List',
     userCenter: 'User Center',
     yesOrNo: {
       yes: 'Yes',
@@ -227,6 +229,7 @@ const local: App.I18n.Schema = {
         userNamePlaceholder: 'Please enter user name',
         phonePlaceholder: 'Please enter phone number',
         codePlaceholder: 'Please enter verification code',
+        codeExpired: 'Expired, Please refresh',
         passwordPlaceholder: 'Please enter password',
         confirmPasswordPlaceholder: 'Please enter password again',
         codeLogin: 'Verification code login',

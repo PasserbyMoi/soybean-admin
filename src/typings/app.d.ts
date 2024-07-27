@@ -320,10 +320,12 @@ declare namespace App {
         trigger: string;
         update: string;
         updateSuccess: string;
-        userCenter: string;
         export: string;
         exportSuccess: string;
         confirmExport: string;
+        dataList: string;
+        list: string;
+        userCenter: string;
         yesOrNo: {
           yes: string;
           no: string;
@@ -403,6 +405,7 @@ declare namespace App {
             userNamePlaceholder: string;
             phonePlaceholder: string;
             codePlaceholder: string;
+            codeExpired: string;
             passwordPlaceholder: string;
             confirmPasswordPlaceholder: string;
             codeLogin: string;
@@ -835,6 +838,8 @@ declare namespace App {
       msg: string;
       /** The backend service response data */
       data: T;
+      success: boolean;
+      timestamp: string;
     };
 
     /** The demo backend service response data */
@@ -846,5 +851,24 @@ declare namespace App {
       /** The backend service response data */
       result: T;
     };
+
+    /** 分页响应数据格式 */
+    type Page<T = unknown> = {
+      list: T;
+      total: number;
+    };
+  }
+
+  namespace Table {
+    interface TableButton {
+      name: string;
+      confirm?: boolean;
+      confirmText?: string;
+      positiveText?: string;
+      negativeText?: string;
+      clickHandle?: (rowId: string | number) => void;
+      positiveHandle?: (rowId: string | number) => void;
+      negativeHandle?: (rowId: string | number) => void;
+    }
   }
 }

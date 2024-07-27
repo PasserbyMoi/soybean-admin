@@ -10,11 +10,21 @@ defineOptions({
 
 interface Props {
   itemAlign?: NaiveUI.Align;
+  hasAdd?: boolean;
+  hasDelete?: boolean;
+  hasExport?: boolean;
+  disabledAdd?: boolean;
   disabledDelete?: boolean;
-  disabledExport?: boolean;
   loading?: boolean;
 }
-defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  itemAlign: 'flex-end',
+  hasAdd: true,
+  hasDelete: true,
+  hasExport: true,
+  disabledAdd: false,
+  disabledDelete: false
+});
 
 interface Emits {
   (e: 'add'): void;
@@ -56,16 +66,16 @@ function refresh() {
 </script>
 
 <template>
-  <NSpace :align="itemAlign" wrap justify="end" class="lt-sm:w-200px">
+  <NSpace :align="itemAlign" wrap class="lt-sm:w-200px">
     <slot name="prefix"></slot>
     <slot name="default">
-      <NButton size="small" ghost type="primary" @click="add">
+      <NButton v-if="hasAdd" size="small" ghost type="primary" :disabled="disabledAdd" @click="add">
         <template #icon>
           <icon-ic-round-plus class="text-icon" />
         </template>
         {{ $t('common.add') }}
       </NButton>
-      <NPopconfirm @positive-click="batchDelete">
+      <NPopconfirm v-if="hasDelete" @positive-click="batchDelete">
         <template #trigger>
           <NButton size="small" ghost type="error" :disabled="disabledDelete">
             <template #icon>
@@ -76,9 +86,9 @@ function refresh() {
         </template>
         {{ $t('common.confirmDelete') }}
       </NPopconfirm>
-      <NPopconfirm @positive-click="batchExport">
+      <NPopconfirm v-if="hasExport" @positive-click="batchExport">
         <template #trigger>
-          <NButton size="small" ghost type="warning" :disabled="disabledExport">
+          <NButton size="small" ghost type="warning">
             <template #icon>
               <icon-ic-round-get-app class="text-icon" />
             </template>

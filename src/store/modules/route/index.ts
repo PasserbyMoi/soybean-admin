@@ -5,7 +5,7 @@ import { useBoolean } from '@sa/hooks';
 import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
 import { SetupStoreId } from '@/enum';
 import { router } from '@/router';
-import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
+import { createDynamicRoutes, createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
 import { fetchGetConstantRoutes, fetchGetUserRoutes, fetchIsRouteExist } from '@/service/api';
@@ -57,7 +57,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   function addConstantRoutes(routes: ElegantConstRoute[]) {
     const constantRoutesMap = new Map<string, ElegantConstRoute>([]);
-
     routes.forEach(route => {
       constantRoutesMap.set(route.name, route);
     });
@@ -196,19 +195,13 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   async function initConstantRoute() {
     if (isInitConstantRoute.value) return;
 
-    const staticRoute = createStaticRoutes();
-
     if (authRouteMode.value === 'static') {
+      const staticRoute = createStaticRoutes();
       addConstantRoutes(staticRoute.constantRoutes);
     } else {
-      const { data, error } = await fetchGetConstantRoutes();
-
-      if (!error) {
-        addConstantRoutes(data);
-      } else {
-        // if fetch constant routes failed, use static constant routes
-        addConstantRoutes(staticRoute.constantRoutes);
-      }
+      const { data } = fetchGetConstantRoutes();
+      const staticRoute = createDynamicRoutes(data ?? []);
+      addConstantRoutes(staticRoute.constantRoutes);
     }
 
     handleConstantAndAuthRoutes();
@@ -247,11 +240,11 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /** Init dynamic auth route */
   async function initDynamicAuthRoute() {
     const { data, error } = await fetchGetUserRoutes();
-
     if (!error) {
       const { routes, home } = data;
 
-      addAuthRoutes(routes);
+      const { authRoutes: dynamicAuthRoutes } = createDynamicRoutes(routes ?? [], true);
+      addAuthRoutes(dynamicAuthRoutes);
 
       handleConstantAndAuthRoutes();
 

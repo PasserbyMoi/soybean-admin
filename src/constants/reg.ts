@@ -17,6 +17,8 @@ export const REG_EMAIL = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 /** Six digit code reg */
 export const REG_CODE_SIX = /^\d{6}$/;
 
+export const REG_CAPTCHA_FOUR = /^[a-zA-Z0-9]{4}$/;
+
 /** Four digit code reg */
 export const REG_CODE_FOUR = /^\d{4}$/;
 
