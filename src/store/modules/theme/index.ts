@@ -143,24 +143,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     cacheThemeSettings();
   });
 
-  // /**
-  //  * Set theme space
-  //  *
-  //  * @param mode Theme space size
-  //  */
-  // function setThemeSpace(size: UnionKey.ThemeSpaceSize) {
-  //   settings.value.space.themeSpace = size;
-  // }
-
-  // /**
-  //  * Set height space
-  //  *
-  //  * @param mode Theme height size
-  //  */
-  // function setTableSpace(size: UnionKey.TableSpaceSize) {
-  //   settings.value.space.tableSpace = size;
-  // }
-
   // watch store
   scope.run(() => {
     // watch dark mode

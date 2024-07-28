@@ -37,17 +37,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'about',
-    path: '/about',
-    component: 'layout.base$view.about',
-    meta: {
-      title: 'about',
-      i18nKey: 'route.about',
-      icon: 'fluent:book-information-24-regular',
-      order: 10
-    }
-  },
-  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -576,6 +565,26 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'plugin_video',
           i18nKey: 'route.plugin_video',
           icon: 'mdi:video'
+        }
+      }
+    ]
+  },
+  {
+    name: 'project',
+    path: '/project',
+    component: 'layout.base',
+    meta: {
+      title: 'project',
+      i18nKey: 'route.project'
+    },
+    children: [
+      {
+        name: 'project_about',
+        path: '/project/about',
+        component: 'view.project_about',
+        meta: {
+          title: 'project_about',
+          i18nKey: 'route.project_about'
         }
       }
     ]

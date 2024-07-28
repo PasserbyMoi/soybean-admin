@@ -43,6 +43,15 @@ const options = computed(() => {
       key: 'divider'
     },
     {
+      label: $t('route.about'),
+      key: 'project_about',
+      icon: SvgIconVNode({ icon: 'ph:info-bold', fontSize: 18 })
+    },
+    {
+      type: 'divider',
+      key: 'divider'
+    },
+    {
       label: $t('common.logout'),
       key: 'logout',
       icon: SvgIconVNode({ icon: 'ph:sign-out', fontSize: 18 })
@@ -81,7 +90,7 @@ function handleDropdown(key: DropdownKey) {
     <div>
       <ButtonIcon>
         <SvgIcon icon="ph:user-circle" class="text-icon-large" />
-        <span class="text-16px font-medium">{{ authStore.userInfo.userName }}</span>
+        <span class="text-16px font-medium">{{ authStore.userInfo.username }}</span>
       </ButtonIcon>
     </div>
   </NDropdown>

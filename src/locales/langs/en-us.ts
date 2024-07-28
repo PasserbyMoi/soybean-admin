@@ -187,6 +187,8 @@ const local: App.I18n.Schema = {
     manage_role: 'Role Manage',
     manage_menu: 'Menu Manage',
     manage_dictionary: 'Dict Manage',
+    system_log: 'Log Manage',
+    system_api: 'API Manage',
     'multi-menu': 'Multi Menu',
     'multi-menu_first': 'Menu One',
     'multi-menu_first_child': 'Menu One Child',

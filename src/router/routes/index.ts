@@ -124,6 +124,28 @@ const commonRoutes: GeneratedRoute[] = [
       constant: true,
       hideInMenu: true
     }
+  },
+  // {
+  //   name: 'about',
+  //   path: '/about',
+  //   component: 'layout.base$view.about',
+  //   meta: {
+  //     title: 'about',
+  //     i18nKey: 'route.about',
+  //     constant: true,
+  //     icon: 'fluent:book-information-24-regular',
+  //     order: 10
+  //   }
+  // },
+  {
+    name: 'user-center',
+    path: '/user-center',
+    component: 'layout.base$view.user-center',
+    meta: {
+      title: 'user-center',
+      i18nKey: 'route.user-center',
+      hideInMenu: true
+    }
   }
 ];
 

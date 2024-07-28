@@ -24,7 +24,6 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
-    "about": "/about";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -75,6 +74,8 @@ declare module "@elegant-router/types" {
     "plugin_table": "/plugin/table";
     "plugin_table_edittable": "/plugin/table/edittable";
     "plugin_video": "/plugin/video";
+    "project": "/project";
+    "project_about": "/project/about";
     "system": "/system";
     "system_config": "/system/config";
     "system_dept": "/system/dept";
@@ -127,7 +128,6 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
-    | "about"
     | "function"
     | "home"
     | "iframe-page"
@@ -136,6 +136,7 @@ declare module "@elegant-router/types" {
     | "monitor"
     | "multi-menu"
     | "plugin"
+    | "project"
     | "system"
     | "tool"
     | "user-center"
@@ -159,11 +160,11 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
-    | "about"
     | "iframe-page"
     | "login"
     | "monitor_log"
     | "monitor_online"
+    | "project_about"
     | "system_config"
     | "system_dept"
     | "system_dict"
