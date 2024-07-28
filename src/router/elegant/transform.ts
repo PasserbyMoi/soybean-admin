@@ -183,9 +183,7 @@ const routeMap: RouteMap = {
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
   "manage": "/manage",
-  "manage_api": "/manage/api",
   "manage_dictionary": "/manage/dictionary",
-  "manage_log": "/manage/log",
   "manage_menu": "/manage/menu",
   "manage_role": "/manage/role",
   "manage_user": "/manage/user",
@@ -233,7 +231,8 @@ const routeMap: RouteMap = {
   "system_storage": "/system/storage",
   "system_user": "/system/user",
   "tool": "/tool",
-  "tool_generator": "/tool/generator"
+  "tool_generator": "/tool/generator",
+  "user-center": "/user-center"
 };
 
 /**

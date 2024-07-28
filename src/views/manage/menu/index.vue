@@ -23,8 +23,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
   columns: () => [
     {
       type: 'selection',
-      align: 'center',
-      width: 48
+      align: 'center'
     },
     {
       key: 'id',
@@ -35,15 +34,12 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       key: 'menuType',
       title: $t('page.manage.menu.menuType'),
       align: 'center',
-      width: 80,
       render: row => {
         const tagMap: Record<Api.SystemManage.MenuType, NaiveUI.ThemeColor> = {
           1: 'default',
           2: 'primary'
         };
-
         const label = $t(menuTypeRecord[row.menuType]);
-
         return <NTag type={tagMap[row.menuType]}>{label}</NTag>;
       }
     },
@@ -54,9 +50,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       minWidth: 120,
       render: row => {
         const { i18nKey, menuName } = row;
-
         const label = i18nKey ? $t(i18nKey) : menuName;
-
         return <span>{label}</span>;
       }
     },
@@ -64,12 +58,9 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       key: 'icon',
       title: $t('page.manage.menu.icon'),
       align: 'center',
-      width: 60,
       render: row => {
         const icon = row.iconType === '1' ? row.icon : undefined;
-
         const localIcon = row.iconType === '2' ? row.icon : undefined;
-
         return (
           <div class="flex-center">
             <SvgIcon icon={icon} localIcon={localIcon} class="text-icon" />
@@ -93,19 +84,15 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       key: 'status',
       title: $t('page.manage.menu.menuStatus'),
       align: 'center',
-      width: 80,
       render: row => {
         if (row.status === null) {
           return null;
         }
-
         const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
           1: 'success',
           2: 'warning'
         };
-
         const label = $t(enableStatusRecord[row.status]);
-
         return <NTag type={tagMap[row.status]}>{label}</NTag>;
       }
     },
@@ -113,37 +100,31 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       key: 'hideInMenu',
       title: $t('page.manage.menu.hideInMenu'),
       align: 'center',
-      width: 80,
       render: row => {
         const hide: CommonType.YesOrNo = row.hideInMenu ? 'Y' : 'N';
-
         const tagMap: Record<CommonType.YesOrNo, NaiveUI.ThemeColor> = {
           Y: 'error',
           N: 'default'
         };
-
         const label = $t(yesOrNoRecord[hide]);
-
         return <NTag type={tagMap[hide]}>{label}</NTag>;
       }
     },
     {
       key: 'parentId',
       title: $t('page.manage.menu.parentId'),
-      width: 90,
       align: 'center'
     },
     {
       key: 'order',
       title: $t('page.manage.menu.order'),
-      align: 'center',
-      width: 60
+      align: 'center'
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 230,
+      minWidth: 120,
       render: row => (
         <div class="flex-center justify-end gap-8px">
           {row.menuType === '1' && (
@@ -243,12 +224,13 @@ init();
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"
-        size="small"
+        :size="appStore.tableSize"
         :flex-height="!appStore.isMobile"
         :scroll-x="1088"
         :loading="loading"
         :row-key="row => row.id"
         remote
+        :striped="appStore.isStriped"
         :pagination="pagination"
         class="sm:h-full"
       />

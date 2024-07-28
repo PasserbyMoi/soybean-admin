@@ -4,6 +4,7 @@ export default defineConfig(
   { vue: true, unocss: true },
   {
     rules: {
+      complexity: ['error', { max: 50 }],
       'vue/multi-word-component-names': [
         'warn',
         {

@@ -39,9 +39,7 @@ declare module "@elegant-router/types" {
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
-    "manage_api": "/manage/api";
     "manage_dictionary": "/manage/dictionary";
-    "manage_log": "/manage/log";
     "manage_menu": "/manage/menu";
     "manage_role": "/manage/role";
     "manage_user": "/manage/user";
@@ -90,6 +88,7 @@ declare module "@elegant-router/types" {
     "system_user": "/system/user";
     "tool": "/tool";
     "tool_generator": "/tool/generator";
+    "user-center": "/user-center";
   };
 
   /**
@@ -139,6 +138,7 @@ declare module "@elegant-router/types" {
     | "plugin"
     | "system"
     | "tool"
+    | "user-center"
   >;
 
   /**
@@ -159,6 +159,7 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
+    | "about"
     | "iframe-page"
     | "login"
     | "monitor_log"
@@ -174,7 +175,7 @@ declare module "@elegant-router/types" {
     | "system_storage"
     | "system_user"
     | "tool_generator"
-    | "about"
+    | "user-center"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
@@ -184,9 +185,7 @@ declare module "@elegant-router/types" {
     | "function_tab"
     | "function_toggle-auth"
     | "home"
-    | "manage_api"
     | "manage_dictionary"
-    | "manage_log"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

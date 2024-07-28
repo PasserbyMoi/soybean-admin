@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { $t } from '@/locales';
 import { enableStatusOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';

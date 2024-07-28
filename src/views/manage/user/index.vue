@@ -51,13 +51,28 @@ const {
       key: 'userName',
       title: $t('page.manage.user.userName'),
       align: 'center',
-      minWidth: 100
+      minWidth: 100,
+      sorter: 'default'
     },
     {
       key: 'userGender',
       title: $t('page.manage.user.userGender'),
       align: 'center',
       width: 100,
+      defaultFilterOptionValues: [],
+      filterOptions: [
+        {
+          label: '男',
+          value: 1
+        },
+        {
+          label: '女',
+          value: 2
+        }
+      ],
+      filter(value, row) {
+        return row.userGender === value;
+      },
       render: row => {
         if (row.userGender === null) {
           return null;
@@ -95,7 +110,21 @@ const {
       key: 'status',
       title: $t('page.manage.user.userStatus'),
       align: 'center',
-      width: 100,
+      width: 120,
+      defaultFilterOptionValues: [],
+      filterOptions: [
+        {
+          label: '启用',
+          value: 1
+        },
+        {
+          label: '禁用',
+          value: 2
+        }
+      ],
+      filter(value, row) {
+        return row.status === value;
+      },
       render: row => {
         if (row.status === null) {
           return null;
@@ -115,7 +144,8 @@ const {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 180,
+      resizable: true,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
@@ -145,22 +175,21 @@ const {
   handleEdit,
   checkedRowKeys,
   onBatchDeleted,
-  onDeleted
+  onDeleted,
+  onExported
   // closeDrawer
 } = useTableOperate(data, getData);
 
 async function handleBatchDelete() {
-  // request
-  console.log(checkedRowKeys.value);
-
   onBatchDeleted();
 }
 
 function handleDelete(id: number) {
-  // request
-  console.log(id);
-
   onDeleted();
+}
+
+function handleExport() {
+  onExported();
 }
 
 function edit(id: number) {
@@ -176,21 +205,24 @@ function edit(id: number) {
         <TableHeaderOperation
           v-model:columns="columnChecks"
           :disabled-delete="checkedRowKeys.length === 0"
+          :disabled-export="data.length === 0"
           :loading="loading"
           @add="handleAdd"
           @delete="handleBatchDelete"
           @refresh="getData"
+          @export="handleExport"
         />
       </template>
       <NDataTable
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"
-        size="small"
+        :size="appStore.tableSize"
         :flex-height="!appStore.isMobile"
         :scroll-x="962"
         :loading="loading"
         remote
+        :striped="appStore.isStriped"
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"

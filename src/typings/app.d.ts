@@ -4,6 +4,16 @@ declare namespace App {
   namespace Theme {
     type ColorPaletteNumber = import('@sa/color').ColorPaletteNumber;
 
+    /** Theme token */
+    type ThemeToken = {
+      colors: ThemeTokenColor;
+      boxShadow: {
+        header: string;
+        sider: string;
+        tab: string;
+      };
+    };
+
     /** Theme setting */
     interface ThemeSetting {
       /** Theme scheme */
@@ -785,21 +795,13 @@ declare namespace App {
 
     interface $T {
       (key: I18nKey): string;
-
       (key: I18nKey, plural: number, options?: TranslateOptions<LangType>): string;
-
       (key: I18nKey, defaultMsg: string, options?: TranslateOptions<I18nKey>): string;
-
       (key: I18nKey, list: unknown[], options?: TranslateOptions<I18nKey>): string;
-
       (key: I18nKey, list: unknown[], plural: number): string;
-
       (key: I18nKey, list: unknown[], defaultMsg: string): string;
-
       (key: I18nKey, named: Record<string, unknown>, options?: TranslateOptions<LangType>): string;
-
       (key: I18nKey, named: Record<string, unknown>, plural: number): string;
-
       (key: I18nKey, named: Record<string, unknown>, defaultMsg: string): string;
     }
   }
@@ -839,7 +841,8 @@ declare namespace App {
       /** The backend service response data */
       data: T;
       success: boolean;
-      timestamp: string;
+      /** The backend service response timestamp */
+      timestamp: Date | string | number;
     };
 
     /** The demo backend service response data */
@@ -850,6 +853,8 @@ declare namespace App {
       message: string;
       /** The backend service response data */
       result: T;
+      /** The backend service response timestamp */
+      timestamp: Date | string | number;
     };
 
     /** 分页响应数据格式 */

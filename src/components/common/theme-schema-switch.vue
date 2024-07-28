@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { PopoverPlacement } from 'naive-ui';
 import { $t } from '@/locales';
 

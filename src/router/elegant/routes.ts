@@ -208,30 +208,12 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
-        name: 'manage_api',
-        path: '/manage/api',
-        component: 'view.manage_api',
-        meta: {
-          title: 'manage_api',
-          i18nKey: 'route.manage_api'
-        }
-      },
-      {
         name: 'manage_dictionary',
         path: '/manage/dictionary',
         component: 'view.manage_dictionary',
         meta: {
           title: 'manage_dictionary',
           i18nKey: 'route.manage_dictionary'
-        }
-      },
-      {
-        name: 'manage_log',
-        path: '/manage/log',
-        component: 'view.manage_log',
-        meta: {
-          title: 'manage_log',
-          i18nKey: 'route.manage_log'
         }
       },
       {
@@ -719,5 +701,14 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       }
     ]
+  },
+  {
+    name: 'user-center',
+    path: '/user-center',
+    component: 'layout.base$view.user-center',
+    meta: {
+      title: 'user-center',
+      i18nKey: 'route.user-center'
+    }
   }
 ];

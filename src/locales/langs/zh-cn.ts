@@ -186,8 +186,6 @@ const local: App.I18n.Schema = {
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
     manage_menu: '菜单管理',
-    manage_log: '日志管理',
-    manage_api: 'API 管理',
     manage_dictionary: '字典管理',
     'multi-menu': '多级菜单',
     'multi-menu_first': '菜单一',

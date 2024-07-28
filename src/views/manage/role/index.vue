@@ -160,6 +160,7 @@ function edit(id: number) {
         :scroll-x="702"
         :loading="loading"
         remote
+        :striped="appStore.isStriped"
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"

@@ -49,6 +49,9 @@ export default defineConfig(configEnv => {
       optimizeDeps: {
         include: ['md-editor-v3', 'quill'] // 'echarts',
       }
+    },
+    optimizeDeps: {
+      include: ['md-editor-v3', 'quill'] // 'echarts',
     }
   };
 });

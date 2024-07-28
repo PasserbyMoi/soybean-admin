@@ -1,4 +1,3 @@
-import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useEventListener } from '@vueuse/core';
 import type { RouteKey } from '@elegant-router/types';

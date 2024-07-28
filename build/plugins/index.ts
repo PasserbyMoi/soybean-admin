@@ -24,5 +24,13 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
     setupHtmlPlugin(buildTime)
   ];
 
+  // use compression
+  // if (env.VITE_BUILD_COMPRESS === 'Y') {
+  //   const { VITE_COMPRESS_TYPE = 'gzip' } = env
+  //   plugins.push(viteCompression({
+  //     algorithm: VITE_COMPRESS_TYPE, // 压缩算法
+  //   }))
+  // }
+
   return plugins;
 }

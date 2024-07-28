@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { getPaletteColorByNumber } from '@sa/color';
 
 defineOptions({ name: 'WaveBg' });

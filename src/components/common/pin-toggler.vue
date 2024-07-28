@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { $t } from '@/locales';
 
 defineOptions({ name: 'PinToggler' });

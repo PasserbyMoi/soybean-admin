@@ -1,5 +1,4 @@
-<script setup lang="ts">
-import { computed } from 'vue';
+<script setup lang="tsx">
 import { $t } from '@/locales';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';

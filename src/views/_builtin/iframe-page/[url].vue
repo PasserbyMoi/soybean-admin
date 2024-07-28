@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { onActivated, onMounted } from 'vue';
-
 interface Props {
   url: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 onMounted(() => {
   console.log('mounted');
