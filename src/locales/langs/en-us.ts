@@ -46,12 +46,26 @@ const local: App.I18n.Schema = {
     export: 'Export',
     exportSuccess: 'Export Success',
     confirmExport: 'Are you sure you want to export',
+    copy: 'Copy',
+    copySuccess: 'Copy success',
+    copyNotSupported: "Your browser don't support Clipboard API",
     dataList: 'Data list',
     list: 'List',
+    confirmOperations: 'Are you sure you want {name} ?',
     userCenter: 'User Center',
+    unkonw: 'Unkonw',
+    default: 'Default',
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
+    },
+    enable: {
+      enabled: 'Enabled',
+      disabled: 'Disabled'
+    },
+    status: {
+      succeed: 'Succeed',
+      failed: 'Failed'
     }
   },
   request: {

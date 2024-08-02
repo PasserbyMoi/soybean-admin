@@ -2,9 +2,9 @@
 import { fetchGetUserList } from '@/service/api';
 import { $t } from '@/locales';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
-import BSelect from '@/components/advanced/b-select.vue';
-import BInput from '@/components/advanced/b-input.vue';
-import BSwitch from '@/components/advanced/b-switch.vue';
+import BSelect from '@/components/advanced/e-select.vue';
+import BInput from '@/components/advanced/e-input.vue';
+import BSwitch from '@/components/advanced/e-switch.vue';
 import UserOperateDrawer from './modules/user-operate-drawer.vue';
 import UserSearch from './modules/user-search.vue';
 

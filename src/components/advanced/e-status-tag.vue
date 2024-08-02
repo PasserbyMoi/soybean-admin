@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 defineOptions({
-  name: 'BStatusTag'
+  name: 'EStatusTag'
 });
 
 interface Props {

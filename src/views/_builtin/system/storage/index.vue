@@ -1,90 +1,167 @@
 <script setup lang="tsx">
-import { useAuthStore } from '@/store/modules/auth';
+import { NBadge, NGradientText, NTag } from 'naive-ui';
+import { type StorageQuery, type StorageResp, deleteStorage, listStorage } from '@/apis';
+import TableTag from '@/components/advanced/table-tag.vue';
+import { enableNextOptions } from '@/constants/common';
+import { $t } from '@/locales';
+import { useDict } from '@/hooks/business/dict';
+import StorageDetailDrawer from './modules/storage-detail-drawer.vue';
 
-const authStore = useAuthStore();
+defineOptions({ name: 'SystemStorage' });
 
-const { userInfo } = authStore;
-const formRef = ref();
-const formValue = ref({
-  user: {
-    name: '张三',
-    age: ''
-  },
-  phone: ''
-});
-const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
+const { storage_type_enum } = useDict('storage_type_enum');
+
+const apiParams: Api.Common.EPaginatingSearchParams<StorageQuery> = {
+  page: 1,
+  size: 10,
+  sort: ['createTime, desc'],
+  description: null,
+  status: null
+};
+const columns = ref<NaiveUI.TableColumn<any>[]>([
+  {
+    title: '名称',
+    key: 'name',
+    fixed: 'left',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return (
+        <div>
+          {row.name}
+          {row.isDefault ? (
+            <NTag type="primary" class="ml-10px" round size="tiny">
+              默认
+            </NTag>
+          ) : (
+            ''
+          )}
+        </div>
+      );
     }
   },
-  phone: {
-    required: true,
-    message: '请输入电话号码',
-    trigger: ['input']
-  }
-};
+  { title: '编码', key: 'code', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '状态',
+    key: 'status',
+    align: 'center',
+    resizable: true,
+    render: row => {
+      return h(TableTag, { value: row.status, options: enableNextOptions }, { default: () => row.status });
+    }
+  },
+  {
+    title: '类型',
+    key: 'type',
+    align: 'center',
+    resizable: true,
+    render: row => {
+      return h(TableTag, { value: row.type, options: storage_type_enum.value }, { default: () => row.type });
+    }
+  },
+  { title: '访问密钥', key: 'accessKey', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '终端节点', key: 'endpoint', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '桶名称', key: 'bucketName', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '域名', key: 'domain', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+]);
 
-function handleValidateClick() {
-  formRef.value?.validate((errors: any) => {
-    if (!errors) window.$message?.success('验证通过');
-    else window.$message?.error('验证不通过');
-  });
+const operations: App.Table.Operation<StorageResp>[] = [
+  {
+    label: '编辑',
+    yesHandle(row, _index) {
+      if (row.id) editHandle(row.id);
+    }
+  },
+  {
+    label: '删除',
+    type: 'error',
+    confirm: true,
+    disabled: (row: StorageResp) => row.isDefault ?? true,
+    yesHandle(row, _index) {
+      if (row.id) deleteHandle(row.id);
+    }
+  }
+];
+
+const tableRef = ref();
+const detailRef = ref();
+
+const rowId = ref<string>();
+const visible = ref<boolean>();
+const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function addHandle() {
+  rowId.value = undefined;
+  visible.value = true;
+  operateType.value = 'add';
+  console.log(JSON.stringify(columns.value));
+}
+
+function editHandle(id: string) {
+  rowId.value = `${id}`;
+  visible.value = true;
+  operateType.value = 'edit';
+}
+
+function deleteHandle(id: string) {
+  deleteStorage(id)
+    .then(() => {
+      window.$message?.info($t('common.deleteSuccess'));
+      submited();
+    })
+    .catch(err => {
+      window.$message?.info(err);
+    });
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
 }
 </script>
 
 <template>
-  <NSpace vertical>
-    <NCard title="个人信息">
-      <NSpace size="large">
-        <NAvatar round :size="128" :src="userInfo?.avatar" />
-
-        <NDescriptions
-          label-placement="left"
-          :column="2"
-          :title="`傍晚好，${userInfo?.nickname}，这里是简单的个人中心模板`"
-        >
-          <NDescriptionsItem label="id">
-            {{ userInfo?.id }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="用户名">
-            {{ userInfo?.userName }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="真实名称">
-            {{ userInfo?.nickname }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="角色">
-            {{ userInfo?.roles }}
-          </NDescriptionsItem>
-        </NDescriptions>
-      </NSpace>
-    </NCard>
-    <NCard title="信息修改">
-      <NSpace justify="center">
-        <NForm ref="formRef" class="w-500px" :label-width="80" :model="formValue" :rules="rules">
-          <NFormItem label="姓名" path="user.name">
-            <NInput v-model:value="formValue.user.name" placeholder="输入姓名" />
-          </NFormItem>
-          <NFormItem label="年龄" path="user.age">
-            <NInput v-model:value="formValue.user.age" placeholder="输入年龄" />
-          </NFormItem>
-          <NFormItem label="电话号码" path="phone">
-            <NInput v-model:value="formValue.phone" placeholder="电话号码" />
-          </NFormItem>
-          <NFormItem>
-            <NButton type="primary" attr-type="button" block @click="handleValidateClick">验证</NButton>
-          </NFormItem>
-        </NForm>
-      </NSpace>
-    </NCard>
-  </NSpace>
+  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <TableCard
+      ref="tableRef"
+      row-key="id"
+      :api-fn="listStorage"
+      :api-params="apiParams"
+      :columns="columns"
+      :show-selection="false"
+      :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      @add="addHandle"
+      @edit="editHandle"
+      @delete="deleteHandle"
+    >
+      <template #search="{ searchParams }">
+        <NFormItemGi span="24 s:12 m:5" label="关键词" path="description">
+          <NInput v-model:value="searchParams.description" placeholder="请输入关键词" clearable />
+        </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:5" label="状态" path="status">
+          <NSelect
+            v-model:value="searchParams.status"
+            :options="enableNextOptions"
+            placeholder="请选择状态"
+            clearable
+          />
+        </NFormItemGi>
+      </template>
+    </TableCard>
+    <StorageDetailDrawer
+      ref="detailRef"
+      v-model:visible="visible"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+  </div>
 </template>
 
 <style scoped></style>

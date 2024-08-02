@@ -1,90 +1,163 @@
 <script setup lang="tsx">
-import { useAuthStore } from '@/store/modules/auth';
+import { NA } from 'naive-ui';
+import type { RoleQuery, RoleResp } from '@/apis';
+import { deleteRole, listRole } from '@/apis';
+import TableBTag from '@/components/advanced/table-btag.vue';
+import TableTag from '@/components/advanced/table-tag.vue';
+import { $t } from '@/locales';
+import { booleanOptions } from '@/constants/common';
+import { useDict } from '@/hooks/business/dict';
+import RoleViewModal from './modules/role-view-modal.vue';
+import RoleDetailModal from './modules/role-detail-modal.vue';
 
-const authStore = useAuthStore();
+defineOptions({ name: 'SystemRole' });
 
-const { userInfo } = authStore;
-const formRef = ref();
-const formValue = ref({
-  user: {
-    name: '张三',
-    age: ''
-  },
-  phone: ''
-});
-const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
+const { data_scope_enum } = useDict('data_scope_enum');
+
+const apiParams: Api.Common.EPaginatingSearchParams<RoleQuery> = {
+  page: 1,
+  size: 10,
+  sort: ['createTime, desc'],
+  description: null
+};
+const columns = ref<NaiveUI.TableColumn<any>[]>([
+  {
+    title: '名称',
+    key: 'name',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render(row) {
+      return h(NA, { size: 'small', onClick: () => viewHandle(row.id) }, { default: () => row.name });
     }
   },
-  phone: {
-    required: true,
-    message: '请输入电话号码',
-    trigger: ['input']
-  }
-};
+  { title: '编码', key: 'code', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '数据权限',
+    key: 'dataScope',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(TableTag, { value: row.dataScope, options: data_scope_enum.value }, { default: () => row.dataScope });
+    }
+  },
+  {
+    title: '系统内置',
+    key: 'isSystem',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(TableBTag, { value: row.isSystem, options: booleanOptions }, { default: () => row.isSystem });
+    }
+  },
+  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+]);
 
-function handleValidateClick() {
-  formRef.value?.validate((errors: any) => {
-    if (!errors) window.$message?.success('验证通过');
-    else window.$message?.error('验证不通过');
-  });
+const operations: App.Table.Operation<RoleResp>[] = [
+  {
+    label: '编辑',
+    yesHandle(row, _index) {
+      if (row.id) editHandle(row.id);
+    }
+  },
+  {
+    label: '删除',
+    type: 'error',
+    confirm: true,
+    disabled: row => row.isSystem,
+    yesHandle(row, _index) {
+      if (row.id) deleteHandle(row.id);
+    }
+  }
+];
+
+const tableRef = ref();
+const detailRef = ref();
+const viewRef = ref();
+
+const rowId = ref<string>();
+const visible = ref<boolean>();
+const visibleView = ref<boolean>();
+const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function addHandle() {
+  rowId.value = undefined;
+  visible.value = true;
+  operateType.value = 'add';
+}
+
+function editHandle(id: string) {
+  rowId.value = `${id}`;
+  visible.value = true;
+  operateType.value = 'edit';
+}
+
+function viewHandle(id: string) {
+  rowId.value = `${id}`;
+  visibleView.value = true;
+}
+
+function deleteHandle(id: string) {
+  deleteRole(id)
+    .then(() => {
+      window.$message?.info($t('common.deleteSuccess'));
+      submited();
+    })
+    .catch(err => {
+      window.$message?.info(err);
+    });
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
 }
 </script>
 
 <template>
-  <NSpace vertical>
-    <NCard title="个人信息">
-      <NSpace size="large">
-        <NAvatar round :size="128" :src="userInfo?.avatar" />
+  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <TableCard
+      ref="tableRef"
+      row-key="id"
+      :api-fn="listRole"
+      :api-params="apiParams"
+      :columns="columns"
+      :show-selection="false"
+      :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      @add="addHandle"
+      @edit="editHandle"
+      @delete="deleteHandle"
+    >
+      <template #search="{ searchParams }">
+        <NFormItemGi span="24 s:12 m:5" label="关键词" path="description">
+          <NInput v-model:value="searchParams.description" placeholder="请输入关键词" clearable />
+        </NFormItemGi>
+      </template>
+    </TableCard>
 
-        <NDescriptions
-          label-placement="left"
-          :column="2"
-          :title="`傍晚好，${userInfo?.nickname}，这里是简单的个人中心模板`"
-        >
-          <NDescriptionsItem label="id">
-            {{ userInfo?.id }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="用户名">
-            {{ userInfo?.userName }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="真实名称">
-            {{ userInfo?.nickname }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="角色">
-            {{ userInfo?.roles }}
-          </NDescriptionsItem>
-        </NDescriptions>
-      </NSpace>
-    </NCard>
-    <NCard title="信息修改">
-      <NSpace justify="center">
-        <NForm ref="formRef" class="w-500px" :label-width="80" :model="formValue" :rules="rules">
-          <NFormItem label="姓名" path="user.name">
-            <NInput v-model:value="formValue.user.name" placeholder="输入姓名" />
-          </NFormItem>
-          <NFormItem label="年龄" path="user.age">
-            <NInput v-model:value="formValue.user.age" placeholder="输入年龄" />
-          </NFormItem>
-          <NFormItem label="电话号码" path="phone">
-            <NInput v-model:value="formValue.phone" placeholder="电话号码" />
-          </NFormItem>
-          <NFormItem>
-            <NButton type="primary" attr-type="button" block @click="handleValidateClick">验证</NButton>
-          </NFormItem>
-        </NForm>
-      </NSpace>
-    </NCard>
-  </NSpace>
+    <RoleDetailModal
+      ref="detailRef"
+      v-model:visible="visible"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+
+    <RoleViewModal
+      ref="viewRef"
+      v-model:visible="visibleView"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+  </div>
 </template>
 
 <style scoped></style>

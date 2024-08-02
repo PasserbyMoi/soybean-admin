@@ -334,11 +334,25 @@ declare namespace App {
         exportSuccess: string;
         confirmExport: string;
         dataList: string;
+        copy: string;
+        copySuccess: string;
+        copyNotSupported: string;
+        confirmOperations: string;
         list: string;
         userCenter: string;
+        unkonw: string;
+        default: string;
         yesOrNo: {
           yes: string;
           no: string;
+        };
+        enable: {
+          enabled: string;
+          disabled: string;
+        };
+        status: {
+          succeed: string;
+          failed: string;
         };
       };
       request: {
@@ -865,15 +879,26 @@ declare namespace App {
   }
 
   namespace Table {
-    interface TableButton {
-      name: string;
+    interface Operation<T> {
+      label: string;
+      icon?: string;
+      vif?: (row: T) => boolean;
+      disabled?: (row: T) => boolean;
       confirm?: boolean;
+      type?: import('naive-ui/es/tag/src/Tag').TagProps['type'];
+      size?: import('naive-ui/es/tag/src/Tag').TagProps['size'];
+      permissions?: Array<string>;
       confirmText?: string;
       positiveText?: string;
       negativeText?: string;
-      clickHandle?: (rowId: string | number) => void;
-      positiveHandle?: (rowId: string | number) => void;
-      negativeHandle?: (rowId: string | number) => void;
+      yesHandle: (row: T, index?: number) => void;
+      noHandle?: (row: T, index?: number) => void;
+    }
+
+    interface TagNumber {
+      type: import('naive-ui/es/tag/src/Tag').TagProps['type'];
+      minValue: number;
+      maxValue: number;
     }
   }
 }

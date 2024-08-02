@@ -4,8 +4,8 @@ import type * as System from './type';
 const BASE_URL = '/system/user';
 
 /** 查询用户列表 */
-export function listUser(query: System.UserPageQuery) {
-  return request<App.Service.Page<System.UserResp[]>>({
+export function listUser(query: Api.Common.EPaginatingSearchParams<System.UserQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.UserResp[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query

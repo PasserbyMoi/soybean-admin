@@ -49,7 +49,7 @@ async function search() {
         </NFormItemGi>
         <NFormItemGi span="24 s:18 m:6" label="时间" path="createTime" class="pr-24px">
           <NDatePicker
-            v-model:formatted-value="model.createTime"
+            v-model:value="model.createTime"
             format="yyyy-MM-dd HH:mm"
             value-format="yyyy-MM-dd HH:mm"
             type="datetimerange"

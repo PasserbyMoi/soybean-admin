@@ -8,7 +8,7 @@ declare namespace Api {
     /** common search params */
     export type SearchParams = Pick<Common.PaginatingCommonParams, 'page' | 'size'>;
 
-    export type EPaginatingSearchParams<T = any> = Pick<Common.PaginatingCommonParams, 'page' | 'size'> & T;
+    export type EPaginatingSearchParams<T = any> = Pick<Common.PaginatingCommonParams, 'page' | 'size' | 'sort'> & T;
 
     /** common page search params */
     export type PaginatingSearchParams = Pick<Common.PaginatingCommonParams, 'page' | 'size'>;
@@ -28,6 +28,7 @@ declare namespace Api {
       size: number;
       /** total count */
       total: number;
+      sort?: Array<string> | null,
     }
 
     /** common params of paginating query list data */

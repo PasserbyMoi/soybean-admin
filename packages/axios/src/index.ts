@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import type { AxiosResponse, CancelTokenSource, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 import axiosRetry from 'axios-retry';
 import { nanoid } from '@sa/utils';
+import qs from 'qs';
 import { createAxiosConfig, createDefaultOptions, createRetryOptions } from './options';
 import { BACKEND_ERROR_CODE, REQUEST_ID_KEY } from './constant';
 import type {
@@ -21,6 +22,11 @@ function createCommonRequest<ResponseData = any>(
 
   const axiosConf = createAxiosConfig(axiosConfig);
   const instance = axios.create(axiosConf);
+
+  // chanbeiyu 设置 prarm 数组的格式化方式
+  instance.defaults.paramsSerializer = params => {
+    return qs.stringify(params, { arrayFormat: 'repeat' });
+  };
 
   const cancelTokenSourceMap = new Map<string, CancelTokenSource>();
 

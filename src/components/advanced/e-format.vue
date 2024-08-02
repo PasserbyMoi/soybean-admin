@@ -2,7 +2,7 @@
 import numeral from 'numeral';
 
 defineOptions({
-  name: 'BFormat'
+  name: 'EFormat'
 });
 
 type FormatType = 'default' | 'currency' | 'number' | 'gbytes' | 'kbytes' | 'percentages' | 'time' | 'exponential';

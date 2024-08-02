@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import type {SelectBaseOption} from 'naive-ui/es/select/src/interface';
+import type { SelectBaseOption } from 'naive-ui/es/select/src/interface';
 
 defineOptions({
-  name: 'BSelect'
+  name: 'ESelect'
 });
 
 interface Props {

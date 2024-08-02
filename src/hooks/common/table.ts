@@ -209,207 +209,59 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
   };
 }
 
-export function useCommonTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
-  const scope = effectScope();
-  const appStore = useAppStore();
+export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>, getData: () => Promise<void>) {
+  const { bool: drawerVisible, setTrue: openDrawer, setFalse: closeDrawer } = useBoolean();
 
-  const isMobile = computed(() => appStore.isMobile);
+  const operateType = ref<NaiveUI.TableOperateType>('add');
 
-  const { apiFn, apiParams, immediate, showTotal } = config;
-
-  const SELECTION_KEY = '__selection__';
-
-  const EXPAND_KEY = '__expand__';
-
-  const {
-    loading,
-    empty,
-    data,
-    columns,
-    columnChecks,
-    reloadColumns,
-    getData,
-    searchParams,
-    updateSearchParams,
-    resetSearchParams
-  } = useHookTable<A, GetTableData<A>, TableColumn<NaiveUI.TableDataWithIndex<GetTableData<A>>>>({
-    apiFn,
-    apiParams,
-    columns: config.columns,
-    transformer: res => {
-      const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
-
-      const recordsWithIndex = records.map((item, index) => {
-        return {
-          ...item,
-          index: (current - 1) * size + index + 1
-        };
-      });
-
-      return {
-        data: recordsWithIndex,
-        pageNum: current,
-        pageSize: size,
-        total
-      };
-    },
-    getColumnChecks: cols => {
-      const checks: NaiveUI.TableColumnCheck[] = [];
-
-      cols.forEach(column => {
-        if (isTableColumnHasKey(column)) {
-          checks.push({
-            key: column.key as string,
-            title: column.title as string,
-            checked: true
-          });
-        } else if (column.type === 'selection') {
-          checks.push({
-            key: SELECTION_KEY,
-            title: $t('common.check'),
-            checked: true
-          });
-        } else if (column.type === 'expand') {
-          checks.push({
-            key: EXPAND_KEY,
-            title: $t('common.expandColumn'),
-            checked: true
-          });
-        }
-      });
-
-      return checks;
-    },
-    getColumns: (cols, checks) => {
-      const columnMap = new Map<string, TableColumn<GetTableData<A>>>();
-
-      cols.forEach(column => {
-        if (isTableColumnHasKey(column)) {
-          columnMap.set(column.key as string, column);
-        } else if (column.type === 'selection') {
-          columnMap.set(SELECTION_KEY, column);
-        } else if (column.type === 'expand') {
-          columnMap.set(EXPAND_KEY, column);
-        }
-      });
-
-      const filteredColumns = checks
-        .filter(item => item.checked)
-        .map(check => columnMap.get(check.key) as TableColumn<GetTableData<A>>);
-
-      return filteredColumns;
-    },
-    onFetched: async transformed => {
-      const { pageNum, pageSize, total } = transformed;
-
-      updatePagination({
-        page: pageNum,
-        pageSize,
-        itemCount: total
-      });
-    },
-    immediate
-  });
-
-  const pagination: PaginationProps = reactive({
-    page: 1,
-    pageSize: 10,
-    showSizePicker: true,
-    pageSizes: [10, 20, 30, 50, 100],
-    onUpdatePage: async (page: number) => {
-      pagination.page = page;
-
-      updateSearchParams({
-        current: page,
-        size: pagination.pageSize!
-      });
-
-      getData();
-    },
-    onUpdatePageSize: async (pageSize: number) => {
-      pagination.pageSize = pageSize;
-      pagination.page = 1;
-
-      updateSearchParams({
-        current: pagination.page,
-        size: pageSize
-      });
-
-      getData();
-    },
-    ...(showTotal
-      ? {
-          prefix: page => $t('datatable.itemCount', { total: page.itemCount })
-        }
-      : {})
-  });
-
-  // this is for mobile, if the system does not support mobile, you can use `pagination` directly
-  const mobilePagination = computed(() => {
-    const p: PaginationProps = {
-      ...pagination,
-      pageSlot: isMobile.value ? 3 : 9,
-      prefix: !isMobile.value && showTotal ? pagination.prefix : undefined
-    };
-
-    return p;
-  });
-
-  function updatePagination(update: Partial<PaginationProps>) {
-    Object.assign(pagination, update);
+  function handleAdd() {
+    operateType.value = 'add';
+    openDrawer();
   }
 
-  /**
-   * get data by page number
-   *
-   * @param pageNum the page number. default is 1
-   */
-  async function getDataByPage(pageNum: number = 1) {
-    updatePagination({
-      page: pageNum
-    });
+  /** the editing row data */
+  const editingData: Ref<T | null> = ref(null);
 
-    updateSearchParams({
-      current: pageNum,
-      size: pagination.pageSize!
-    });
+  function handleEdit(id: string | number) {
+    const findItem = data.value.find(item => item.id === id) || null;
+    editingData.value = cloneDeep(findItem);
+    operateType.value = 'edit';
+    openDrawer();
+  }
 
+  /** the checked row keys of table */
+  const checkedRowKeys = ref<string[] | number[]>([]);
+
+  /** the hook after the batch delete operation is completed */
+  async function onBatchDeleted() {
+    window.$message?.success($t('common.deleteSuccess'));
+
+    checkedRowKeys.value = [];
     await getData();
   }
 
-  scope.run(() => {
-    watch(
-      () => appStore.locale,
-      () => {
-        reloadColumns();
-      }
-    );
-  });
-
-  onScopeDispose(() => {
-    scope.stop();
-  });
+  /** the hook after the delete operation is completed */
+  async function onDeleted() {
+    window.$message?.success($t('common.deleteSuccess'));
+    await getData();
+  }
 
   return {
-    loading,
-    empty,
-    data,
-    columns,
-    columnChecks,
-    reloadColumns,
-    pagination,
-    mobilePagination,
-    updatePagination,
-    getData,
-    getDataByPage,
-    searchParams,
-    updateSearchParams,
-    resetSearchParams
+    drawerVisible,
+    openDrawer,
+    closeDrawer,
+    operateType,
+    editingData,
+    handleAdd,
+    handleEdit,
+    checkedRowKeys,
+    onBatchDeleted,
+    onDeleted
   };
 }
 
 /** 适配 Continew */
-export function useContiNewTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
+export function useCommonTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
   const scope = effectScope();
   const appStore = useAppStore();
 
@@ -613,49 +465,26 @@ export function useContiNewTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.N
   };
 }
 
-export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>, getData: () => Promise<void>) {
+/** 适配 Continew */
+export function useCommonTableOperate<T extends TableData = TableData>(data: Ref<T[]>, getData: () => Promise<void>) {
   const { bool: drawerVisible, setTrue: openDrawer, setFalse: closeDrawer } = useBoolean();
 
   const operateType = ref<NaiveUI.TableOperateType>('add');
+  /** the editing row data */
+  const editingData: Ref<T | null> = ref(null);
+  /** the checked row keys of table */
+  const checkedRowKeys = ref<string[] | number[]>([]);
 
   function handleAdd() {
     operateType.value = 'add';
     openDrawer();
   }
 
-  /** the editing row data */
-  const editingData: Ref<T | null> = ref(null);
-
-  function handleEdit(id: T['id']) {
-    operateType.value = 'edit';
+  function handleEdit(id: string | number) {
     const findItem = data.value.find(item => item.id === id) || null;
     editingData.value = cloneDeep(findItem);
+    operateType.value = 'edit';
     openDrawer();
-  }
-
-  /** the checked row keys of table */
-  const checkedRowKeys = ref<string[] | number[]>([]);
-
-  /** the hook after the batch delete operation is completed */
-  async function onBatchDeleted() {
-    window.$message?.success($t('common.deleteSuccess'));
-
-    checkedRowKeys.value = [];
-
-    await getData();
-  }
-
-  /** the hook after the delete operation is completed */
-  async function onDeleted() {
-    window.$message?.success($t('common.deleteSuccess'));
-
-    await getData();
-  }
-
-  /** the hook after the export operation is completed */
-  async function onExported() {
-    window.$message?.success($t('common.exportSuccess'));
-    // await getData();
   }
 
   return {
@@ -663,13 +492,10 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     openDrawer,
     closeDrawer,
     operateType,
-    handleAdd,
     editingData,
-    handleEdit,
     checkedRowKeys,
-    onBatchDeleted,
-    onDeleted,
-    onExported
+    handleAdd,
+    handleEdit
   };
 }
 

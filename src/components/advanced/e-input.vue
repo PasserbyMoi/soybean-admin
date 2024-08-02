@@ -1,16 +1,16 @@
 <script setup lang="tsx">
 defineOptions({
-  name: 'BInputNumber'
+  name: 'EInput'
 });
 
 interface Props {
-  mvalue: number;
+  mvalue: string | [string, string];
   autoClose?: boolean;
   // rules: FormItemRule;
 }
 
 interface Emits {
-  (e: 'onUpdated', id: string | number): boolean;
+  (e: 'onUpdated', id: string | [string, string]): boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -25,7 +25,7 @@ const isEdit = ref(false);
 const inputRef = ref();
 
 const handleChange = (isChange: boolean): void => {
-  if (isChange && emit('onUpdated', value.value)) {
+  if (isChange) {
     remindVal = value.value;
   } else {
     value.value = remindVal;
@@ -38,7 +38,7 @@ const handleChange = (isChange: boolean): void => {
 
 <template>
   <div v-if="isEdit" class="flex gap-2">
-    <NInputNumber
+    <NInput
       ref="inputRef"
       v-model:value="value"
       type="text"
@@ -46,7 +46,7 @@ const handleChange = (isChange: boolean): void => {
       class="text-align-left"
       @keyup.enter="handleChange(true)"
     />
-    <NButton text type="success" class="font-size-20px" @click="handleChange(true)">
+    <NButton text class="font-size-20px" type="success" @click="handleChange(true)">
       <icon-ic-round-check />
     </NButton>
     <NButton text class="font-size-20px" @click="handleChange(false)">

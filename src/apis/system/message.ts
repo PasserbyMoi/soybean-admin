@@ -4,8 +4,8 @@ import type * as System from './type';
 const BASE_URL = '/system/message';
 
 /** 查询消息列表 */
-export function listMessage(query: System.MessagePageQuery) {
-  return request<App.Service.Page<System.MessageResp[]>>({
+export function listMessage(query: Api.Common.EPaginatingSearchParams<System.MessageQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.MessageResp[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query

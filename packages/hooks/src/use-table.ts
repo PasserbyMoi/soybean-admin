@@ -1,5 +1,6 @@
 import { computed, reactive, ref } from 'vue';
 import type { Ref } from 'vue';
+import _ from 'lodash';
 import useBoolean from './use-boolean';
 import useLoading from './use-loading';
 
@@ -108,7 +109,6 @@ export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<
 
   function formatSearchParams(params: Record<string, unknown>) {
     const formattedParams: Record<string, unknown> = {};
-
     Object.entries(params).forEach(([key, value]) => {
       if (value !== null && value !== undefined) {
         formattedParams[key] = value;

@@ -4,8 +4,8 @@ import type * as System from './type';
 const BASE_URL = '/system/file';
 
 /** 查询文件列表 */
-export function listFile(query: System.FilePageQuery) {
-  return request<App.Service.Page<System.FileItem[]>>({
+export function listFile(query: Api.Common.EPaginatingSearchParams<System.FileQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.FileItem[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query

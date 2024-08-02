@@ -4,8 +4,8 @@ import type * as System from './type';
 const BASE_URL = '/system/notice';
 
 /** 查询公告列表 */
-export function listNotice(query: System.NoticePageQuery) {
-  return request<App.Service.Page<System.NoticeResp[]>>({
+export function listNotice(query: Api.Common.EPaginatingSearchParams<System.NoticeQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.NoticeResp[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query
@@ -14,7 +14,7 @@ export function listNotice(query: System.NoticePageQuery) {
 
 /** 查询公告详情 */
 export function getNotice(id: string) {
-  return request<System.NoticeResp[]>({
+  return request<System.NoticeResp>({
     url: `${BASE_URL}/${id}`,
     method: 'get'
   });
@@ -25,7 +25,7 @@ export function addNotice(data: any) {
   return request({
     url: `${BASE_URL}`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -34,7 +34,7 @@ export function updateNotice(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 

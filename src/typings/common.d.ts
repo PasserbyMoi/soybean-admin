@@ -8,9 +8,11 @@ declare namespace CommonType {
     callback: () => void;
   }
 
-  type YesOrNo = 'Y' | 'N';
+  type YesOrNo = 'Y' | 'N' | 'U';
 
-  type YesOrNoNum = 1 | 0;
+  type YesOrNoNum = 1 | 0 | 2;
+
+  type EnableStatus = 0 | 1 | 2;
 
   /**
    * The option type

@@ -1,90 +1,156 @@
 <script setup lang="tsx">
-import { useAuthStore } from '@/store/modules/auth';
+import { NA } from 'naive-ui';
+import type { NoticeQuery, NoticeResp } from '@/apis';
+import { deleteNotice, listNotice } from '@/apis';
+import TableTag from '@/components/advanced/table-tag.vue';
+import { $t } from '@/locales';
+import { useDict } from '@/hooks/business/dict';
+import NoticeDetailModal from './modules/notice-detail-modal.vue';
+import NoticeViewModal from './modules/notice-view-modal.vue';
 
-const authStore = useAuthStore();
+defineOptions({ name: 'SystemStorage' });
 
-const { userInfo } = authStore;
-const formRef = ref();
-const formValue = ref({
-  user: {
-    name: '张三',
-    age: ''
-  },
-  phone: ''
-});
-const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
+const { notice_type, notice_status_enum } = useDict('notice_type', 'notice_status_enum');
+
+const apiParams: Api.Common.EPaginatingSearchParams<NoticeQuery> = {
+  page: 1,
+  size: 10,
+  sort: ['createTime, desc'],
+  title: null,
+  type: null
+};
+const columns = ref<NaiveUI.TableColumn<any>[]>([
+  {
+    title: '标题',
+    key: 'title',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render(row) {
+      return h(NA, { size: 'small', onClick: () => viewHandle(row.id) }, { default: () => row.title });
     }
   },
-  phone: {
-    required: true,
-    message: '请输入电话号码',
-    trigger: ['input']
-  }
-};
+  {
+    title: '类型',
+    key: 'type',
+    align: 'center',
+    resizable: true,
+    render: row => {
+      return h(TableTag, { value: row.type, options: notice_type.value }, { default: () => row.type });
+    }
+  },
+  {
+    title: '状态',
+    key: 'status',
+    align: 'center',
+    resizable: true,
+    render: row => {
+      return h(TableTag, { value: row.status, options: notice_status_enum.value }, { default: () => row.status });
+    }
+  },
+  { title: '生效时间', key: 'effectiveTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '终止时间', key: 'terminateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+]);
 
-function handleValidateClick() {
-  formRef.value?.validate((errors: any) => {
-    if (!errors) window.$message?.success('验证通过');
-    else window.$message?.error('验证不通过');
-  });
+const operations: App.Table.Operation<NoticeResp>[] = [
+  {
+    label: '编辑',
+    yesHandle(row, _index) {
+      if (row.id) editHandle(row.id);
+    }
+  },
+  {
+    label: '删除',
+    type: 'error',
+    confirm: true,
+    yesHandle(row, _index) {
+      if (row.id) deleteHandle(row.id);
+    }
+  }
+];
+
+const tableRef = ref();
+const detailRef = ref();
+const viewRef = ref();
+
+const rowId = ref<string>();
+const visible = ref<boolean>();
+const visibleView = ref<boolean>();
+const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function addHandle() {
+  rowId.value = undefined;
+  visible.value = true;
+  operateType.value = 'add';
+}
+
+function editHandle(id: string) {
+  rowId.value = `${id}`;
+  visible.value = true;
+  operateType.value = 'edit';
+}
+
+function viewHandle(id: string) {
+  rowId.value = `${id}`;
+  visibleView.value = true;
+}
+
+function deleteHandle(id: string) {
+  deleteNotice(id)
+    .then(() => {
+      window.$message?.info($t('common.deleteSuccess'));
+      submited();
+    })
+    .catch(err => {
+      window.$message?.info(err);
+    });
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
 }
 </script>
 
 <template>
-  <NSpace vertical>
-    <NCard title="个人信息">
-      <NSpace size="large">
-        <NAvatar round :size="128" :src="userInfo?.avatar" />
-
-        <NDescriptions
-          label-placement="left"
-          :column="2"
-          :title="`傍晚好，${userInfo?.nickname}，这里是简单的个人中心模板`"
-        >
-          <NDescriptionsItem label="id">
-            {{ userInfo?.id }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="用户名">
-            {{ userInfo?.userName }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="真实名称">
-            {{ userInfo?.nickname }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="角色">
-            {{ userInfo?.roles }}
-          </NDescriptionsItem>
-        </NDescriptions>
-      </NSpace>
-    </NCard>
-    <NCard title="信息修改">
-      <NSpace justify="center">
-        <NForm ref="formRef" class="w-500px" :label-width="80" :model="formValue" :rules="rules">
-          <NFormItem label="姓名" path="user.name">
-            <NInput v-model:value="formValue.user.name" placeholder="输入姓名" />
-          </NFormItem>
-          <NFormItem label="年龄" path="user.age">
-            <NInput v-model:value="formValue.user.age" placeholder="输入年龄" />
-          </NFormItem>
-          <NFormItem label="电话号码" path="phone">
-            <NInput v-model:value="formValue.phone" placeholder="电话号码" />
-          </NFormItem>
-          <NFormItem>
-            <NButton type="primary" attr-type="button" block @click="handleValidateClick">验证</NButton>
-          </NFormItem>
-        </NForm>
-      </NSpace>
-    </NCard>
-  </NSpace>
+  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <TableCard
+      ref="tableRef"
+      row-key="id"
+      :api-fn="listNotice"
+      :api-params="apiParams"
+      :columns="columns"
+      :show-selection="false"
+      :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      @add="addHandle"
+      @edit="editHandle"
+      @delete="deleteHandle"
+    >
+      <template #search="{ searchParams }">
+        <NFormItemGi span="24 s:12 m:5" label="标题" path="title">
+          <NInput v-model:value="searchParams.title" placeholder="请输入公告标题" clearable />
+        </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:5" label="类型" path="status">
+          <NSelect v-model:value="searchParams.type" :options="notice_type" placeholder="请选择类型" clearable />
+        </NFormItemGi>
+      </template>
+    </TableCard>
+    <NoticeDetailModal
+      ref="detailRef"
+      v-model:visible="visible"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+    <NoticeViewModal
+      ref="viewRef"
+      v-model:visible="visibleView"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+  </div>
 </template>
 
 <style scoped></style>

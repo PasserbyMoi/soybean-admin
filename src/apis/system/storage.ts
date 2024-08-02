@@ -4,8 +4,8 @@ import type * as System from './type';
 const BASE_URL = '/system/storage';
 
 /** 查询存储列表 */
-export function listStorage(query: System.StoragePageQuery) {
-  return request<App.Service.Page<System.StorageResp[]>>({
+export function listStorage(query: Api.Common.EPaginatingSearchParams<System.StoragePageQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.StorageResp[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query
@@ -25,7 +25,7 @@ export function addStorage(data: any) {
   return request({
     url: `${BASE_URL}`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -34,7 +34,7 @@ export function updateStorage(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 

@@ -9,7 +9,7 @@ export interface TableResp {
   disabled: boolean;
 }
 export interface TableQuery {
-  tableName?: string;
+  tableName?: string | null;
 }
 export interface FieldConfigResp {
   tableName: string;

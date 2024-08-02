@@ -5,6 +5,10 @@ export default defineConfig(
   {
     rules: {
       complexity: ['error', { max: 50 }],
+      'no-nested-ternary': 'off',
+      'no-use-before-define': 'off',
+      // 'allow-all-properties-on-same-line': true,
+      '@typescript-eslint/no-use-before-define': 'off',
       'vue/multi-word-component-names': [
         'warn',
         {

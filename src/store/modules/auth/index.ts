@@ -74,19 +74,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    */
   async function login(accountLoginReq: AccountLoginReq, redirect = true) {
     startLoading();
-
     const { data: loginResp, error } = await accountLogin(accountLoginReq);
-
     if (!error) {
       const pass = await loginByToken(loginResp);
-
       if (pass) {
         await routeStore.initAuthRoute();
-
         if (redirect) {
           await redirectFromLogin();
         }
-
         if (routeStore.isInitAuthRoute) {
           window.$notification?.success({
             title: $t('page.login.common.loginSuccess'),
@@ -98,8 +93,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     } else {
       resetStore();
     }
-
     endLoading();
+    return error;
   }
 
   async function loginByToken(loginResp: LoginResp) {

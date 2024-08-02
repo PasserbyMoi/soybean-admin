@@ -12,11 +12,11 @@ export interface OnlineUserResp {
   errorMsg: string;
   createUserString: string;
   createTime: string;
+  token: string;
 }
 export interface OnlineUserQuery {
-  nickname?: string;
-  loginTime?: string;
-  sort: Array<string>;
+  nickname?: string | null;
+  loginTime?: string | null;
 }
 
 /** 系统日志类型 */
@@ -45,11 +45,10 @@ export interface LogDetailResp extends LogResp {
   responseBody: string;
 }
 export interface LogQuery {
-  description?: string;
-  module?: string;
-  ip?: string;
-  createUserString?: string;
-  createTime: Array<string>;
-  status?: number;
-  sort: Array<string>;
+  description?: string | null;
+  module?: string | null;
+  ip?: string | null;
+  createUserString?: string | null;
+  createTime: Array<string> | null;
+  status?: number | null;
 }

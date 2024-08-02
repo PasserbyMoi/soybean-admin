@@ -1,3 +1,5 @@
+import { error } from 'node:console';
+
 const local: App.I18n.Schema = {
   system: {
     title: 'Soybean 管理系统',
@@ -46,12 +48,26 @@ const local: App.I18n.Schema = {
     export: '导出',
     exportSuccess: '导出成功',
     confirmExport: '确认导出吗？',
+    copy: '点击复制',
+    copySuccess: '复制成功',
+    copyNotSupported: '您的浏览器不支持 Clipboard API',
     dataList: '数据列表',
     list: '列表',
+    confirmOperations: '确认执行 {name} 操作吗？',
     userCenter: '个人中心',
+    unkonw: '未知',
+    default: '默认',
     yesOrNo: {
       yes: '是',
       no: '否'
+    },
+    enable: {
+      enabled: '启用',
+      disabled: '禁用'
+    },
+    status: {
+      succeed: '成功',
+      failed: '失败'
     }
   },
   request: {

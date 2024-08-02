@@ -4,8 +4,8 @@ import type * as System from './type';
 const BASE_URL = '/system/role';
 
 /** 查询角色列表 */
-export function listRole(query: System.RolePageQuery) {
-  return request<App.Service.Page<System.RoleResp[]>>({
+export function listRole(query: Api.Common.EPaginatingSearchParams<System.RoleQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.RoleResp[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query
@@ -25,7 +25,7 @@ export function addRole(data: any) {
   return request({
     url: `${BASE_URL}`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -34,7 +34,7 @@ export function updateRole(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 

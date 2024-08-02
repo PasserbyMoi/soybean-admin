@@ -32,8 +32,6 @@ export interface UserQuery {
   sort: Array<string>;
 }
 
-export interface UserPageQuery extends UserQuery, PageQuery {}
-
 /** 系统角色类型 */
 export interface RoleResp {
   id: string;
@@ -41,7 +39,7 @@ export interface RoleResp {
   code: string;
   sort: number;
   description: string;
-  dataScope: number;
+  dataScope: number | null;
   isSystem: boolean;
   createUserString: string;
   createTime: string;
@@ -57,7 +55,7 @@ export interface RoleDetailResp {
   sort: number;
   description: string;
   menuIds: Array<number>;
-  dataScope: number;
+  dataScope: number | null;
   deptIds: Array<number>;
   isSystem: boolean;
   createUserString: string;
@@ -68,11 +66,9 @@ export interface RoleDetailResp {
 }
 
 export interface RoleQuery {
-  description?: string;
+  description?: string | null;
   sort: Array<string>;
 }
-
-export interface RolePageQuery extends RoleQuery, PageQuery {}
 
 /** 系统菜单类型 */
 export interface MenuResp {
@@ -166,30 +162,25 @@ export interface DictItemQuery {
   dictId: string;
 }
 
-export interface DictItemPageQuery extends DictItemQuery, PageQuery {}
-
 /** 系统公告类型 */
 export interface NoticeResp {
-  id: string;
-  title: string;
-  content: string;
-  status: number;
-  type: string;
-  effectiveTime: string;
-  terminateTime: string;
-  createUserString: string;
-  createTime: string;
-  updateUserString: string;
-  updateTime: string;
+  id?: string;
+  title?: string;
+  content?: string;
+  status?: number;
+  type?: string;
+  effectiveTime?: string | null;
+  terminateTime?: string | null;
+  createUserString?: string;
+  createTime?: string;
+  updateUserString?: string;
+  updateTime?: string;
 }
 
 export interface NoticeQuery {
-  title?: string;
-  type?: string;
-  sort: Array<string>;
+  title?: string | null;
+  type?: string | null;
 }
-
-export interface NoticePageQuery extends NoticeQuery, PageQuery {}
 
 /** 系统文件类型 */
 export type FileItem = {
@@ -224,33 +215,30 @@ export interface FileQuery {
   sort: Array<string>;
 }
 
-export interface FilePageQuery extends FileQuery, PageQuery {}
-
 /** 系统存储类型 */
 export type StorageResp = {
-  id: string;
-  name: string;
-  code: string;
-  type: number;
-  accessKey: string;
-  secretKey: string;
-  endpoint: string;
-  bucketName: string;
-  domain: string;
-  description: string;
-  isDefault: boolean;
-  sort: number;
-  status: number;
-  createUserString: string;
-  createTime: string;
-  updateUserString: string;
-  updateTime: string;
+  id?: string | null;
+  name?: string | null;
+  code?: string | null;
+  type?: number | null;
+  accessKey?: string | null;
+  secretKey?: string | null;
+  endpoint?: string | null;
+  bucketName?: string | null;
+  domain?: string | null;
+  description?: string | null;
+  isDefault?: boolean;
+  sort?: number | null;
+  status?: number;
+  createUserString?: string | null;
+  createTime?: string | null;
+  updateUserString?: string | null;
+  updateTime?: string | null;
 };
 
 export interface StorageQuery {
-  description?: string;
-  status?: number;
-  sort: Array<string>;
+  description?: string | null;
+  status?: number | null;
 }
 
 export interface StoragePageQuery extends StorageQuery, PageQuery {}
@@ -290,13 +278,13 @@ export interface SiteConfig {
 
 /** 邮箱配置类型 */
 export interface MailConfig {
-  MAIL_PROTOCOL: OptionResp;
-  MAIL_HOST: OptionResp;
-  MAIL_PORT: OptionResp;
-  MAIL_USERNAME: OptionResp;
-  MAIL_PASSWORD: OptionResp;
-  MAIL_SSL_ENABLED: OptionResp;
-  MAIL_SSL_PORT: OptionResp;
+  MAIL_PROTOCOL?: OptionResp;
+  MAIL_HOST?: OptionResp;
+  MAIL_PORT?: OptionResp;
+  MAIL_USERNAME?: OptionResp;
+  MAIL_PASSWORD?: OptionResp;
+  MAIL_SSL_ENABLED?: OptionResp;
+  MAIL_SSL_PORT?: OptionResp;
 }
 
 /** 安全配置类型 */
@@ -352,5 +340,3 @@ export interface ArcoTreeNodeData {
   dragIcon?: () => VNode;
   children?: ArcoTreeNodeData[];
 }
-
-export interface MessagePageQuery extends MessageQuery, PageQuery {}

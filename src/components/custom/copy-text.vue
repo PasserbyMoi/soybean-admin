@@ -1,8 +1,22 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core';
+import { $t } from '@/locales';
+
+const { copy, isSupported } = useClipboard();
+
 const props = defineProps<{
   maxLength?: string;
 }>();
 const modelValue = defineModel<string>('value');
+
+async function handleCopy() {
+  if (!isSupported) {
+    window.$message?.error($t('common.copyNotSupported'));
+    return;
+  }
+  await copy(modelValue.value ?? '');
+  window.$message?.success($t('common.copySuccess'));
+}
 </script>
 
 <template>
@@ -12,11 +26,11 @@ const modelValue = defineModel<string>('value');
     </NEllipsis>
     <NTooltip trigger="hover">
       <template #trigger>
-        <span v-copy="modelValue" class="cursor-pointer">
-          <icon-park-outline-copy />
+        <span class="cursor-pointer">
+          <icon-icon-park-outline:copy class="text-icon" @click="handleCopy" />
         </span>
       </template>
-      {{ $t('components.copyText.tooltip') }}
+      {{ $t('common.copy') }}
     </NTooltip>
   </div>
 </template>

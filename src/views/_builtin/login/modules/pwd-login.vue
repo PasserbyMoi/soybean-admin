@@ -37,7 +37,10 @@ const rules = computed<Record<keyof AccountLoginReq, App.Global.FormRule[]>>(() 
 
 async function handleSubmit() {
   await validate();
-  await authStore.login(model);
+  const error = await authStore.login(model);
+  if (error) {
+    getCaptcha();
+  }
 }
 
 // type AccountKey = 'super' | 'admin' | 'user';

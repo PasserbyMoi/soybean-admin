@@ -244,15 +244,24 @@ export function getNaiveTheme(colors: App.Theme.ThemeColor, recommended = false)
 
   const theme: GlobalThemeOverrides = {
     common: {
-      ...getNaiveThemeColors(colors, recommended),
-      borderRadius: '6px'
+      ...getNaiveThemeColors(colors, recommended)
+      // borderRadius: '6px'
     },
     LoadingBar: {
       colorLoading
-    },
-    Tag: {
-      borderRadius: '2px'
     }
+    // Tag: {
+    //   borderRadius: '2px'
+    // },
+    // Button: {
+    //   borderRadius: '2px'
+    // },
+    // FloatButton: {
+    //   borderRadius: '2px'
+    // },
+    // ButtonGroup: {
+    //   borderRadius: '2px'
+    // }
   };
 
   return theme;

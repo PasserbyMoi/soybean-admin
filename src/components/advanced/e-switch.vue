@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import {NSwitch} from 'naive-ui';
+import { NSwitch } from 'naive-ui';
 
 defineOptions({
-  name: 'BSwitch'
+  name: 'ESwitch'
 });
 
 interface Props {

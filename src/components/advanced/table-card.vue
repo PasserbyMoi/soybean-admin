@@ -1,200 +1,184 @@
 <script setup lang="tsx">
 import type { DataTableInst } from 'naive-ui';
-import { NButton, NPopconfirm } from 'naive-ui';
-import { utils, writeFile } from 'xlsx';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
-import { useContiNewTable, useTableOperate } from '@/hooks/common/table';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
-
-const appStore = useAppStore();
+import { useTabStore } from '@/store/modules/tab';
+import { useCommonTable } from '@/hooks/common/table';
+import { tableIndexColumns, tableSelectionColumns } from '@/constants/business';
+import TableColumnOperations from './table-column-operations.vue';
+import TableHeaderOperation from './table-header-operation.vue';
 
 defineOptions({
   name: 'TableCard'
 });
 
+const appStore = useAppStore();
+const tabStore = useTabStore();
+
 interface Props {
+  rowKey?: string;
   title?: string;
   showTotal?: boolean;
+  showSelection?: boolean;
+  showIndex?: boolean;
   apiFn: NaiveUI.TableApiFn;
-  // apiParams: Api.SystemManage.CommonSearchParams;
-  apiParams: any;
+  apiParams: Api.Common.PaginatingSearchParams | any;
   columns: NaiveUI.TableColumn<any>[];
+
+  loading?: boolean;
+  itemAlign?: NaiveUI.Align;
 }
-
-const props = defineProps<Props>();
-
-interface Emits {
-  (e: 'delete', id: string | number): void;
-  (e: 'batchDelete', ids: string[] | number[]): void;
-}
-
-const emit = defineEmits<Emits>();
-
-const tableRef = ref<DataTableInst | null>(null);
-
-const {
-  columns,
-  columnChecks,
-  data,
-  getData,
-  getDataByPage,
-  loading,
-  mobilePagination,
-  searchParams,
-  resetSearchParams
-} = useContiNewTable({
-  apiFn: props.apiFn,
-  showTotal: props.showTotal,
-  apiParams: props.apiParams,
-  columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
-    {
-      key: 'index',
-      title: $t('common.index'),
-      align: 'center',
-      width: 64
-    },
-    ...props.columns,
-    {
-      key: 'operate',
-      title: $t('common.operate'),
-      align: 'center',
-      width: 180,
-      resizable: true,
-      fixed: 'right',
-      render: row => (
-        <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
-            {$t('common.edit')}
-          </NButton>
-          <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
-            {{
-              default: () => $t('common.confirmDelete'),
-              trigger: () => (
-                <NButton type="error" ghost size="small">
-                  {$t('common.delete')}
-                </NButton>
-              )
-            }}
-          </NPopconfirm>
-        </div>
-      )
-    }
-  ]
+const props = withDefaults(defineProps<Props>(), {
+  rowKey: 'id',
+  title: '数据展示',
+  showSelection: true,
+  showIndex: true,
+  showTotal: true,
+  loading: false,
+  itemAlign: 'flex-end'
 });
 
-const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedRowKeys, onBatchDeleted, onDeleted } =
-  useTableOperate(data, getData);
+interface Emits {
+  (e: 'add'): void;
+  (e: 'batchDelete', ids: string[] | number[]): void;
+}
+const emit = defineEmits<Emits>();
 
-async function handleBatchDelete() {
-  emit('batchDelete', checkedRowKeys.value);
-  await onBatchDeleted();
+const headerOperations = defineModel<Array<UnionKey.TableHeaderOperation<any>>>('headerOperations', {
+  default: () => ['add', 'delete', 'export', 'refresh', 'height', 'columnSetting']
+});
+
+const columnOperations = defineModel<Array<UnionKey.TableColumnOperation<any>>>('columnsOperations', {
+  default: () => []
+});
+
+const tabTitle = ref<string>(props.title ?? tabStore.getActiveTab().label ?? tabStore.getActiveTab().newLabel);
+const tableRef = ref<DataTableInst>();
+const searchVisible = ref(true);
+const tableHeaderOperatioRef = ref<any>();
+const checkedRowKeys = ref<string[] | number[]>([]);
+
+function columnsTransformer(): NaiveUI.TableColumn<any>[] {
+  let tableColumns: NaiveUI.TableColumn<any>[] = [];
+  if (props.showSelection) {
+    tableColumns.push(tableSelectionColumns);
+  }
+  if (props.showIndex) {
+    tableColumns.push(tableIndexColumns);
+  }
+  tableColumns = tableColumns.concat(props.columns);
+
+  if (!columnOperations.value || columnOperations.value.length === 0) {
+    return tableColumns;
+  }
+
+  tableColumns.push({
+    key: 'operate',
+    title: $t('common.operate'),
+    align: 'center',
+    width: 180,
+    resizable: true,
+    fixed: 'right',
+    render: row => {
+      return h(TableColumnOperations, { row, operations: columnOperations.value });
+    }
+  });
+  return tableColumns;
 }
 
-function handleDelete(id: string | number) {
-  emit('delete', id);
-  onDeleted();
+const { columns, columnChecks, data, getData, getDataByPage, loading, pagination, searchParams, resetSearchParams } =
+  useCommonTable({
+    apiFn: props.apiFn,
+    showTotal: props.showTotal,
+    apiParams: props.apiParams,
+    columns: columnsTransformer
+  });
+
+function handleAdd() {
+  emit('add');
+}
+
+function handleBatchDelete() {
+  emit('batchDelete', checkedRowKeys.value);
+  window.$message?.success($t('common.deleteSuccess'));
+  checkedRowKeys.value = [];
+  getData();
 }
 
 function handleExport() {
-  const exportColumns = columns.value.slice(2);
-  const excelList = data.value.map(item => exportColumns.map(col => getTableValue(col, item)));
-  const titleList = exportColumns.map(col => (isTableColumnHasTitle(col) && col.title) || null);
-  excelList.unshift(titleList);
-  const workBook = utils.book_new();
-  const workSheet = utils.aoa_to_sheet(excelList);
-  workSheet['!cols'] = exportColumns.map(item => ({
-    width: Math.round(Number(item.width) / 10 || 20)
-  }));
-  utils.book_append_sheet(workBook, workSheet, props.title);
-  writeFile(workBook, `${props.title}.xlsx`);
+  tableRef.value?.downloadCsv({ fileName: props.title, keepOriginalData: false });
+  window.$message?.success($t('common.exportSuccess'));
 }
 
-function edit(id: number) {
-  handleEdit(id);
-}
-
-/**
- * convert enum data, value to label
- *
- * @param col columns
- * @param item Item
- */
-function getTableValue(
-  col: NaiveUI.TableColumn<NaiveUI.TableDataWithIndex<any>>,
-  item: NaiveUI.TableDataWithIndex<any>
-) {
-  if (!isTableColumnHasKey(col)) {
-    return null;
-  }
-  const { key } = col;
-  if (key === 'operate') {
-    return null;
-  } else if (key === 'userRoles') {
-    return item.userRoles.map(role => role).join(',');
-  } else if (key === 'status') {
-    return (item.status && $t(enableStatusRecord[item.status])) || null;
-  } else if (key === 'userGender') {
-    return (item.userGender && $t(userGenderRecord[item.userGender])) || null;
-  }
-  return item[key];
-}
-
-function isTableColumnHasKey<T>(column: NaiveUI.TableColumn<T>): column is NaiveUI.TableColumnWithKey<T> {
-  return Boolean((column as NaiveUI.TableColumnWithKey<T>).key);
-}
-
-function isTableColumnHasTitle<T>(column: NaiveUI.TableColumn<T>): column is NaiveUI.TableColumnWithKey<T> & {
-  title: string;
-} {
-  return Boolean((column as NaiveUI.TableColumnWithKey<T>).title);
-}
+defineExpose({
+  getDataByPage
+});
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch flex-auto gap-16px overflow-hidden lt-sm:overflow-auto">
-    <slot name="search" :param="searchParams" :reset="resetSearchParams" :refresh="getDataByPage"></slot>
-    <NCard :title="title" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+  <div class="min-h-500px flex-col-stretch flex-auto gap-6px overflow-hidden lt-sm:overflow-auto">
+    <NCard v-if="searchVisible" :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
+      <NForm v-model:mode="searchParams" label-placement="left" :label-width="80">
+        <NGrid responsive="screen" item-responsive :x-gap="10">
+          <slot name="search" :search-params="searchParams"></slot>
+          <slot name="default">
+            <NFormItemGi>
+              <NSpace class="ml-6px" :wrap="false">
+                <NButton @click="resetSearchParams">
+                  <template #icon>
+                    <icon-ic-round-refresh class="text-icon" />
+                  </template>
+                  {{ $t('common.reset') }}
+                </NButton>
+                <NButton type="primary" ghost @click="getData">
+                  <template #icon>
+                    <icon-ic-round-search class="text-icon" />
+                  </template>
+                  {{ $t('common.search') }}
+                </NButton>
+              </NSpace>
+            </NFormItemGi>
+          </slot>
+        </NGrid>
+      </NForm>
+    </NCard>
+
+    <NCard :title="tabTitle" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :disabled-export="data.length === 0"
-          :loading="loading"
-          @add="handleAdd"
-          @delete="handleBatchDelete"
-          @refresh="getData"
-          @export="handleExport"
-        />
+        <NSpace :align="itemAlign" wrap class="items-center justify-center lt-sm:w-200px">
+          <slot name="operations"></slot>
+          <TableHeaderOperation
+            ref="tableHeaderOperatioRef"
+            v-model:columns="columnChecks"
+            v-model:operations="headerOperations"
+            :loading="loading"
+            :item-align="itemAlign"
+            :search-visible="searchVisible"
+            :delete-disabled="columnChecks.length === 0"
+            @add="handleAdd"
+            @batch-delete="handleBatchDelete"
+            @export="handleExport"
+            @refresh="getDataByPage"
+          />
+        </NSpace>
       </template>
+
       <NDataTable
         ref="tableRef"
         v-model:checked-row-keys="checkedRowKeys"
-        :columns="columns"
+        :row-key="row => row[rowKey]"
         :data="data"
-        :size="appStore.tableSize"
-        :flex-height="!appStore.isMobile"
-        :scroll-x="962"
+        :columns="columns"
         :loading="loading"
-        remote
+        :size="appStore.tableSize"
         :striped="appStore.isStriped"
-        :row-key="row => row.id"
-        :pagination="mobilePagination"
+        :pagination="pagination"
+        :flex-height="!appStore.isMobile"
+        :scroll-x="1200"
         class="sm:h-full"
+        remote
       />
     </NCard>
-    <slot
-      name="drawer"
-      :visible="drawerVisible"
-      :type="operateType"
-      :data="editingData"
-      :submitted="getDataByPage"
-    ></slot>
   </div>
 </template>
 

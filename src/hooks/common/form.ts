@@ -9,32 +9,32 @@ export function useFormRules() {
     username: {
       pattern: REG_USER_NAME,
       message: $t('form.userName.invalid'),
-      trigger: 'change'
+      trigger: ['change', 'blur']
     },
     phone: {
       pattern: REG_PHONE,
       message: $t('form.phone.invalid'),
-      trigger: 'change'
+      trigger: ['change', 'blur']
     },
     pwd: {
       pattern: REG_PWD,
       message: $t('form.pwd.invalid'),
-      trigger: 'change'
+      trigger: ['change', 'blur']
     },
     captcha: {
       pattern: REG_CAPTCHA_FOUR,
       message: $t('form.code.invalid'),
-      trigger: 'change'
+      trigger: ['change', 'blur']
     },
     code: {
       pattern: REG_CODE_SIX,
       message: $t('form.code.invalid'),
-      trigger: 'change'
+      trigger: ['change', 'blur']
     },
     email: {
       pattern: REG_EMAIL,
       message: $t('form.required'),
-      trigger: 'change'
+      trigger: ['change', 'blur']
     },
     uuid: {}
   } satisfies Record<string, App.Global.FormRule>;
@@ -55,6 +55,7 @@ export function useFormRules() {
   function createRequiredRule(message: string): App.Global.FormRule {
     return {
       required: true,
+      trigger: 'blur',
       message
     };
   }

@@ -21,6 +21,6 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "src/views/_builtin/tool/generator/modules/generator-config-drawer"],
   "exclude": ["node_modules", "dist"]
 }

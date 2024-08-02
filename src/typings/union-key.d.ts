@@ -49,6 +49,23 @@ declare namespace UnionKey {
   /** Table Space Size */
   type TableSpaceSize = 'small' | 'medium' | 'large';
 
+  /** Table header operation button state */
+  // import('naive-ui/es/tag/src/Tag').TagProps['size'];
+  type TableOperationState = 'enabled' | 'disabled' | 'none';
+
+  type TableHeaderOperation<T> =
+    | 'add'
+    | 'edit'
+    | 'delete'
+    | 'export'
+    | 'refresh'
+    | 'height'
+    | 'stripe'
+    | 'columnSetting'
+    | App.Table.Operation<T>;
+
+  type TableColumnOperation<T> = App.Table.Operation<T>;
+
   /** Unocss animate key */
   type UnoCssAnimateKey =
     | 'pulse'

@@ -56,11 +56,15 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
       // when the backend response code is in `modalLogoutCodes`, it means the user will be logged out by displaying a modal
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
-      if (modalLogoutCodes.includes(response.data.code) && !request.state.errMsgStack?.includes(response.data.msg)) {
+      if (
+        modalLogoutCodes.includes(`${response.data.code}`)
+        // && !request.state.errMsgStack?.includes(response.data.msg)
+      ) {
         request.state.errMsgStack = [...(request.state.errMsgStack || []), response.data.msg];
-
+        window.$message?.info('1----------', { duration: 4500 });
         // prevent the user from refreshing the page
         window.addEventListener('beforeunload', handleLogout);
+        window.$message?.info('----------', { duration: 4500 });
 
         window.$dialog?.error({
           title: $t('common.error'),
@@ -78,11 +82,10 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
         return null;
       }
-
       // when the backend response code is in `expiredTokenCodes`, it means the token is expired, and refresh token
       // the api `refreshToken` can not return error code in `expiredTokenCodes`, otherwise it will be a dead loop, should return `logoutCodes` or `modalLogoutCodes`
       const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
-      if (expiredTokenCodes.includes(response.data.code) && !request.state.isRefreshingToken) {
+      if (expiredTokenCodes.includes(`${response.data.code}`) && !request.state.isRefreshingToken) {
         request.state.isRefreshingToken = true;
 
         const refreshConfig = await handleRefreshToken(response.config);
@@ -101,7 +104,6 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
     },
     onError(error) {
       // when the request is fail, you can show error message
-
       let message = error.message;
       let backendErrorCode = '';
 
@@ -113,13 +115,13 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
       // the error message is displayed in the modal
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
-      if (modalLogoutCodes.includes(backendErrorCode)) {
+      if (modalLogoutCodes.includes(`${backendErrorCode}`)) {
         return;
       }
 
       // when the token is expired, refresh token and retry request, so no need to show error message
       const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
-      if (expiredTokenCodes.includes(backendErrorCode)) {
+      if (expiredTokenCodes.includes(`${backendErrorCode}`)) {
         return;
       }
 

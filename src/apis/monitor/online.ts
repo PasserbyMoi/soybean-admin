@@ -1,11 +1,11 @@
 import { request } from '@/service/request';
-import type * as Monitor from './type';
+import type { OnlineUserQuery, OnlineUserResp } from './type';
 
 const BASE_URL = '/monitor/online';
 
 /** 查询在线用户列表 */
-export function listOnlineUser(query: Api.Common.EPaginatingSearchParams<Monitor.OnlineUserQuery>) {
-  return request<Api.Common.PaginatingQueryRecord<Monitor.OnlineUserResp[]>[]>({
+export function listOnlineUser(query: Api.Common.EPaginatingSearchParams<OnlineUserQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<OnlineUserResp[]>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query
