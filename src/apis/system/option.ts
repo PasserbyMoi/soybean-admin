@@ -17,7 +17,7 @@ export function updateOption(data: any) {
   return request({
     url: `${BASE_URL}`,
     method: 'put',
-    params: data
+    data
   });
 }
 

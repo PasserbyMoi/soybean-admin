@@ -1,90 +1,143 @@
 <script setup lang="tsx">
-import { useAuthStore } from '@/store/modules/auth';
+import type { DictItemQuery, DictItemResp } from '@/apis';
+import { deleteDictItem, listDictItem } from '@/apis';
+import { $t } from '@/locales';
+import EnableTag from '@/components/custom/enable-tag.vue';
+import DictTag from '@/components/custom/dict-tag.vue';
+import DictListCard from './modules/dict-list-card.vue';
+import DictItemDetailDrawer from './modules/dict-item-detail-drawer.vue';
 
-const authStore = useAuthStore();
+defineOptions({ name: 'SystemDict' });
 
-const { userInfo } = authStore;
-const formRef = ref();
-const formValue = ref({
-  user: {
-    name: '张三',
-    age: ''
-  },
-  phone: ''
-});
-const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
-    }
-  },
-  phone: {
-    required: true,
-    message: '请输入电话号码',
-    trigger: ['input']
-  }
+const apiParams: Api.Common.EPaginatingSearchParams<DictItemQuery> = {
+  page: 1,
+  size: 10,
+  sort: ['createTime, desc'],
+  description: null
 };
 
-function handleValidateClick() {
-  formRef.value?.validate((errors: any) => {
-    if (!errors) window.$message?.success('验证通过');
-    else window.$message?.error('验证不通过');
-  });
+const columns = ref<NaiveUI.TableColumn<any>[]>([
+  {
+    title: '标签',
+    key: 'label',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    fixed: 'left',
+    render: row => {
+      return h(DictTag, { text: row.label, color: row.color });
+    }
+  },
+  { title: '值', key: 'value', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '状态',
+    key: 'status',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(EnableTag, { value: row.status });
+    }
+  },
+  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+]);
+
+const operations: App.Table.Operation<DictItemResp>[] = [
+  {
+    label: '编辑',
+    yesHandle(row, _index) {
+      if (row.id) editHandle(row.id);
+    }
+  },
+  {
+    label: '删除',
+    type: 'error',
+    confirm: true,
+    yesHandle(row, _index) {
+      if (row.id) deleteHandle(row.id);
+    }
+  }
+];
+
+const tableRef = ref();
+const detailRef = ref();
+
+const rowId = ref<string>();
+const visible = ref<boolean>();
+const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function addHandle() {
+  rowId.value = undefined;
+  visible.value = true;
+  operateType.value = 'add';
 }
+
+function editHandle(id: string) {
+  rowId.value = `${id}`;
+  visible.value = true;
+  operateType.value = 'edit';
+}
+
+function deleteHandle(id: string) {
+  deleteDictItem(id)
+    .then(() => {
+      window.$message?.info($t('common.deleteSuccess'));
+      submited();
+    })
+    .catch(err => {
+      window.$message?.info(err);
+    });
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
+}
+
+// 根据选中部门查询
+const handleSelectDict = (key: string) => {
+  tableRef.value.searchParams.dictId = key;
+  tableRef.value.getDataByPage();
+};
 </script>
 
 <template>
-  <NSpace vertical>
-    <NCard title="个人信息">
-      <NSpace size="large">
-        <NAvatar round :size="128" :src="userInfo?.avatar" />
+  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <TableCard
+      ref="tableRef"
+      row-key="id"
+      :api-fn="listDictItem"
+      :api-params="apiParams"
+      :columns="columns"
+      :show-selection="false"
+      :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
+      @add="addHandle"
+      @edit="editHandle"
+      @delete="deleteHandle"
+    >
+      <template #search="{ searchParams }">
+        <NFormItemGi span="24 s:12 m:5" label="关键词" path="description">
+          <NInput v-model:value="searchParams.description" placeholder="请输入关键词" clearable />
+        </NFormItemGi>
+      </template>
+      <template #sider>
+        <DictListCard placeholder="请输入关键词" @switch="handleSelectDict" />
+      </template>
+    </TableCard>
 
-        <NDescriptions
-          label-placement="left"
-          :column="2"
-          :title="`傍晚好，${userInfo?.nickname}，这里是简单的个人中心模板`"
-        >
-          <NDescriptionsItem label="id">
-            {{ userInfo?.id }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="用户名">
-            {{ userInfo?.userName }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="真实名称">
-            {{ userInfo?.nickname }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="角色">
-            {{ userInfo?.roles }}
-          </NDescriptionsItem>
-        </NDescriptions>
-      </NSpace>
-    </NCard>
-    <NCard title="信息修改">
-      <NSpace justify="center">
-        <NForm ref="formRef" class="w-500px" :label-width="80" :model="formValue" :rules="rules">
-          <NFormItem label="姓名" path="user.name">
-            <NInput v-model:value="formValue.user.name" placeholder="输入姓名" />
-          </NFormItem>
-          <NFormItem label="年龄" path="user.age">
-            <NInput v-model:value="formValue.user.age" placeholder="输入年龄" />
-          </NFormItem>
-          <NFormItem label="电话号码" path="phone">
-            <NInput v-model:value="formValue.phone" placeholder="电话号码" />
-          </NFormItem>
-          <NFormItem>
-            <NButton type="primary" attr-type="button" block @click="handleValidateClick">验证</NButton>
-          </NFormItem>
-        </NForm>
-      </NSpace>
-    </NCard>
-  </NSpace>
+    <DictItemDetailDrawer
+      ref="detailRef"
+      v-model:visible="visible"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+  </div>
 </template>
 
 <style scoped></style>

@@ -8,7 +8,7 @@ export function uploadAvatar(data: FormData) {
   return request({
     url: `${BASE_URL}/avatar`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -17,7 +17,7 @@ export function updateUserBaseInfo(data: { nickname: string; gender: number }) {
   return request({
     url: `${BASE_URL}/basic/info`,
     method: 'patch',
-    params: data
+    data
   });
 }
 
@@ -26,7 +26,7 @@ export function updateUserPassword(data: { oldPassword: string; newPassword: str
   return request({
     url: `${BASE_URL}/password`,
     method: 'patch',
-    params: data
+    data
   });
 }
 
@@ -35,7 +35,7 @@ export function updateUserPhone(data: { phone: string; captcha: string; oldPassw
   return request({
     url: `${BASE_URL}/phone`,
     method: 'patch',
-    params: data
+    data
   });
 }
 
@@ -44,7 +44,7 @@ export function updateUserEmail(data: { email: string; captcha: string; oldPassw
   return request({
     url: `${BASE_URL}/email`,
     method: 'patch',
-    params: data
+    data
   });
 }
 
@@ -61,7 +61,7 @@ export function bindSocialAccount(source: string, data: any) {
   return request({
     url: `${BASE_URL}/social/${source}`,
     method: 'post',
-    params: data
+    data
   });
 }
 

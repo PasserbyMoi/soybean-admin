@@ -10,9 +10,11 @@ declare namespace CommonType {
 
   type YesOrNo = 'Y' | 'N' | 'U';
 
-  type YesOrNoNum = 1 | 0 | 2;
+  type YesOrNoNum = 0 | 1 | 2;
 
   type EnableStatus = 0 | 1 | 2;
+
+  type Gender = 0 | 1 | 2;
 
   /**
    * The option type
@@ -24,7 +26,7 @@ declare namespace CommonType {
   type Option<V = string | number> = { value: V; label: string };
 
   /** 键值对类型 */
-  type EOption<V = any, L = string | number> = { label: L; value: V; code?: string; extend?: string };
+  type EOption<V = any, L = string | number> = { label: L; value: V; code?: string; type?: string; extend?: string };
 
   /** 字典类型 */
   type DictState = { code: string; items: Array<Option> };

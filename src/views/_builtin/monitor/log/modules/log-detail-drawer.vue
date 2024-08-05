@@ -26,6 +26,12 @@ const getDataDetail = async () => {
   }
 };
 
+// 关闭窗口
+function closeDrawer() {
+  dataDetail.value = undefined;
+  visible.value = false;
+}
+
 watch(visible, () => {
   if (visible.value) {
     getDataDetail();
@@ -34,7 +40,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NDrawer v-model:show="visible" display-directive="show" :width="800" close-on-esc>
+  <NDrawer v-model:show="visible" display-directive="show" :width="800" close-on-esc @after-leave="closeDrawer">
     <NDrawerContent closable>
       <template #header>日志详情</template>
       <NDescriptions

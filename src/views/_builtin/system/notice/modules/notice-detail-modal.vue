@@ -96,22 +96,29 @@ function handleInitModel() {
 // 提交
 async function handleSubmit() {
   await validate();
-  if (isEdit && rowId.value) {
-    updateNotice(model, rowId.value);
-    window.$message?.success($t('common.updateSuccess'));
+  if (isEdit.value && rowId.value) {
+    const { error } = await updateNotice(model, rowId.value);
+    if (!error) {
+      window.$message?.success($t('common.updateSuccess'));
+      closeDrawer(true);
+    }
   } else {
-    addNotice(model);
-    window.$message?.success($t('common.addSuccess'));
+    const { error } = await addNotice(model);
+    if (!error) {
+      window.$message?.success($t('common.addSuccess'));
+      closeDrawer(true);
+    }
   }
-  closeDrawer();
-  nextTick(() => {
-    emit('submitted');
-  });
 }
 
 // 关闭窗口
-function closeDrawer() {
+function closeDrawer(submitted: boolean = false) {
   visible.value = false;
+  if (submitted) {
+    nextTick(() => {
+      emit('submitted');
+    });
+  }
 }
 
 watch(visible, () => {
@@ -129,6 +136,7 @@ watch(visible, () => {
     class="h-90% w-80%"
     :title="title"
     close-on-esc
+    segmented
     @after-leave="closeDrawer"
   >
     <NForm ref="formRef" :model="model" :rules="rules">
@@ -180,8 +188,8 @@ watch(visible, () => {
       </NRow>
     </NForm>
     <template #footer>
-      <NSpace :size="16">
-        <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
+      <NSpace :size="16" justify="end">
+        <NButton @click="closeDrawer(false)">{{ $t('common.cancel') }}</NButton>
         <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
       </NSpace>
     </template>

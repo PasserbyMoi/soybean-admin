@@ -354,6 +354,11 @@ declare namespace App {
           succeed: string;
           failed: string;
         };
+        gender: {
+          male: string;
+          female: string;
+          unknow: string;
+        };
       };
       request: {
         logout: string;
@@ -595,11 +600,6 @@ declare namespace App {
             };
             addUser: string;
             editUser: string;
-            gender: {
-              male: string;
-              female: string;
-              unknow: string;
-            };
           };
           menu: {
             home: string;
@@ -785,6 +785,8 @@ declare namespace App {
         expand: string;
         pin: string;
         unpin: string;
+        expandList: string;
+        collapseList: string;
         notifications: string;
       };
       datatable: {
@@ -893,12 +895,6 @@ declare namespace App {
       negativeText?: string;
       yesHandle: (row: T, index?: number) => void;
       noHandle?: (row: T, index?: number) => void;
-    }
-
-    interface TagNumber {
-      type: import('naive-ui/es/tag/src/Tag').TagProps['type'];
-      minValue: number;
-      maxValue: number;
     }
   }
 }

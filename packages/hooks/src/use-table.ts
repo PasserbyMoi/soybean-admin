@@ -18,9 +18,9 @@ export type TableDataWithIndex<T> = T & { index: number };
 
 export type TransformedData<T> = {
   data: TableDataWithIndex<T>[];
-  pageNum: number;
-  pageSize: number;
-  total: number;
+  pageNum?: number;
+  pageSize?: number;
+  total?: number;
 };
 
 export type Transformer<T, Response> = (response: Response) => TransformedData<T>;

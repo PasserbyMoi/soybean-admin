@@ -1,7 +1,8 @@
 <script setup lang="tsx">
-import { NBadge, NGradientText, NTag } from 'naive-ui';
+import { NTag } from 'naive-ui';
 import { type StorageQuery, type StorageResp, deleteStorage, listStorage } from '@/apis';
 import TableTag from '@/components/advanced/table-tag.vue';
+import EnableTag from '@/components/custom/enable-tag.vue';
 import { enableNextOptions } from '@/constants/common';
 import { $t } from '@/locales';
 import { useDict } from '@/hooks/business/dict';
@@ -48,7 +49,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     align: 'center',
     resizable: true,
     render: row => {
-      return h(TableTag, { value: row.status, options: enableNextOptions }, { default: () => row.status });
+      return h(EnableTag, { value: row.status });
     }
   },
   {
@@ -100,7 +101,6 @@ function addHandle() {
   rowId.value = undefined;
   visible.value = true;
   operateType.value = 'add';
-  console.log(JSON.stringify(columns.value));
 }
 
 function editHandle(id: string) {
@@ -135,7 +135,7 @@ function submited() {
       :columns="columns"
       :show-selection="false"
       :columns-operations="operations"
-      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
       @add="addHandle"
       @edit="editHandle"
       @delete="deleteHandle"

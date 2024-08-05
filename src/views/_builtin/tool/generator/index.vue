@@ -44,7 +44,7 @@ const operations: App.Table.Operation<TableResp>[] = [
       :api-fn="listGenerator"
       :show-selection="false"
       :columns-operations="operations"
-      :header-operations="['export', 'refresh', 'height', 'columnSetting']"
+      :header-operations="['export', 'refresh', 'height', 'stripe', 'columnSetting']"
     >
       <template #search="{ searchParams }">
         <NFormItemGi span="24 s:12 m:6" label="表名" path="tableName" class="pr-24px">

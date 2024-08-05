@@ -36,6 +36,9 @@ const deleteDisabled = defineModel<boolean>('deleteDisabled', {
   default: () => false
 });
 
+const expand = defineModel<boolean>('expand', {
+  default: () => false
+});
 const searchVisible = defineModel<boolean>('searchVisible', {
   default: () => true
 });
@@ -55,15 +58,17 @@ function toggleTableFullScreen() {
   searchVisible.value = !searchVisible.value;
   appThemeStore.tab.visible = !appThemeStore.tab.visible;
 }
+function toggleExpand() {
+  expand.value = !expand.value;
+}
 </script>
 
 <template>
-  <NSpace :align="itemAlign" wrap class="items-center justify-center lt-sm:w-200px">
-    <slot name="prefix"></slot>
+  <NSpace :align="itemAlign" wrap class="lt-sm:w-200px !items-center">
     <slot name="default">
       <NButton v-if="operations.includes('add')" size="small" ghost type="primary" @click="emit('add')">
         <template #icon>
-          <icon-ic-round-plus class="text-icon" :class="{ 'animate-spin': loading }" />
+          <icon-material-symbols:add class="text-icon" :class="{ 'animate-spin': loading }" />
         </template>
         {{ $t('common.add') }}
       </NButton>
@@ -71,7 +76,7 @@ function toggleTableFullScreen() {
         <template #trigger>
           <NButton size="small" ghost type="error" :disabled="deleteDisabled">
             <template #icon>
-              <icon-ic-round-delete class="text-icon" :class="{ 'animate-spin': loading }" />
+              <icon-material-symbols:delete class="text-icon" :class="{ 'animate-spin': loading }" />
             </template>
             <!-- {{ $t('common.delete') }} -->
           </NButton>
@@ -82,7 +87,7 @@ function toggleTableFullScreen() {
         <template #trigger>
           <NButton size="small" ghost type="warning">
             <template #icon>
-              <icon-ic-round-get-app class="text-icon" :class="{ 'animate-spin': loading }" />
+              <icon-material-symbols:arrow-downward class="text-icon" :class="{ 'animate-spin': loading }" />
             </template>
             <!-- {{ $t('common.export') }} -->
           </NButton>
@@ -90,10 +95,9 @@ function toggleTableFullScreen() {
         {{ $t('common.confirmExport') }}
       </NPopconfirm>
     </slot>
-    <slot name="suffix"></slot>
     <NButton size="small" @click="emit('refresh')">
       <template #icon>
-        <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
+        <icon-material-symbols:refresh class="text-icon" :class="{ 'animate-spin': loading }" />
       </template>
     </NButton>
     <NDropdown
@@ -105,10 +109,16 @@ function toggleTableFullScreen() {
     >
       <NButton size="small">
         <template #icon>
-          <icon-ic-round-expand class="text-icon" :class="{ 'animate-spin': loading }" />
+          <icon-material-symbols:expand class="text-icon" :class="{ 'animate-spin': loading }" />
         </template>
       </NButton>
     </NDropdown>
+    <NButton size="small" @click="toggleExpand">
+      <template #icon>
+        <icon-material-symbols:arrow-right-alt v-if="expand" title=" $t('icon.collapseList')" />
+        <icon-material-symbols:arrow-split v-else title=" $t('icon.expandList')" />
+      </template>
+    </NButton>
     <NSwitch v-if="operations.includes('stripe')" v-model:value="appStore.isStriped" size="small" />
     <TableColumnSetting
       v-model:columns="columnChecks"

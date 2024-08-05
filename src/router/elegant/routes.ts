@@ -287,68 +287,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
-    name: 'multi-menu',
-    path: '/multi-menu',
-    component: 'layout.base',
-    meta: {
-      title: 'multi-menu',
-      i18nKey: 'route.multi-menu',
-      order: 8
-    },
-    children: [
-      {
-        name: 'multi-menu_first',
-        path: '/multi-menu/first',
-        meta: {
-          title: 'multi-menu_first',
-          i18nKey: 'route.multi-menu_first',
-          order: 1
-        },
-        children: [
-          {
-            name: 'multi-menu_first_child',
-            path: '/multi-menu/first/child',
-            component: 'view.multi-menu_first_child',
-            meta: {
-              title: 'multi-menu_first_child',
-              i18nKey: 'route.multi-menu_first_child'
-            }
-          }
-        ]
-      },
-      {
-        name: 'multi-menu_second',
-        path: '/multi-menu/second',
-        meta: {
-          title: 'multi-menu_second',
-          i18nKey: 'route.multi-menu_second',
-          order: 2
-        },
-        children: [
-          {
-            name: 'multi-menu_second_child',
-            path: '/multi-menu/second/child',
-            meta: {
-              title: 'multi-menu_second_child',
-              i18nKey: 'route.multi-menu_second_child'
-            },
-            children: [
-              {
-                name: 'multi-menu_second_child_home',
-                path: '/multi-menu/second/child/home',
-                component: 'view.multi-menu_second_child_home',
-                meta: {
-                  title: 'multi-menu_second_child_home',
-                  i18nKey: 'route.multi-menu_second_child_home'
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     name: 'plugin',
     path: '/plugin',
     component: 'layout.base',
@@ -625,13 +563,23 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
-            name: 'system_dict_item',
-            path: '/system/dict/item',
-            component: 'view.system_dict_item',
+            name: 'system_dict_modules',
+            path: '/system/dict/modules',
             meta: {
-              title: 'system_dict_item',
-              i18nKey: 'route.system_dict_item'
-            }
+              title: 'system_dict_modules',
+              i18nKey: 'route.system_dict_modules'
+            },
+            children: [
+              {
+                name: 'system_dict_modules_tree',
+                path: '/system/dict/modules/tree',
+                component: 'view.system_dict_modules_tree',
+                meta: {
+                  title: 'system_dict_modules_tree',
+                  i18nKey: 'route.system_dict_modules_tree'
+                }
+              }
+            ]
           }
         ]
       },
@@ -642,7 +590,28 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'system_file',
           i18nKey: 'route.system_file'
-        }
+        },
+        children: [
+          {
+            name: 'system_file_main',
+            path: '/system/file/main',
+            meta: {
+              title: 'system_file_main',
+              i18nKey: 'route.system_file_main'
+            },
+            children: [
+              {
+                name: 'system_file_main_filemain',
+                path: '/system/file/main/filemain',
+                component: 'view.system_file_main_filemain',
+                meta: {
+                  title: 'system_file_main_filemain',
+                  i18nKey: 'route.system_file_main_filemain'
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         name: 'system_menu',
@@ -687,7 +656,28 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'system_user',
           i18nKey: 'route.system_user'
-        }
+        },
+        children: [
+          {
+            name: 'system_user_modules',
+            path: '/system/user/modules',
+            meta: {
+              title: 'system_user_modules',
+              i18nKey: 'route.system_user_modules'
+            },
+            children: [
+              {
+                name: 'system_user_modules_dept',
+                path: '/system/user/modules/dept',
+                component: 'view.system_user_modules_dept',
+                meta: {
+                  title: 'system_user_modules_dept',
+                  i18nKey: 'route.system_user_modules_dept'
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   },

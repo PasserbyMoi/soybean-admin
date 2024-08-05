@@ -21,7 +21,7 @@ interface Props {
   showTotal?: boolean;
   showSelection?: boolean;
   showIndex?: boolean;
-  apiFn: NaiveUI.TableApiFn;
+  apiFn: NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn;
   apiParams: Api.Common.PaginatingSearchParams | any;
   columns: NaiveUI.TableColumn<any>[];
 
@@ -54,6 +54,7 @@ const columnOperations = defineModel<Array<UnionKey.TableColumnOperation<any>>>(
 
 const tabTitle = ref<string>(props.title ?? tabStore.getActiveTab().label ?? tabStore.getActiveTab().newLabel);
 const tableRef = ref<DataTableInst>();
+const expand = ref(false);
 const searchVisible = ref(true);
 const tableHeaderOperatioRef = ref<any>();
 const checkedRowKeys = ref<string[] | number[]>([]);
@@ -111,12 +112,13 @@ function handleExport() {
 }
 
 defineExpose({
+  searchParams,
   getDataByPage
 });
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch flex-auto gap-6px overflow-hidden lt-sm:overflow-auto">
+  <div class="min-h-500px flex-col-stretch flex-auto gap-6px overflow-auto">
     <NCard v-if="searchVisible" :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
       <NForm v-model:mode="searchParams" label-placement="left" :label-width="80">
         <NGrid responsive="screen" item-responsive :x-gap="10">
@@ -151,6 +153,7 @@ defineExpose({
             ref="tableHeaderOperatioRef"
             v-model:columns="columnChecks"
             v-model:operations="headerOperations"
+            v-model:expand="expand"
             :loading="loading"
             :item-align="itemAlign"
             :search-visible="searchVisible"
@@ -162,22 +165,28 @@ defineExpose({
           />
         </NSpace>
       </template>
-
-      <NDataTable
-        ref="tableRef"
-        v-model:checked-row-keys="checkedRowKeys"
-        :row-key="row => row[rowKey]"
-        :data="data"
-        :columns="columns"
-        :loading="loading"
-        :size="appStore.tableSize"
-        :striped="appStore.isStriped"
-        :pagination="pagination"
-        :flex-height="!appStore.isMobile"
-        :scroll-x="1200"
-        class="sm:h-full"
-        remote
-      />
+      <NFlex :wrap="false" class="sm:h-full">
+        <slot name="sider" :params="searchParams" :search="getDataByPage"></slot>
+        <NDataTable
+          ref="tableRef"
+          v-model:checked-row-keys="checkedRowKeys"
+          :row-key="row => row[rowKey]"
+          :data="data"
+          :columns="columns"
+          :loading="loading"
+          :indent="24"
+          :default-expand-all="true"
+          :size="appStore.tableSize"
+          :striped="appStore.isStriped"
+          :flex-height="!appStore.isMobile"
+          :pagination="pagination"
+          :paginate-single-page="false"
+          :scroll-x="120"
+          :expandable="true"
+          class="sm:h-full"
+          remote
+        />
+      </NFlex>
     </NCard>
   </div>
 </template>

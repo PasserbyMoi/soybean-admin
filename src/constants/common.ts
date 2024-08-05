@@ -1,4 +1,3 @@
-import { $t } from '@/locales';
 import { transformRecordToOption } from '@/utils/common';
 
 export const yesOrNoRecord: Record<CommonType.YesOrNo, App.I18n.I18nKey> = {
@@ -28,14 +27,3 @@ export const enableNextRecord: Record<CommonType.EnableStatus, App.I18n.I18nKey>
   0: 'common.unkonw'
 };
 export const enableNextOptions = transformRecordToOption(enableNextRecord);
-
-export const booleanOptions = [
-  {
-    label: $t('common.yesOrNo.no'),
-    value: 'true'
-  },
-  {
-    label: $t('common.yesOrNo.no'),
-    value: 'false'
-  }
-];

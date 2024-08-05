@@ -1,90 +1,280 @@
 <script setup lang="tsx">
-import { useAuthStore } from '@/store/modules/auth';
+import { type MenuQuery, type MenuResp, deleteMenu, listMenu } from '@/apis';
+import EnableTag from '@/components/custom/enable-tag.vue';
+import { $t } from '@/locales';
+import { enableStatusOptions } from '@/constants/business';
+import BoolTag from '@/components/custom/bool-tag.vue';
+import MenuTypeTag from '@/components/custom/menu-type-tag.vue';
+import SvgIcon from '@/components/custom/svg-icon.vue';
+import MenuDetailModal from './modules/menu-detail-modal.vue';
 
-const authStore = useAuthStore();
+defineOptions({ name: 'SystemMenu' });
 
-const { userInfo } = authStore;
-const formRef = ref();
-const formValue = ref({
-  user: {
-    name: '张三',
-    age: ''
+const apiParams: MenuQuery = {
+  title: null,
+  status: null
+};
+const columns = ref<NaiveUI.TableColumn<any>[]>([
+  {
+    title: '菜单标题',
+    key: 'title',
+    titleAlign: 'center',
+    align: 'left',
+    width: '180px',
+    minWidth: '180px',
+    fixed: 'left',
+    resizable: true,
+    ellipsis: { tooltip: true }
   },
-  phone: ''
-});
-const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
+  {
+    title: '类型',
+    key: 'type',
+    align: 'center',
+    width: '80px',
+    minWidth: '80px',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(MenuTypeTag, { value: row.type });
     }
   },
-  phone: {
-    required: true,
-    message: '请输入电话号码',
-    trigger: ['input']
+  {
+    title: '状态',
+    key: 'status',
+    align: 'center',
+    width: '80px',
+    minWidth: '80px',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(EnableTag, { value: row.status });
+    }
+  },
+  {
+    title: '路由地址',
+    key: 'path',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '组件名称',
+    key: 'name',
+    align: 'center',
+    width: '100px',
+    minWidth: '100px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '组件路径',
+    key: 'component',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '权限标识',
+    key: 'permission',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '外链',
+    key: 'isExternal',
+    align: 'center',
+    width: '80px',
+    minWidth: '80px',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(BoolTag, { value: row.isExternal });
+    }
+  },
+  {
+    title: '隐藏',
+    key: 'isHidden',
+    align: 'center',
+    width: '80px',
+    minWidth: '80px',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(BoolTag, { value: row.isHidden });
+    }
+  },
+  {
+    title: '缓存',
+    key: 'isCache',
+    align: 'center',
+    width: '80px',
+    minWidth: '80px',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(BoolTag, { value: row.isCache });
+    }
+  },
+  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '图标',
+    key: 'icon',
+    align: 'center',
+    width: '80px',
+    minWidth: '80px',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return row.icon ? h(SvgIcon, { localIcon: row.icon }) : '';
+    }
+  },
+  {
+    title: '创建人',
+    key: 'createUserString',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '修改人',
+    key: 'updateUserString',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '修改时间',
+    key: 'updateTime',
+    align: 'center',
+    width: '180px',
+    minWidth: '180px',
+    resizable: true,
+    ellipsis: { tooltip: true }
   }
-};
+]);
 
-function handleValidateClick() {
-  formRef.value?.validate((errors: any) => {
-    if (!errors) window.$message?.success('验证通过');
-    else window.$message?.error('验证不通过');
-  });
+const operations: App.Table.Operation<MenuResp>[] = [
+  {
+    label: '编辑',
+    yesHandle(row, _index) {
+      if (row.id) editHandle(row.id);
+    }
+  },
+  {
+    label: '新增',
+    type: 'success',
+    disabled: row => row.type === 3,
+    yesHandle(row, _index) {
+      if (row.id) addHandle(row.id);
+    }
+  },
+  {
+    label: '删除',
+    type: 'error',
+    confirm: true,
+    yesHandle(row, _index) {
+      if (row.id) deleteHandle(row.id);
+    }
+  }
+];
+
+const tableRef = ref();
+const detailRef = ref();
+
+const rowId = ref<string | number>();
+const visible = ref<boolean>();
+const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function addHandle(id?: string | number) {
+  if (id) {
+    rowId.value = id;
+  } else {
+    rowId.value = undefined;
+  }
+  operateType.value = 'add';
+  visible.value = true;
+}
+
+function editHandle(id: string | number) {
+  rowId.value = id;
+  operateType.value = 'edit';
+  visible.value = true;
+}
+
+function deleteHandle(id: string | number) {
+  deleteMenu(`${id}`)
+    .then(() => {
+      window.$message?.info($t('common.deleteSuccess'));
+      submited();
+    })
+    .catch(err => {
+      window.$message?.info(err);
+    });
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
 }
 </script>
 
 <template>
-  <NSpace vertical>
-    <NCard title="个人信息">
-      <NSpace size="large">
-        <NAvatar round :size="128" :src="userInfo?.avatar" />
-
-        <NDescriptions
-          label-placement="left"
-          :column="2"
-          :title="`傍晚好，${userInfo?.nickname}，这里是简单的个人中心模板`"
-        >
-          <NDescriptionsItem label="id">
-            {{ userInfo?.id }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="用户名">
-            {{ userInfo?.userName }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="真实名称">
-            {{ userInfo?.nickname }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="角色">
-            {{ userInfo?.roles }}
-          </NDescriptionsItem>
-        </NDescriptions>
-      </NSpace>
-    </NCard>
-    <NCard title="信息修改">
-      <NSpace justify="center">
-        <NForm ref="formRef" class="w-500px" :label-width="80" :model="formValue" :rules="rules">
-          <NFormItem label="姓名" path="user.name">
-            <NInput v-model:value="formValue.user.name" placeholder="输入姓名" />
-          </NFormItem>
-          <NFormItem label="年龄" path="user.age">
-            <NInput v-model:value="formValue.user.age" placeholder="输入年龄" />
-          </NFormItem>
-          <NFormItem label="电话号码" path="phone">
-            <NInput v-model:value="formValue.phone" placeholder="电话号码" />
-          </NFormItem>
-          <NFormItem>
-            <NButton type="primary" attr-type="button" block @click="handleValidateClick">验证</NButton>
-          </NFormItem>
-        </NForm>
-      </NSpace>
-    </NCard>
-  </NSpace>
+  <div class="min-2-1000px min-h-500px flex-col-stretch gap-16px overflow-auto overflow-hidden">
+    <TableCard
+      ref="tableRef"
+      row-key="id"
+      :api-fn="listMenu"
+      :api-params="apiParams"
+      :columns="columns"
+      :show-index="false"
+      :show-selection="false"
+      :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      @add="addHandle"
+      @edit="editHandle"
+      @delete="deleteHandle"
+    >
+      <template #search="{ searchParams }">
+        <NFormItemGi span="24 s:12 m:5" label="菜单标题" path="title">
+          <NInput v-model:value="searchParams.title" placeholder="请输入菜单标题" clearable />
+        </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:5" label="状态" path="status">
+          <NSelect
+            v-model:value="searchParams.status"
+            :options="enableStatusOptions"
+            placeholder="请选择状态"
+            clearable
+          />
+        </NFormItemGi>
+      </template>
+    </TableCard>
+    <MenuDetailModal
+      ref="detailRef"
+      v-model:visible="visible"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+  </div>
 </template>
 
 <style scoped></style>

@@ -1,90 +1,217 @@
 <script setup lang="tsx">
-import { useAuthStore } from '@/store/modules/auth';
+import type { UserQuery, UserResp } from '@/apis';
+import { deleteUser, listUser } from '@/apis';
+import { $t } from '@/locales';
+import { enableNextOptions } from '@/constants/common';
+import GenderTag from '@/components/custom/gender-tag.vue';
+import EnableTag from '@/components/custom/enable-tag.vue';
+import BoolTag from '@/components/custom/bool-tag.vue';
+import GenderAvatar from '@/components/custom/gender-avatar.vue';
+import Tags from '@/components/custom/tags.vue';
+import UserRestpwdModal from './modules/user-restpwd-modal.vue';
+import UserViewDrawer from './modules/user-view-drawer.vue';
+import UserDetailDrawer from './modules/user-detail-drawer.vue';
+import DictTreeCard from './modules/dept-tree-card.vue';
 
-const authStore = useAuthStore();
+defineOptions({ name: 'SystemStorage' });
 
-const { userInfo } = authStore;
-const formRef = ref();
-const formValue = ref({
-  user: {
-    name: '张三',
-    age: ''
-  },
-  phone: ''
-});
-const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
+const apiParams: Api.Common.EPaginatingSearchParams<UserQuery> = {
+  page: 1,
+  size: 10,
+  sort: ['createTime, desc'],
+  description: null,
+  status: null
+};
+const columns = ref<NaiveUI.TableColumn<any>[]>([
+  {
+    title: '用户名',
+    key: 'username',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    fixed: 'left',
+    render(row) {
+      return h(GenderAvatar, { name: row.username, gender: row.gender, onClick: () => viewHandle(row.id) });
     }
   },
-  phone: {
-    required: true,
-    message: '请输入电话号码',
-    trigger: ['input']
-  }
-};
+  { title: '昵称', key: 'nickname', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '状态',
+    key: 'status',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(EnableTag, { value: row.status });
+    }
+  },
+  {
+    title: '性别',
+    key: 'gender',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(GenderTag, { value: row.status });
+    }
+  },
+  { title: '所属部门', key: 'deptName', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '角色',
+    key: 'roleNames',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(Tags, { values: row.roleNames });
+    }
+  },
+  { title: '手机号', key: 'phone', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '邮箱', key: 'email', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '系统内置',
+    key: 'isSystem',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return h(BoolTag, { value: row.isSystem });
+    }
+  },
+  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+]);
 
-function handleValidateClick() {
-  formRef.value?.validate((errors: any) => {
-    if (!errors) window.$message?.success('验证通过');
-    else window.$message?.error('验证不通过');
-  });
+const operations: App.Table.Operation<UserResp>[] = [
+  {
+    label: '编辑',
+    yesHandle(row, _index) {
+      if (row.id) editHandle(row.id);
+    }
+  },
+  {
+    label: '删除',
+    type: 'error',
+    confirm: true,
+    disabled: row => row.isSystem ?? false,
+    yesHandle(row, _index) {
+      if (row.id) deleteHandle(row.id);
+    }
+  },
+  {
+    label: '修改密码',
+    type: 'default',
+    yesHandle(row, _index) {
+      if (row.id) resetPwdHandle(row.id);
+    }
+  }
+];
+
+const tableRef = ref();
+const detailRef = ref();
+const viewRef = ref();
+
+const rowId = ref<string>();
+const visible = ref<boolean>();
+const visibleView = ref<boolean>();
+const visibleRepwd = ref<boolean>();
+const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function addHandle() {
+  rowId.value = undefined;
+  visible.value = true;
+  operateType.value = 'add';
 }
+
+function editHandle(id: string) {
+  rowId.value = `${id}`;
+  visible.value = true;
+  operateType.value = 'edit';
+}
+
+function viewHandle(id: string) {
+  rowId.value = `${id}`;
+  visibleView.value = true;
+}
+
+function resetPwdHandle(id: string) {
+  rowId.value = `${id}`;
+  visibleRepwd.value = true;
+}
+
+function deleteHandle(id: string) {
+  deleteUser(id)
+    .then(() => {
+      window.$message?.info($t('common.deleteSuccess'));
+      submited();
+    })
+    .catch(err => {
+      window.$message?.info(err);
+    });
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
+}
+
+// 根据选中部门查询
+const handleSelectDept = (key: string) => {
+  tableRef.value.searchParams.deptId = key;
+  tableRef.value.getDataByPage();
+};
 </script>
 
 <template>
-  <NSpace vertical>
-    <NCard title="个人信息">
-      <NSpace size="large">
-        <NAvatar round :size="128" :src="userInfo?.avatar" />
-
-        <NDescriptions
-          label-placement="left"
-          :column="2"
-          :title="`傍晚好，${userInfo?.nickname}，这里是简单的个人中心模板`"
-        >
-          <NDescriptionsItem label="id">
-            {{ userInfo?.id }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="用户名">
-            {{ userInfo?.userName }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="真实名称">
-            {{ userInfo?.nickname }}
-          </NDescriptionsItem>
-          <NDescriptionsItem label="角色">
-            {{ userInfo?.roles }}
-          </NDescriptionsItem>
-        </NDescriptions>
-      </NSpace>
-    </NCard>
-    <NCard title="信息修改">
-      <NSpace justify="center">
-        <NForm ref="formRef" class="w-500px" :label-width="80" :model="formValue" :rules="rules">
-          <NFormItem label="姓名" path="user.name">
-            <NInput v-model:value="formValue.user.name" placeholder="输入姓名" />
-          </NFormItem>
-          <NFormItem label="年龄" path="user.age">
-            <NInput v-model:value="formValue.user.age" placeholder="输入年龄" />
-          </NFormItem>
-          <NFormItem label="电话号码" path="phone">
-            <NInput v-model:value="formValue.phone" placeholder="电话号码" />
-          </NFormItem>
-          <NFormItem>
-            <NButton type="primary" attr-type="button" block @click="handleValidateClick">验证</NButton>
-          </NFormItem>
-        </NForm>
-      </NSpace>
-    </NCard>
-  </NSpace>
+  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <TableCard
+      ref="tableRef"
+      row-key="id"
+      :api-fn="listUser"
+      :api-params="apiParams"
+      :columns="columns"
+      :show-selection="false"
+      :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
+      @add="addHandle"
+      @edit="editHandle"
+      @delete="deleteHandle"
+    >
+      <template #search="{ searchParams }">
+        <NFormItemGi span="24 s:12 m:5" label="标题" path="description">
+          <NInput v-model:value="searchParams.description" placeholder="请输入关键词" clearable />
+        </NFormItemGi>
+        <NFormItemGi span="24 s:12 m:5" label="类型" path="status">
+          <NSelect
+            v-model:value="searchParams.status"
+            :options="enableNextOptions"
+            placeholder="请选择状态"
+            clearable
+          />
+        </NFormItemGi>
+      </template>
+      <template #sider>
+        <DictTreeCard placeholder="请输入关键词" @switch="handleSelectDept" />
+      </template>
+    </TableCard>
+    <UserRestpwdModal ref="detailRef" v-model:visible="visibleRepwd" v-model:row-id="rowId" @submitted="submited" />
+    <UserDetailDrawer
+      ref="detailRef"
+      v-model:visible="visible"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+    <UserViewDrawer
+      ref="viewRef"
+      v-model:visible="visibleView"
+      v-model:row-id="rowId"
+      :operate-type="operateType"
+      @submitted="submited"
+    />
+  </div>
 </template>
 
 <style scoped></style>

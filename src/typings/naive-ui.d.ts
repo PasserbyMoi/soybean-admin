@@ -30,6 +30,9 @@ declare namespace NaiveUI {
     params: R
   ) => Promise<FlatResponseData<Api.Common.PaginatingQueryRecord<T>>>;
 
+  // 无分页
+  type TableApiFirstFn<T = any, R = any> = (params: R) => Promise<FlatResponseData<T[]>>;
+
   /**
    * the type of table operation
    *
@@ -38,9 +41,9 @@ declare namespace NaiveUI {
    */
   type TableOperateType = 'add' | 'edit';
 
-  type GetTableData<A extends TableApiFn> = A extends TableApiFn<infer T> ? T : never;
+  type GetTableData<A extends TableApiFn | NaiveUI.TableApiFirstFn> = A extends TableApiFn<infer T> ? T : never;
 
-  type NaiveTableConfig<A extends TableApiFn> = Pick<
+  type NaiveTableConfig<A extends TableApiFn | TableApiFirstFn> = Pick<
     import('@sa/hooks').TableConfig<A, GetTableData<A>, TableColumn<TableDataWithIndex<GetTableData<A>>>>,
     'apiFn' | 'apiParams' | 'columns' | 'immediate'
   > & {

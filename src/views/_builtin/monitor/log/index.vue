@@ -2,7 +2,7 @@
 import { NA, NTag } from 'naive-ui';
 import { listLog } from '@/apis/monitor/log';
 import type { LogQuery } from '@/apis/monitor/type';
-import BStatusTag from '@/components/advanced/e-status-tag.vue';
+import StatusTag from '@/components/custom/status-tag.vue';
 import LogDetailDrawer from './modules/log-detail-drawer.vue';
 
 const apiParams: Api.Common.EPaginatingSearchParams<LogQuery> = {
@@ -36,7 +36,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     align: 'center',
     resizable: true,
     render: row => {
-      return h(BStatusTag, { value: row.status, bordered: false }, { default: () => row.status });
+      return h(StatusTag, { value: row.status });
     }
   },
   { key: 'ip', title: 'IP', align: 'center', resizable: true },
@@ -86,7 +86,7 @@ function handleOnClick(id: string) {
       :api-params="apiParams"
       :columns="columns"
       :show-selection="false"
-      :header-operations="['export', 'refresh', 'height', 'columnSetting']"
+      :header-operations="['export', 'refresh', 'height', 'stripe', 'columnSetting']"
     >
       <template #search="{ searchParams }">
         <NFormItemGi span="24 s:12 m:5" label="用户" path="createUserString">

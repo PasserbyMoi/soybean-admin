@@ -17,7 +17,7 @@ export function updateFile(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 

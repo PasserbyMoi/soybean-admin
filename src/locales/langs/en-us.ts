@@ -66,6 +66,11 @@ const local: App.I18n.Schema = {
     status: {
       succeed: 'Succeed',
       failed: 'Failed'
+    },
+    gender: {
+      male: 'Male',
+      female: 'Female',
+      unknow: 'Unknow'
     }
   },
   request: {
@@ -409,12 +414,7 @@ const local: App.I18n.Schema = {
           userRole: 'Please select user role'
         },
         addUser: 'Add User',
-        editUser: 'Edit User',
-        gender: {
-          male: 'Male',
-          female: 'Female',
-          unknow: 'Unknow'
-        }
+        editUser: 'Edit User'
       },
       menu: {
         home: 'Home',
@@ -625,6 +625,8 @@ const local: App.I18n.Schema = {
     expand: 'Expand Menu',
     pin: 'Pin',
     unpin: 'Unpin',
+    expandList: 'Expand List',
+    collapseList: 'Collapse List',
     notifications: 'Notifications'
   },
   datatable: {

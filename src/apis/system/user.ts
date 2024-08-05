@@ -25,7 +25,7 @@ export function addUser(data: any) {
   return request({
     url: `${BASE_URL}`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -34,7 +34,7 @@ export function updateUser(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 
@@ -60,6 +60,6 @@ export function resetUserPwd(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}/password`,
     method: 'patch',
-    params: data
+    data
   });
 }

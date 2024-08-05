@@ -5,7 +5,7 @@ const BASE_URL = '/system/dict';
 
 /** 查询字典列表 */
 export function listDict(query: System.DictQuery) {
-  return request<System.DeptResp[]>({
+  return request<System.DictResp[]>({
     url: `${BASE_URL}/list`,
     method: 'get',
     params: query
@@ -25,7 +25,7 @@ export function addDict(data: any) {
   return request({
     url: `${BASE_URL}`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -34,7 +34,7 @@ export function updateDict(data: any, id: string) {
   return request({
     url: `${BASE_URL}/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 
@@ -47,8 +47,8 @@ export function deleteDict(id: string) {
 }
 
 /** 查询字典项列表 */
-export function listDictItem(query: System.DictItemPageQuery) {
-  return request<App.Service.Page<System.DictItemResp[]>>({
+export function listDictItem(query: Api.Common.EPaginatingSearchParams<System.DictItemQuery>) {
+  return request<Api.Common.PaginatingQueryRecord<System.DictItemResp[]>>({
     url: `${BASE_URL}/item`,
     method: 'get',
     params: query
@@ -68,7 +68,7 @@ export function addDictItem(data: any) {
   return request({
     url: `${BASE_URL}/item`,
     method: 'post',
-    params: data
+    data
   });
 }
 
@@ -77,7 +77,7 @@ export function updateDictItem(data: any, id: string) {
   return request({
     url: `${BASE_URL}/item/${id}`,
     method: 'put',
-    params: data
+    data
   });
 }
 

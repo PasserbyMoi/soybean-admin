@@ -122,7 +122,7 @@ function submited() {
       :columns="columns"
       :show-selection="false"
       :columns-operations="operations"
-      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
       @add="addHandle"
       @edit="editHandle"
       @delete="deleteHandle"
@@ -131,7 +131,7 @@ function submited() {
         <NFormItemGi span="24 s:12 m:5" label="标题" path="title">
           <NInput v-model:value="searchParams.title" placeholder="请输入公告标题" clearable />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:5" label="类型" path="status">
+        <NFormItemGi span="24 s:12 m:5" label="类型" path="type">
           <NSelect v-model:value="searchParams.type" :options="notice_type" placeholder="请选择类型" clearable />
         </NFormItemGi>
       </template>

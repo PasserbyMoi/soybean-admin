@@ -46,12 +46,6 @@ declare module "@elegant-router/types" {
     "monitor": "/monitor";
     "monitor_log": "/monitor/log";
     "monitor_online": "/monitor/online";
-    "multi-menu": "/multi-menu";
-    "multi-menu_first": "/multi-menu/first";
-    "multi-menu_first_child": "/multi-menu/first/child";
-    "multi-menu_second": "/multi-menu/second";
-    "multi-menu_second_child": "/multi-menu/second/child";
-    "multi-menu_second_child_home": "/multi-menu/second/child/home";
     "plugin": "/plugin";
     "plugin_barcode": "/plugin/barcode";
     "plugin_cascader": "/plugin/cascader";
@@ -80,8 +74,9 @@ declare module "@elegant-router/types" {
     "system_config": "/system/config";
     "system_dept": "/system/dept";
     "system_dict": "/system/dict";
-    "system_dict_item": "/system/dict/item";
     "system_file": "/system/file";
+    "system_file_main": "/system/file/main";
+    "system_file_main_filemain": "/system/file/main/filemain";
     "system_menu": "/system/menu";
     "system_notice": "/system/notice";
     "system_role": "/system/role";
@@ -134,7 +129,6 @@ declare module "@elegant-router/types" {
     | "login"
     | "manage"
     | "monitor"
-    | "multi-menu"
     | "plugin"
     | "project"
     | "system"
@@ -168,8 +162,8 @@ declare module "@elegant-router/types" {
     | "system_config"
     | "system_dept"
     | "system_dict"
-    | "system_dict_item"
     | "system_file"
+    | "system_file_main_filemain"
     | "system_menu"
     | "system_notice"
     | "system_role"
@@ -191,8 +185,6 @@ declare module "@elegant-router/types" {
     | "manage_role"
     | "manage_user-detail"
     | "manage_user"
-    | "multi-menu_first_child"
-    | "multi-menu_second_child_home"
     | "plugin_barcode"
     | "plugin_cascader"
     | "plugin_charts_echarts"

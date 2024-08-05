@@ -122,22 +122,29 @@ function handleInitModel() {
 // 提交
 async function handleSubmit() {
   await validate();
-  if (isEdit && rowId.value) {
-    updateStorage(model, rowId.value);
-    window.$message?.success($t('common.updateSuccess'));
+  if (isEdit.value && rowId.value) {
+    const { error } = await updateStorage(model, rowId.value);
+    if (!error) {
+      window.$message?.success($t('common.updateSuccess'));
+      closeDrawer(true);
+    }
   } else {
-    addStorage(model);
-    window.$message?.success($t('common.addSuccess'));
+    const { error } = await addStorage(model);
+    if (!error) {
+      window.$message?.success($t('common.addSuccess'));
+      closeDrawer(true);
+    }
   }
-  closeDrawer();
-  nextTick(() => {
-    emit('submitted');
-  });
 }
 
 // 关闭窗口
-function closeDrawer() {
+function closeDrawer(submitted: boolean = false) {
   visible.value = false;
+  if (submitted) {
+    nextTick(() => {
+      emit('submitted');
+    });
+  }
 }
 
 watch(visible, () => {

@@ -26,10 +26,9 @@ export type UserDetailResp = UserResp & {
 };
 
 export interface UserQuery {
-  description?: string;
-  status?: number;
+  description?: string | null;
+  status?: number | null;
   deptId?: string;
-  sort: Array<string>;
 }
 
 /** 系统角色类型 */
@@ -72,7 +71,7 @@ export interface RoleQuery {
 
 /** 系统菜单类型 */
 export interface MenuResp {
-  id: string;
+  id: string | number;
   title: string;
   parentId: string;
   type: 1 | 2 | 3;
@@ -95,9 +94,8 @@ export interface MenuResp {
 }
 
 export interface MenuQuery {
-  title?: string;
-  status?: number;
-  sort: Array<string>;
+  title?: string | null;
+  status?: number | null;
 }
 
 /** 系统部门类型 */
@@ -117,9 +115,8 @@ export interface DeptResp {
 }
 
 export interface DeptQuery {
-  description?: string;
-  status?: number;
-  sort: Array<string>;
+  description?: string | null;
+  status?: number | null;
 }
 
 /** 系统字典类型 */
@@ -156,9 +153,8 @@ export type DictItemResp = {
 };
 
 export interface DictItemQuery {
-  description?: string;
+  description?: string | null;
   status?: number;
-  sort: Array<string>;
   dictId: string;
 }
 

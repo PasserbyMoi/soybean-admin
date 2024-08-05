@@ -68,6 +68,11 @@ const local: App.I18n.Schema = {
     status: {
       succeed: '成功',
       failed: '失败'
+    },
+    gender: {
+      male: '男',
+      female: '女',
+      unknow: '未知'
     }
   },
   request: {
@@ -411,12 +416,7 @@ const local: App.I18n.Schema = {
           userRole: '请选择用户角色'
         },
         addUser: '新增用户',
-        editUser: '编辑用户',
-        gender: {
-          male: '男',
-          female: '女',
-          unknow: '未知'
-        }
+        editUser: '编辑用户'
       },
       menu: {
         home: '首页',
@@ -626,6 +626,8 @@ const local: App.I18n.Schema = {
     expand: '展开菜单',
     pin: '固定',
     unpin: '取消固定',
+    expandList: '展开列表',
+    collapseList: '折叠列表',
     notifications: '消息通知'
   },
   datatable: {

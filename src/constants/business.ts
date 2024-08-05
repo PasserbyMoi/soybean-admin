@@ -10,9 +10,9 @@ export const enableStatusRecord: Record<Api.Common.EnableStatus, App.I18n.I18nKe
 export const enableStatusOptions = transformRecordToOption(enableStatusRecord);
 
 export const userGenderRecord: Record<Api.SystemManage.UserGender, App.I18n.I18nKey> = {
-  '0': 'page.manage.user.gender.female',
-  '1': 'page.manage.user.gender.male',
-  '2': 'page.manage.user.gender.unknow'
+  '0': 'common.gender.female',
+  '1': 'common.gender.male',
+  '2': 'common.gender.unknow'
 };
 
 export const userGenderOptions = transformRecordToOption(userGenderRecord);
@@ -101,12 +101,12 @@ export const apiMethodOptions = transformRecordToOption(apiMethodRecord);
 export const tableSelectionColumns: NaiveUI.TableColumn<any> = {
   type: 'selection',
   align: 'center',
-  width: 48
+  resizable: true
 };
 
 export const tableIndexColumns: NaiveUI.TableColumn<any> = {
   key: 'index',
   title: $t('common.index'),
   align: 'center',
-  width: 64
+  resizable: true
 };

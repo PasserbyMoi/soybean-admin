@@ -109,7 +109,7 @@ const operations: App.Table.Operation<OnlineUserResp>[] = [
       :columns="columns"
       :show-selection="false"
       :columns-operations="operations"
-      :header-operations="['refresh', 'height', 'columnSetting']"
+      :header-operations="['refresh', 'height', 'stripe', 'columnSetting']"
     >
       <template #search="{ searchParams }">
         <NFormItemGi span="24 s:12 m:5" label="用户" path="nickname" class="pr-24px">

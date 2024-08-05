@@ -7,10 +7,10 @@ import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
 
 type TableData = NaiveUI.TableData;
-type GetTableData<A extends NaiveUI.TableApiFn> = NaiveUI.GetTableData<A>;
+type GetTableData<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn> = NaiveUI.GetTableData<A>;
 type TableColumn<T> = NaiveUI.TableColumn<T>;
 
-export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
+export function useTable<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn>(config: NaiveUI.NaiveTableConfig<A>) {
   const scope = effectScope();
   const appStore = useAppStore();
 
@@ -261,11 +261,14 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
 }
 
 /** 适配 Continew */
-export function useCommonTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
+export function useCommonTable<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn>(
+  config: NaiveUI.NaiveTableConfig<A>
+) {
   const scope = effectScope();
   const appStore = useAppStore();
 
   const isMobile = computed(() => appStore.isMobile);
+  const hasPagination = ref<boolean>(true);
   const currentPageNum = ref<number>(1);
   const currentPageSize = ref<number>(10);
 
@@ -291,8 +294,18 @@ export function useCommonTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.Nai
     apiParams,
     columns: config.columns,
     transformer: res => {
+      if (Array.isArray(res.data)) {
+        hasPagination.value = false;
+        const list = res.data || [];
+        const recordsWithIndex = list.map((item, index) => {
+          return {
+            ...item,
+            index: index + 1
+          };
+        });
+        return { data: recordsWithIndex };
+      }
       const { list = [], page = currentPageNum.value, size = currentPageSize.value, total = 0 } = res.data || {};
-
       const recordsWithIndex = list.map((item, index) => {
         return {
           ...item,
@@ -368,7 +381,7 @@ export function useCommonTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.Nai
     page: 1,
     pageSize: 10,
     showSizePicker: true,
-    pageSizes: [10, 15, 20, 25, 30],
+    pageSizes: [10, 20, 30, 50, 100],
     onUpdatePage: async (page: number) => {
       pagination.page = page;
       updateSearchParams({
@@ -403,13 +416,15 @@ export function useCommonTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.Nai
 
   // this is for mobile, if the system does not support mobile, you can use `pagination` directly
   const mobilePagination = computed(() => {
-    const p: PaginationProps = {
-      ...pagination,
-      pageSlot: isMobile.value ? 3 : 9,
-      prefix: !isMobile.value && showTotal ? pagination.prefix : undefined
-    };
-
-    return p;
+    if (hasPagination) {
+      const p: PaginationProps = {
+        ...pagination,
+        pageSlot: isMobile.value ? 3 : 9,
+        prefix: !isMobile.value && showTotal ? pagination.prefix : undefined
+      };
+      return p;
+    }
+    return null;
   });
 
   function updatePagination(update: Partial<PaginationProps>) {

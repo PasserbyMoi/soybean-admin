@@ -2,13 +2,12 @@
 import { NA } from 'naive-ui';
 import type { RoleQuery, RoleResp } from '@/apis';
 import { deleteRole, listRole } from '@/apis';
-import TableBTag from '@/components/advanced/table-btag.vue';
+import BoolTag from '@/components/custom/bool-tag.vue';
 import TableTag from '@/components/advanced/table-tag.vue';
 import { $t } from '@/locales';
-import { booleanOptions } from '@/constants/common';
 import { useDict } from '@/hooks/business/dict';
-import RoleViewModal from './modules/role-view-modal.vue';
-import RoleDetailModal from './modules/role-detail-modal.vue';
+import RoleViewDrawer from './modules/role-view-drawer.vue';
+import RoleDetailDrawer from './modules/role-detail-drawer.vue';
 
 defineOptions({ name: 'SystemRole' });
 
@@ -49,7 +48,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
-      return h(TableBTag, { value: row.isSystem, options: booleanOptions }, { default: () => row.isSystem });
+      return h(BoolTag, { value: row.isSystem });
     }
   },
   { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
@@ -130,7 +129,7 @@ function submited() {
       :columns="columns"
       :show-selection="false"
       :columns-operations="operations"
-      :header-operations="['add', 'export', 'refresh', 'height', 'columnSetting']"
+      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
       @add="addHandle"
       @edit="editHandle"
       @delete="deleteHandle"
@@ -142,7 +141,7 @@ function submited() {
       </template>
     </TableCard>
 
-    <RoleDetailModal
+    <RoleDetailDrawer
       ref="detailRef"
       v-model:visible="visible"
       v-model:row-id="rowId"
@@ -150,7 +149,7 @@ function submited() {
       @submitted="submited"
     />
 
-    <RoleViewModal
+    <RoleViewDrawer
       ref="viewRef"
       v-model:visible="visibleView"
       v-model:row-id="rowId"

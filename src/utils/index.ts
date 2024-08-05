@@ -1,4 +1,5 @@
 import { camelCase, upperFirst } from 'lodash-es';
+import { isExternal } from './validate';
 
 export function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];
@@ -218,4 +219,17 @@ export const copyText = (text: any) => {
   document.execCommand('copy');
   document.body.removeChild(textarea);
   window.$message?.success('复制成功');
+};
+
+/**
+ * 动态路由 path 转 name
+ *
+ * @demo /system => System
+ * @demo /system/menu => SystemMenu
+ * @demo /data-manage/detail => DataManageDetail
+ */
+export const transformPathToName = (path: string) => {
+  if (!path) return '';
+  if (isExternal(path)) return '';
+  return upperFirst(camelCase(path));
 };

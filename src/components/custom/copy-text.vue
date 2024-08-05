@@ -6,15 +6,16 @@ const { copy, isSupported } = useClipboard();
 
 const props = defineProps<{
   maxLength?: string;
+  defaultText?: string;
 }>();
-const modelValue = defineModel<string>('value');
+const modelValue = defineModel<string | number>('value');
 
 async function handleCopy() {
   if (!isSupported) {
     window.$message?.error($t('common.copyNotSupported'));
     return;
   }
-  await copy(modelValue.value ?? '');
+  await copy(modelValue.value ? `${modelValue.value}` : '');
   window.$message?.success($t('common.copySuccess'));
 }
 </script>
@@ -33,4 +34,5 @@ async function handleCopy() {
       {{ $t('common.copy') }}
     </NTooltip>
   </div>
+  <div v-else>{{ defaultText }}</div>
 </template>
