@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NButton, NSpace } from 'naive-ui';
-import type { ArcoTreeNodeData, RoleDetailResp, RoleResp } from '@/apis';
+import type { RoleDetailResp } from '@/apis';
 import { addRole, getRole, updateRole } from '@/apis';
 import { useDict } from '@/hooks/business/dict';
 import { $t } from '@/locales';
@@ -9,7 +9,7 @@ import { useDept } from '@/hooks/business/useDept';
 import { useMenu } from '@/hooks/business/useMenu';
 
 defineOptions({
-  name: 'RoleDetailModal'
+  name: 'RoleDetailDrawer'
 });
 
 interface Props {
@@ -144,23 +144,29 @@ function handleInitModel() {
 // 提交
 async function handleSubmit() {
   await validate();
-  if (isEdit && rowId.value) {
-    await updateRole(model, rowId.value).then(() => {
+  if (isEdit.value && rowId.value) {
+    const { error } = await updateRole(model, rowId.value);
+    if (!error) {
       window.$message?.success($t('common.updateSuccess'));
-      emit('submitted');
-    });
+      closeDrawer(true);
+    }
   } else {
-    await addRole(model).then(() => {
+    const { error } = await addRole(model);
+    if (!error) {
       window.$message?.success($t('common.addSuccess'));
-      emit('submitted');
-    });
+      closeDrawer(true);
+    }
   }
-  closeDrawer();
 }
 
 // 关闭窗口
-function closeDrawer() {
+function closeDrawer(submitted: boolean = false) {
   visible.value = false;
+  if (submitted) {
+    nextTick(() => {
+      emit('submitted');
+    });
+  }
 }
 
 watch(visible, () => {
@@ -256,7 +262,7 @@ watch(visible, () => {
       </NForm>
       <template #footer>
         <NSpace :size="16">
-          <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
+          <NButton @click="closeDrawer(false)">{{ $t('common.cancel') }}</NButton>
           <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
         </NSpace>
       </template>

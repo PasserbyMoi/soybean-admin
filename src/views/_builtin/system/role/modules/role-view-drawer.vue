@@ -6,7 +6,7 @@ import { useDept } from '@/hooks/business/useDept';
 import { useMenu } from '@/hooks/business/useMenu';
 
 defineOptions({
-  name: 'RoleDetailModal'
+  name: 'RoleDetailDrawer'
 });
 
 const rowId = defineModel<string | null>('rowId', {
