@@ -528,6 +528,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'setting',
+    path: '/setting',
+    component: 'layout.base',
+    meta: {
+      title: 'setting',
+      i18nKey: 'route.setting'
+    },
+    children: [
+      {
+        name: 'setting_profile',
+        path: '/setting/profile',
+        component: 'view.setting_profile',
+        meta: {
+          title: 'setting_profile',
+          i18nKey: 'route.setting_profile'
+        }
+      }
+    ]
+  },
+  {
     name: 'system',
     path: '/system',
     component: 'layout.base',

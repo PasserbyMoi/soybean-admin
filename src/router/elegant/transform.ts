@@ -214,6 +214,8 @@ const routeMap: RouteMap = {
   "plugin_video": "/plugin/video",
   "project": "/project",
   "project_about": "/project/about",
+  "setting": "/setting",
+  "setting_profile": "/setting/profile",
   "system": "/system",
   "system_config": "/system/config",
   "system_dept": "/system/dept",

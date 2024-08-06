@@ -23,6 +23,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   monitor_log: () => import("@/views/_builtin/monitor/log/index.vue"),
   monitor_online: () => import("@/views/_builtin/monitor/online/index.vue"),
   project_about: () => import("@/views/_builtin/project/about/index.vue"),
+  setting_profile: () => import("@/views/_builtin/setting/profile/index.vue"),
   system_config: () => import("@/views/_builtin/system/config/index.vue"),
   system_dept: () => import("@/views/_builtin/system/dept/index.vue"),
   system_dict: () => import("@/views/_builtin/system/dict/index.vue"),

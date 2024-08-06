@@ -61,10 +61,8 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
         // && !request.state.errMsgStack?.includes(response.data.msg)
       ) {
         request.state.errMsgStack = [...(request.state.errMsgStack || []), response.data.msg];
-        window.$message?.info('1----------', { duration: 4500 });
         // prevent the user from refreshing the page
         window.addEventListener('beforeunload', handleLogout);
-        window.$message?.info('----------', { duration: 4500 });
 
         window.$dialog?.error({
           title: $t('common.error'),
@@ -99,8 +97,16 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
       return null;
     },
+    // return data in { data, error }
     transformBackendResponse(response) {
-      return response.data.data;
+      return {
+        code: response.data.code,
+        msg: response.data.msg,
+        success: response.data.success,
+        timestamp: response.data.timestamp,
+        data: response.data.data
+      };
+      // return response.data.data;
     },
     onError(error) {
       // when the request is fail, you can show error message

@@ -16,6 +16,8 @@ declare namespace CommonType {
 
   type Gender = 0 | 1 | 2;
 
+  type UserVerifyType = 'phone' | 'password' | 'email' | 'github' | 'gitee';
+
   /**
    * The option type
    *

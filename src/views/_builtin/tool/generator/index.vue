@@ -2,6 +2,10 @@
 import { listGenerator } from '@/apis/tool/generator';
 import type { TableQuery, TableResp } from '@/apis/tool/type';
 
+defineOptions({
+  name: 'SystemGenerator'
+});
+
 const tableRef = ref();
 
 const apiParams: Api.Common.EPaginatingSearchParams<TableQuery> = {

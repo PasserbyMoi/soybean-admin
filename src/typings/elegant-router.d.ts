@@ -70,6 +70,8 @@ declare module "@elegant-router/types" {
     "plugin_video": "/plugin/video";
     "project": "/project";
     "project_about": "/project/about";
+    "setting": "/setting";
+    "setting_profile": "/setting/profile";
     "system": "/system";
     "system_config": "/system/config";
     "system_dept": "/system/dept";
@@ -131,6 +133,7 @@ declare module "@elegant-router/types" {
     | "monitor"
     | "plugin"
     | "project"
+    | "setting"
     | "system"
     | "tool"
     | "user-center"
@@ -159,6 +162,7 @@ declare module "@elegant-router/types" {
     | "monitor_log"
     | "monitor_online"
     | "project_about"
+    | "setting_profile"
     | "system_config"
     | "system_dept"
     | "system_dict"

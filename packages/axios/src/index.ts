@@ -164,9 +164,8 @@ export function createFlatRequest<ResponseData = any, State = Record<string, unk
       const responseType = response.config?.responseType || 'json';
 
       if (responseType === 'json') {
-        const data = opts.transformBackendResponse(response);
-
-        return { data, error: null };
+        const { code, msg, success, timestamp, data } = opts.transformBackendResponse(response);
+        return { code, msg, success, timestamp, data, error: null };
       }
 
       return { data: response.data as MappedType<R, T>, error: null };

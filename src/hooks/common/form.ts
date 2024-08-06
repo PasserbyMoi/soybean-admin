@@ -1,6 +1,8 @@
 import { ref, toValue } from 'vue';
 import type { ComputedRef, Ref } from 'vue';
-import type { FormInst } from 'naive-ui';
+import type { FormInst, FormItemRule, FormValidationError } from 'naive-ui';
+import type { FormValidateCallback, ShouldRuleBeApplied } from 'naive-ui/es/form/src/interface';
+import type { RuleItem, ValidateError, ValidateMessages, ValidateOption } from 'async-validator';
 import { REG_CAPTCHA_FOUR, REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
 
@@ -90,8 +92,26 @@ export function useFormRules() {
 export function useNaiveForm() {
   const formRef = ref<FormInst | null>(null);
 
-  async function validate() {
-    await formRef.value?.validate();
+  async function validateField(keys?: Array<string>): Promise<boolean> {
+    let valid = false;
+    await formRef.value?.validate(
+      error => {
+        if (!error) {
+          valid = true;
+        }
+      },
+      rule => {
+        if (keys && keys.length > 0) {
+          return keys.includes(rule?.key ?? '');
+        }
+        return true;
+      }
+    );
+    return valid;
+  }
+
+  async function validate(callback?: FormValidateCallback, shouldRuleBeApplied?: ShouldRuleBeApplied) {
+    return await formRef.value?.validate(callback, shouldRuleBeApplied);
   }
 
   async function restoreValidation() {
@@ -101,6 +121,7 @@ export function useNaiveForm() {
   return {
     formRef,
     validate,
+    validateField,
     restoreValidation
   };
 }

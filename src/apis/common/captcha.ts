@@ -42,7 +42,7 @@ export function getBehaviorCaptcha(req: any) {
 export function checkBehaviorCaptcha(req: any) {
   return request<Common.CheckBehaviorCaptchaResp>({
     url: `${BASE_URL}/behavior`,
-    method: 'get',
-    params: req
+    method: 'post',
+    data: req
   });
 }
