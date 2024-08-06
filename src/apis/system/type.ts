@@ -155,7 +155,7 @@ export type DictItemResp = {
 export interface DictItemQuery {
   description?: string | null;
   status?: number;
-  dictId: string;
+  dictId?: string;
 }
 
 /** 系统公告类型 */

@@ -199,9 +199,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       const staticRoute = createStaticRoutes();
       addConstantRoutes(staticRoute.constantRoutes);
     } else {
-      const { data } = fetchGetConstantRoutes();
-      const staticRoute = createDynamicRoutes(data ?? []);
-      addConstantRoutes(staticRoute.constantRoutes);
+      const constRoutes = fetchGetConstantRoutes();
+      const { constantDynamicRoutes } = createDynamicRoutes();
+      addConstantRoutes([...constRoutes, ...constantDynamicRoutes]);
     }
 
     handleConstantAndAuthRoutes();
@@ -243,8 +243,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     if (!error) {
       const { routes, home } = data;
 
-      const { authRoutes: dynamicAuthRoutes } = createDynamicRoutes(routes ?? [], true);
-      addAuthRoutes(dynamicAuthRoutes);
+      const { authDynamicRoutes } = createDynamicRoutes();
+      addAuthRoutes([...routes, ...authDynamicRoutes]);
 
       handleConstantAndAuthRoutes();
 

@@ -18,7 +18,7 @@ function loginOrRegister() {
   toLogin();
 }
 
-type DropdownKey = 'user-center' | 'logout';
+type DropdownKey = 'user-center' | 'logout' | 'project_about' | 'setting_profile';
 
 type DropdownOption =
   | {
@@ -35,7 +35,7 @@ const options = computed(() => {
   const opts: DropdownOption[] = [
     {
       label: $t('common.userCenter'),
-      key: 'user-center',
+      key: 'setting_profile',
       icon: SvgIconVNode({ icon: 'ph:user-circle', fontSize: 18 })
     },
     {
@@ -43,7 +43,7 @@ const options = computed(() => {
       key: 'divider'
     },
     {
-      label: $t('route.about'),
+      label: $t('common.about'),
       key: 'project_about',
       icon: SvgIconVNode({ icon: 'ph:info-bold', fontSize: 18 })
     },
@@ -90,7 +90,7 @@ function handleDropdown(key: DropdownKey) {
     <div>
       <ButtonIcon>
         <NAvatar
-          :size="32"
+          :size="26"
           round
           class="cursor-pointer"
           :img-props="{ src: authStore.userInfo.avatar ?? '' }"

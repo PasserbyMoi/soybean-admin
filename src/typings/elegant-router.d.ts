@@ -24,50 +24,12 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
-    "function": "/function";
-    "function_hide-child": "/function/hide-child";
-    "function_hide-child_one": "/function/hide-child/one";
-    "function_hide-child_three": "/function/hide-child/three";
-    "function_hide-child_two": "/function/hide-child/two";
-    "function_multi-tab": "/function/multi-tab";
-    "function_request": "/function/request";
-    "function_super-page": "/function/super-page";
-    "function_tab": "/function/tab";
-    "function_toggle-auth": "/function/toggle-auth";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
-    "manage": "/manage";
-    "manage_dictionary": "/manage/dictionary";
-    "manage_menu": "/manage/menu";
-    "manage_role": "/manage/role";
-    "manage_user": "/manage/user";
-    "manage_user-detail": "/manage/user-detail/:id";
     "monitor": "/monitor";
     "monitor_log": "/monitor/log";
     "monitor_online": "/monitor/online";
-    "plugin": "/plugin";
-    "plugin_barcode": "/plugin/barcode";
-    "plugin_cascader": "/plugin/cascader";
-    "plugin_charts": "/plugin/charts";
-    "plugin_charts_echarts": "/plugin/charts/echarts";
-    "plugin_copy": "/plugin/copy";
-    "plugin_drag": "/plugin/drag";
-    "plugin_editor": "/plugin/editor";
-    "plugin_editor_markdown": "/plugin/editor/markdown";
-    "plugin_editor_md": "/plugin/editor/md";
-    "plugin_editor_quill": "/plugin/editor/quill";
-    "plugin_excel": "/plugin/excel";
-    "plugin_form": "/plugin/form";
-    "plugin_form_stepform": "/plugin/form/stepform";
-    "plugin_icon": "/plugin/icon";
-    "plugin_map": "/plugin/map";
-    "plugin_pinyin": "/plugin/pinyin";
-    "plugin_print": "/plugin/print";
-    "plugin_swiper": "/plugin/swiper";
-    "plugin_table": "/plugin/table";
-    "plugin_table_edittable": "/plugin/table/edittable";
-    "plugin_video": "/plugin/video";
     "project": "/project";
     "project_about": "/project/about";
     "setting": "/setting";
@@ -76,9 +38,8 @@ declare module "@elegant-router/types" {
     "system_config": "/system/config";
     "system_dept": "/system/dept";
     "system_dict": "/system/dict";
+    "system_dict_item": "/system/dict/item";
     "system_file": "/system/file";
-    "system_file_main": "/system/file/main";
-    "system_file_main_filemain": "/system/file/main/filemain";
     "system_menu": "/system/menu";
     "system_notice": "/system/notice";
     "system_role": "/system/role";
@@ -86,7 +47,6 @@ declare module "@elegant-router/types" {
     "system_user": "/system/user";
     "tool": "/tool";
     "tool_generator": "/tool/generator";
-    "user-center": "/user-center";
   };
 
   /**
@@ -125,18 +85,14 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
-    | "function"
     | "home"
     | "iframe-page"
     | "login"
-    | "manage"
     | "monitor"
-    | "plugin"
     | "project"
     | "setting"
     | "system"
     | "tool"
-    | "user-center"
   >;
 
   /**
@@ -166,46 +122,15 @@ declare module "@elegant-router/types" {
     | "system_config"
     | "system_dept"
     | "system_dict"
+    | "system_dict_item"
     | "system_file"
-    | "system_file_main_filemain"
     | "system_menu"
     | "system_notice"
     | "system_role"
     | "system_storage"
     | "system_user"
     | "tool_generator"
-    | "user-center"
-    | "function_hide-child_one"
-    | "function_hide-child_three"
-    | "function_hide-child_two"
-    | "function_multi-tab"
-    | "function_request"
-    | "function_super-page"
-    | "function_tab"
-    | "function_toggle-auth"
     | "home"
-    | "manage_dictionary"
-    | "manage_menu"
-    | "manage_role"
-    | "manage_user-detail"
-    | "manage_user"
-    | "plugin_barcode"
-    | "plugin_cascader"
-    | "plugin_charts_echarts"
-    | "plugin_copy"
-    | "plugin_drag"
-    | "plugin_editor_markdown"
-    | "plugin_editor_md"
-    | "plugin_editor_quill"
-    | "plugin_excel"
-    | "plugin_form_stepform"
-    | "plugin_icon"
-    | "plugin_map"
-    | "plugin_pinyin"
-    | "plugin_print"
-    | "plugin_swiper"
-    | "plugin_table_edittable"
-    | "plugin_video"
   >;
 
   /**

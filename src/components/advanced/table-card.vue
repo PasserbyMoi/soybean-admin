@@ -146,6 +146,7 @@ defineExpose({
     </NCard>
 
     <NCard :title="tabTitle" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+      <template #header>dsadsadsadsadasdasdsa</template>
       <template #header-extra>
         <NSpace :align="itemAlign" wrap class="items-center justify-center lt-sm:w-200px">
           <slot name="operations"></slot>
@@ -181,7 +182,7 @@ defineExpose({
           :flex-height="!appStore.isMobile"
           :pagination="pagination"
           :paginate-single-page="false"
-          :scroll-x="120"
+          :scroll-x="2200"
           :expandable="true"
           class="sm:h-full"
           remote

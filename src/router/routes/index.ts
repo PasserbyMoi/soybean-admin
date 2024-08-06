@@ -8,7 +8,7 @@ import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
  *
  * @link https://github.com/soybeanjs/elegant-router?tab=readme-ov-file#custom-route
  */
-const customRoutes: CustomRoute[] = [
+export const customRoutes: CustomRoute[] = [
   {
     name: 'exception',
     path: '/exception',
@@ -55,7 +55,21 @@ const customRoutes: CustomRoute[] = [
 ];
 
 // @chenbeiyu: 通用 Route。抽取公共部分，静态路由和动态路由同时使用
-const commonRoutes: GeneratedRoute[] = [
+// @chenbeiyu: 通用 Route。抽取公共部分，静态路由和动态路由同时使用
+export const homeRoutes: GeneratedRoute[] = [
+  {
+    name: 'home',
+    path: '/home',
+    component: 'layout.base$view.home',
+    meta: {
+      title: 'home',
+      i18nKey: 'route.home',
+      icon: 'mdi:monitor-dashboard',
+      order: 0
+    }
+  }
+];
+export const commonConstantRoutes: GeneratedRoute[] = [
   {
     name: '403',
     path: '/403',
@@ -89,17 +103,17 @@ const commonRoutes: GeneratedRoute[] = [
       hideInMenu: true
     }
   },
-  {
-    name: 'home',
-    path: '/home',
-    component: 'layout.base$view.home',
-    meta: {
-      title: 'home',
-      i18nKey: 'route.home',
-      icon: 'mdi:monitor-dashboard',
-      order: 1
-    }
-  },
+  // {
+  //   name: 'home',
+  //   path: '/home',
+  //   component: 'layout.base$view.home',
+  //   meta: {
+  //     title: 'home',
+  //     i18nKey: 'route.home',
+  //     icon: 'mdi:monitor-dashboard',
+  //     order: 1
+  //   }
+  // },
   {
     name: 'iframe-page',
     path: '/iframe-page/:url',
@@ -124,28 +138,6 @@ const commonRoutes: GeneratedRoute[] = [
       constant: true,
       hideInMenu: true
     }
-  },
-  // {
-  //   name: 'about',
-  //   path: '/about',
-  //   component: 'layout.base$view.about',
-  //   meta: {
-  //     title: 'about',
-  //     i18nKey: 'route.about',
-  //     constant: true,
-  //     icon: 'fluent:book-information-24-regular',
-  //     order: 10
-  //   }
-  // },
-  {
-    name: 'user-center',
-    path: '/user-center',
-    component: 'layout.base$view.user-center',
-    meta: {
-      title: 'user-center',
-      i18nKey: 'route.user-center',
-      hideInMenu: true
-    }
   }
 ];
 
@@ -155,7 +147,7 @@ export function createStaticRoutes() {
 
   const authRoutes: ElegantRoute[] = [];
 
-  [...customRoutes, ...generatedRoutes, ...commonRoutes].forEach(item => {
+  [...customRoutes, ...generatedRoutes].forEach(item => {
     if (item.meta?.constant) {
       constantRoutes.push(item);
     } else {
@@ -170,29 +162,26 @@ export function createStaticRoutes() {
 }
 
 /** create routes when the auth route mode is dynamic */
-export function createDynamicRoutes(
-  fetchedRoutes: ElegantRoute[] | ElegantConstRoute[],
-  includeGenerated: boolean = false
-) {
-  const constantRoutes: ElegantConstRoute[] = [];
+export function createDynamicRoutes() {
+  const constantDynamicRoutes: ElegantConstRoute[] = [...commonConstantRoutes];
 
-  const authRoutes: ElegantConstRoute[] = [];
+  const authDynamicRoutes: ElegantConstRoute[] = [...homeRoutes];
 
-  const allRoutes: ElegantConstRoute[] = includeGenerated
-    ? [...customRoutes, ...generatedRoutes, ...commonRoutes, ...fetchedRoutes]
-    : [...commonRoutes, ...fetchedRoutes];
+  // const allRoutes: ElegantConstRoute[] = includeGenerated
+  //   ? [...customRoutes, ...generatedRoutes, ...commonRoutes, ...fetchedRoutes]
+  //   : [...commonRoutes, ...fetchedRoutes];
 
-  allRoutes.forEach(item => {
-    if (item.meta?.constant) {
-      constantRoutes.push(item);
-    } else {
-      authRoutes.push(item);
-    }
-  });
+  // allRoutes.forEach(item => {
+  //   if (item.meta?.constant) {
+  //     constantRoutes.push(item);
+  //   } else {
+  //     authRoutes.push(item);
+  //   }
+  // });
 
   return {
-    constantRoutes,
-    authRoutes
+    constantDynamicRoutes,
+    authDynamicRoutes
   };
 }
 

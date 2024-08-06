@@ -340,6 +340,7 @@ declare namespace App {
         confirmOperations: string;
         list: string;
         userCenter: string;
+        about: string;
         unkonw: string;
         default: string;
         yesOrNo: {

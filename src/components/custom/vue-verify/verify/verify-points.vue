@@ -1,7 +1,7 @@
 <script type="text/babel">
 import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs } from 'vue';
 import { checkBehaviorCaptcha, getBehaviorCaptcha } from '@/apis/common/captcha';
-import { resetSize } from '@/utils/verify';
+import { resetSize } from '@/utils';
 import { encryptByAes } from '@/utils/encrypt';
 
 export default {

@@ -141,7 +141,7 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem label="标签颜色" path="color">
           <NColorPicker
-            v-model:value="hex8Color"
+            v-model:value="model.color"
             :default-value="hex8Color"
             :modes="['hex']"
             :show-alpha="true"

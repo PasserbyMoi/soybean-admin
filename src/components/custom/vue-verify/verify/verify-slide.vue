@@ -2,7 +2,7 @@
 import { computed, getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue';
 import { checkBehaviorCaptcha, getBehaviorCaptcha } from '@/apis/common/captcha';
 import { encryptByAes } from '@/utils/encrypt';
-import { resetSize } from '@/utils/verify';
+import { resetSize } from '@/utils';
 
 export default {
   name: 'VerifySlide',
