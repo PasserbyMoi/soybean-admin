@@ -6,7 +6,7 @@ import { addStorage, getStorage, updateStorage } from '@/apis';
 import { useDict } from '@/hooks/business/dict';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import { isIPv4 } from '@/utils/validate';
+import { REG_IP_V4 } from '@/constants/reg';
 
 defineOptions({
   name: 'StorageDetailDrawer'
@@ -95,7 +95,7 @@ const defaultDomain = computed(() => {
     return '';
   }
   const { endpoint, protocol } = stripProtocol(initialEndpoint);
-  return isIPv4(endpoint) ? `${protocol}${endpoint}/${bucketName}/` : `${protocol}${bucketName}.${endpoint}/`;
+  return REG_IP_V4.test(endpoint) ? `${protocol}${endpoint}/${bucketName}/` : `${protocol}${bucketName}.${endpoint}/`;
 });
 
 // 查询详情

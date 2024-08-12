@@ -237,8 +237,6 @@ export interface StorageQuery {
   status?: number | null;
 }
 
-export interface StoragePageQuery extends StorageQuery, PageQuery {}
-
 /** 系统参数类型 */
 export interface OptionResp {
   id: string;
@@ -264,12 +262,12 @@ export interface BasicConfig {
 
 /** 基础配置类型 */
 export interface SiteConfig {
-  SITE_FAVICON: OptionResp;
-  SITE_LOGO: OptionResp;
-  SITE_TITLE: OptionResp;
-  SITE_DESCRIPTION: OptionResp;
-  SITE_COPYRIGHT: OptionResp;
-  SITE_BEIAN: OptionResp;
+  SITE_FAVICON: OptionResp | null;
+  SITE_LOGO: OptionResp | null;
+  SITE_TITLE: OptionResp | null;
+  SITE_DESCRIPTION: OptionResp | null;
+  SITE_COPYRIGHT: OptionResp | null;
+  SITE_BEIAN: OptionResp | null;
 }
 
 /** 邮箱配置类型 */
@@ -293,6 +291,11 @@ export interface SecurityConfig {
   PASSWORD_MIN_LENGTH: OptionResp;
   PASSWORD_ALLOW_CONTAIN_USERNAME: OptionResp;
   PASSWORD_REQUIRE_SYMBOLS: OptionResp;
+}
+
+/** 绑定三方账号信息 */
+export interface UploadResult {
+  url: string;
 }
 
 /** 绑定三方账号信息 */

@@ -69,10 +69,8 @@ onMounted(() => {
     <NList :bordered="false">
       <NListItem v-for="item in modeList" :key="item.title">
         <template #prefix>
-          <NAvatar round color="#f2f3f5">
-            <NIcon>
-              <SvgIcon :local-icon="item.icon" />
-            </NIcon>
+          <NAvatar round color="#f2f3f5" class="size-48px">
+            <SvgIcon :local-icon="item.icon" class="size-28px" />
           </NAvatar>
         </template>
         <template #suffix>
@@ -105,4 +103,8 @@ onMounted(() => {
   </NCard>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+:deep(.n-upload-trigger.n-upload-trigger--disabled) {
+  opacity: 100;
+}
+</style>

@@ -1,3 +1,4 @@
+import { blob } from 'node:stream/consumers';
 import { request } from '@/service/request';
 import type {
   FieldConfigResp,
@@ -23,7 +24,7 @@ export function listGenerator(query: Api.Common.EPaginatingSearchParams<TableQue
 }
 
 /** 查询字段配置列表 */
-export function listFieldConfig(tableName: string, requireSync: boolean) {
+export function listFieldConfig(tableName: string, requireSync: boolean = false) {
   return request<FieldConfigResp[]>({
     url: `${BASE_URL}/field/${tableName}?requireSync=${requireSync}`,
     method: 'get'
@@ -57,8 +58,9 @@ export function genPreview(tableName: string) {
 
 /** 生成代码 */
 export function generate(tableNames: Array<string>) {
-  return request<App.Service.Page<TableResp[]>, 'blob'>({
+  return request({
     url: `${BASE_URL}/${tableNames}`,
-    method: 'post'
+    method: 'post',
+    responseType: 'blob'
   });
 }

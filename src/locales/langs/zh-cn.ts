@@ -248,6 +248,7 @@ const local: App.I18n.Schema = {
         getCode: '获取验证码',
         reGetCode: '{time}秒后重新获取',
         sendCodeSuccess: '验证码发送成功',
+        sendCodeFail: '验证码发送失败',
         imageCodePlaceholder: '请输入图片验证码'
       },
       register: {
@@ -578,6 +579,10 @@ const local: App.I18n.Schema = {
     email: {
       required: '请输入邮箱',
       invalid: '邮箱格式不正确'
+    },
+    phoneOrEmail: {
+      required: '请输入手机或邮箱',
+      invalid: '手机或邮箱格式不正确'
     }
   },
   dropdown: {

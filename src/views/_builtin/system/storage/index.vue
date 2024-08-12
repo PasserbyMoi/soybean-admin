@@ -6,6 +6,7 @@ import EnableTag from '@/components/custom/enable-tag.vue';
 import { enableNextOptions } from '@/constants/common';
 import { $t } from '@/locales';
 import { useDict } from '@/hooks/business/dict';
+import type { TableColumn } from '@/hooks/common/table';
 import StorageDetailDrawer from './modules/storage-detail-drawer.vue';
 
 defineOptions({ name: 'SystemStorage' });
@@ -19,11 +20,12 @@ const apiParams: Api.Common.EPaginatingSearchParams<StorageQuery> = {
   description: null,
   status: null
 };
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   {
     title: '名称',
     key: 'name',
     fixed: 'left',
+    width: '180px',
     align: 'center',
     resizable: true,
     ellipsis: { tooltip: true },
@@ -42,7 +44,13 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
       );
     }
   },
-  { title: '编码', key: 'code', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '编码',
+    key: 'code',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
   {
     title: '状态',
     key: 'status',
@@ -61,15 +69,68 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
       return h(TableTag, { value: row.type, options: storage_type_enum.value }, { default: () => row.type });
     }
   },
-  { title: '访问密钥', key: 'accessKey', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '终端节点', key: 'endpoint', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '桶名称', key: 'bucketName', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '域名', key: 'domain', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+  {
+    title: '访问密钥',
+    key: 'accessKey',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '终端节点',
+    key: 'endpoint',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '桶名称',
+    key: 'bucketName',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '域名',
+    key: 'domain',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '描述',
+    key: 'description',
+    align: 'center',
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: '创建人',
+    key: 'createUserString',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '修改人',
+    key: 'updateUserString',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '修改时间',
+    key: 'updateTime',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    hide: true
+  }
 ]);
 
 const operations: App.Table.Operation<StorageResp>[] = [

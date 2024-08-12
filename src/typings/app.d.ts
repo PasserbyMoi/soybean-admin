@@ -461,6 +461,7 @@ declare namespace App {
             getCode: string;
             reGetCode: string;
             sendCodeSuccess: string;
+            sendCodeFail: string;
             imageCodePlaceholder: string;
           };
           register: {
@@ -773,6 +774,7 @@ declare namespace App {
         confirmPwd: FormMsg;
         code: FormMsg;
         email: FormMsg;
+        phoneOrEmail: FormMsg;
       };
       dropdown: Record<Global.DropdownKey, string>;
       icon: {

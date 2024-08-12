@@ -145,7 +145,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NFlex vertical class="w-300px">
+  <NFlex vertical>
     <NInput v-model:value="pattern" size="small" :placeholder="placeholder">
       <template #prefix>
         <icon-material-symbols:search class="text-icon" />
@@ -177,21 +177,4 @@ onMounted(() => {
   <DeptDetailModal v-model:visible="visible" v-model:row-id="rowId" :operate-type="operateType" @submitted="submited" />
 </template>
 
-<style lang="scss" scoped>
-// :deep(.n-tree-node) {
-//   height: 34px !important;
-//   border-radius: 4px;
-// }
-
-// :deep(.n-tree-node-wrapper) {
-//   height: 36px !important;
-// }
-
-// :deep(.n-tree-node-switcher) {
-//   width: 8px !important;
-// }
-
-// :deep(.n-tree-node-switcher--hide) {
-//   width: 8px !important;
-// }
-</style>
+<style scoped></style>

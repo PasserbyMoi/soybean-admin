@@ -6,6 +6,7 @@ import BoolTag from '@/components/custom/bool-tag.vue';
 import TableTag from '@/components/advanced/table-tag.vue';
 import { $t } from '@/locales';
 import { useDict } from '@/hooks/business/dict';
+import type { TableColumn } from '@/hooks/common/table';
 import RoleViewDrawer from './modules/role-view-drawer.vue';
 import RoleDetailDrawer from './modules/role-detail-drawer.vue';
 
@@ -19,7 +20,7 @@ const apiParams: Api.Common.EPaginatingSearchParams<RoleQuery> = {
   sort: ['createTime, desc'],
   description: null
 };
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   {
     title: '名称',
     key: 'name',
@@ -30,7 +31,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
       return h(NA, { size: 'small', onClick: () => viewHandle(row.id) }, { default: () => row.name });
     }
   },
-  { title: '编码', key: 'code', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '编码', key: 'code', width: '180px', align: 'center', resizable: true, ellipsis: { tooltip: true } },
   {
     title: '数据权限',
     key: 'dataScope',
@@ -53,10 +54,38 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
   },
   { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
   { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+  {
+    title: '创建人',
+    key: 'createUserString',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '修改人',
+    key: 'updateUserString',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '修改时间',
+    key: 'updateTime',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  }
 ]);
 
 const operations: App.Table.Operation<RoleResp>[] = [

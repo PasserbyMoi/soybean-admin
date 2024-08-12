@@ -17,6 +17,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '名称',
     key: 'name',
     align: 'left',
+    width: '220px',
     titleAlign: 'center',
     fixed: 'left',
     resizable: true,
@@ -25,6 +26,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
   {
     title: '状态',
     key: 'status',
+    width: '80px',
     align: 'center',
     resizable: true,
     render: row => {
@@ -34,12 +36,13 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
   {
     title: '系统内置',
     key: 'isSystem',
+    width: '80px',
     align: 'center',
     render: row => {
       return h(BoolTag, { value: row.isSystem });
     }
   },
-  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '排序', key: 'sort', width: '80px', align: 'center', resizable: true, ellipsis: { tooltip: true } },
   { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
   { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
   { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },

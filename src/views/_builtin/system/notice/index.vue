@@ -5,6 +5,7 @@ import { deleteNotice, listNotice } from '@/apis';
 import TableTag from '@/components/advanced/table-tag.vue';
 import { $t } from '@/locales';
 import { useDict } from '@/hooks/business/dict';
+import type { TableColumn } from '@/hooks/common/table';
 import NoticeDetailModal from './modules/notice-detail-modal.vue';
 import NoticeViewModal from './modules/notice-view-modal.vue';
 
@@ -19,11 +20,13 @@ const apiParams: Api.Common.EPaginatingSearchParams<NoticeQuery> = {
   title: null,
   type: null
 };
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   {
     title: '标题',
     key: 'title',
+    align: 'center',
     resizable: true,
+    fixed: 'left',
     ellipsis: { tooltip: true },
     render(row) {
       return h(NA, { size: 'small', onClick: () => viewHandle(row.id) }, { default: () => row.title });
@@ -33,7 +36,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '类型',
     key: 'type',
     align: 'center',
-    resizable: true,
     render: row => {
       return h(TableTag, { value: row.type, options: notice_type.value }, { default: () => row.type });
     }
@@ -42,15 +44,26 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '状态',
     key: 'status',
     align: 'center',
-    resizable: true,
     render: row => {
       return h(TableTag, { value: row.status, options: notice_status_enum.value }, { default: () => row.status });
     }
   },
-  { title: '生效时间', key: 'effectiveTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '终止时间', key: 'terminateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+  { title: '生效时间', key: 'effectiveTime', align: 'center', ellipsis: { tooltip: true } },
+  { title: '终止时间', key: 'terminateTime', align: 'center', ellipsis: { tooltip: true } },
+  {
+    title: '创建人',
+    key: 'createUserString',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    hide: true
+  }
 ]);
 
 const operations: App.Table.Operation<NoticeResp>[] = [

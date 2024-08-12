@@ -140,7 +140,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NFlex vertical class="w-300px">
+  <NFlex vertical>
     <NInput v-model:value="pattern" size="small" :placeholder="placeholder">
       <template #prefix>
         <icon-material-symbols:search class="text-icon" />

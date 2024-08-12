@@ -100,10 +100,12 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
     // return data in { data, error }
     transformBackendResponse(response) {
       return {
-        code: response.data.code,
-        msg: response.data.msg,
-        success: response.data.success,
-        timestamp: response.data.timestamp,
+        option: {
+          code: response.data.code,
+          msg: response.data.msg,
+          success: response.data.success,
+          timestamp: response.data.timestamp
+        },
         data: response.data.data
       };
       // return response.data.data;

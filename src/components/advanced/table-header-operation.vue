@@ -113,7 +113,7 @@ function toggleExpand() {
         </template>
       </NButton>
     </NDropdown>
-    <NButton size="small" @click="toggleExpand">
+    <NButton v-if="operations.includes('expand')" size="small" @click="toggleExpand">
       <template #icon>
         <icon-material-symbols:arrow-right-alt v-if="expand" title=" $t('icon.collapseList')" />
         <icon-material-symbols:arrow-split v-else title=" $t('icon.expandList')" />

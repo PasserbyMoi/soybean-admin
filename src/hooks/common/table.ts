@@ -8,7 +8,12 @@ import { $t } from '@/locales';
 
 type TableData = NaiveUI.TableData;
 type GetTableData<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn> = NaiveUI.GetTableData<A>;
-type TableColumn<T> = NaiveUI.TableColumn<T>;
+
+type TableCustomColumn = {
+  hide?: boolean;
+};
+
+export type TableColumn<T> = NaiveUI.TableColumn<T> & TableCustomColumn;
 
 export function useTable<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn>(config: NaiveUI.NaiveTableConfig<A>) {
   const scope = effectScope();
@@ -62,7 +67,7 @@ export function useTable<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn>
           checks.push({
             key: column.key as string,
             title: column.title as string,
-            checked: true
+            checked: !column.hide
           });
         } else if (column.type === 'selection') {
           checks.push({
@@ -327,7 +332,7 @@ export function useCommonTable<A extends NaiveUI.TableApiFn | NaiveUI.TableApiFi
           checks.push({
             key: column.key as string,
             title: column.title as string,
-            checked: true
+            checked: !column.hide
           });
         } else if (column.type === 'selection') {
           checks.push({

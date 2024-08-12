@@ -51,7 +51,7 @@ const onBinding = (type: string, status: boolean) => {
 
 const verifyModelRef = ref<InstanceType<typeof VerifyModel>>();
 // 修改
-const onUpdate = (type: string, status: boolean) => {
+const onUpdate = (type: CommonType.UserVerifyType, _status: boolean) => {
   verifyModelRef.value?.open(type);
 };
 
@@ -65,10 +65,8 @@ onMounted(() => {
     <NList :bordered="false">
       <NListItem v-for="item in modeList" :key="item.title">
         <template #prefix>
-          <NAvatar round color="#f2f3f5">
-            <NIcon>
-              <SvgIcon :local-icon="item.icon" />
-            </NIcon>
+          <NAvatar round color="#f2f3f5" class="size-48px">
+            <SvgIcon :local-icon="item.icon" class="size-28px color-#333" />
           </NAvatar>
         </template>
         <template #suffix>
@@ -109,4 +107,8 @@ onMounted(() => {
   <VerifyModel ref="verifyModelRef" />
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+:deep(.n-upload-trigger.n-upload-trigger--disabled) {
+  opacity: 100;
+}
+</style>

@@ -248,6 +248,7 @@ const local: App.I18n.Schema = {
         getCode: 'Get verification code',
         reGetCode: 'Reacquire after {time}s',
         sendCodeSuccess: 'Verification code sent successfully',
+        sendCodeFail: 'Verification code sent failed',
         imageCodePlaceholder: 'Please enter image verification code'
       },
       register: {
@@ -579,6 +580,10 @@ const local: App.I18n.Schema = {
     email: {
       required: 'Please enter email',
       invalid: 'Email format is incorrect'
+    },
+    phoneOrEmail: {
+      required: 'Please enter phone or email',
+      invalid: 'Phone or email format is incorrect'
     }
   },
   dropdown: {

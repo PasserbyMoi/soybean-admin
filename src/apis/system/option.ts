@@ -22,10 +22,10 @@ export function updateOption(data: any) {
 }
 
 /** 重置参数 */
-export function resetOptionValue(query: System.OptionQuery) {
+export function resetOptionValue(data: System.OptionQuery) {
   return request({
     url: `${BASE_URL}/value`,
     method: 'patch',
-    params: query
+    data
   });
 }

@@ -3,6 +3,7 @@ import type { DataTableInst } from 'naive-ui';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTabStore } from '@/store/modules/tab';
+import type { TableColumn } from '@/hooks/common/table';
 import { useCommonTable } from '@/hooks/common/table';
 import { tableIndexColumns, tableSelectionColumns } from '@/constants/business';
 import TableColumnOperations from './table-column-operations.vue';
@@ -23,14 +24,14 @@ interface Props {
   showIndex?: boolean;
   apiFn: NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn;
   apiParams: Api.Common.PaginatingSearchParams | any;
-  columns: NaiveUI.TableColumn<any>[];
+  columns: TableColumn<any>[];
 
   loading?: boolean;
   itemAlign?: NaiveUI.Align;
 }
 const props = withDefaults(defineProps<Props>(), {
   rowKey: 'id',
-  title: '数据展示',
+  title: undefined,
   showSelection: true,
   showIndex: true,
   showTotal: true,
@@ -52,7 +53,9 @@ const columnOperations = defineModel<Array<UnionKey.TableColumnOperation<any>>>(
   default: () => []
 });
 
-const tabTitle = ref<string>(props.title ?? tabStore.getActiveTab().label ?? tabStore.getActiveTab().newLabel);
+const tabTitle = computed(() => {
+  return props.title ?? tabStore.getActiveTab().label ?? tabStore.getActiveTab().newLabel;
+});
 const tableRef = ref<DataTableInst>();
 const expand = ref(false);
 const searchVisible = ref(true);
@@ -77,10 +80,9 @@ function columnsTransformer(): NaiveUI.TableColumn<any>[] {
     key: 'operate',
     title: $t('common.operate'),
     align: 'center',
-    width: 180,
-    resizable: true,
+    width: 200,
     fixed: 'right',
-    render: row => {
+    render: (row: any) => {
       return h(TableColumnOperations, { row, operations: columnOperations.value });
     }
   });
@@ -118,8 +120,14 @@ defineExpose({
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch flex-auto gap-6px overflow-auto">
-    <NCard v-if="searchVisible" :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
+  <div class="min-h-500px flex-col-stretch flex-auto gap-6px">
+    <NCard
+      v-if="searchVisible && $slots.search"
+      :title="$t('common.search')"
+      :bordered="false"
+      size="small"
+      class="card-wrapper"
+    >
       <NForm v-model:mode="searchParams" label-placement="left" :label-width="80">
         <NGrid responsive="screen" item-responsive :x-gap="10">
           <slot name="search" :search-params="searchParams"></slot>
@@ -146,7 +154,6 @@ defineExpose({
     </NCard>
 
     <NCard :title="tabTitle" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
-      <template #header>dsadsadsadsadasdasdsa</template>
       <template #header-extra>
         <NSpace :align="itemAlign" wrap class="items-center justify-center lt-sm:w-200px">
           <slot name="operations"></slot>
@@ -155,9 +162,9 @@ defineExpose({
             v-model:columns="columnChecks"
             v-model:operations="headerOperations"
             v-model:expand="expand"
+            v-model:search-visible="searchVisible"
             :loading="loading"
             :item-align="itemAlign"
-            :search-visible="searchVisible"
             :delete-disabled="columnChecks.length === 0"
             @add="handleAdd"
             @batch-delete="handleBatchDelete"
@@ -166,8 +173,10 @@ defineExpose({
           />
         </NSpace>
       </template>
-      <NFlex :wrap="false" class="sm:h-full">
-        <slot name="sider" :params="searchParams" :search="getDataByPage"></slot>
+      <NSpace :wrap="false" class="sm:h-full">
+        <div v-if="$slots.sider" class="min-w-260px">
+          <slot name="sider" :params="searchParams" :search="getDataByPage"></slot>
+        </div>
         <NDataTable
           ref="tableRef"
           v-model:checked-row-keys="checkedRowKeys"
@@ -182,12 +191,12 @@ defineExpose({
           :flex-height="!appStore.isMobile"
           :pagination="pagination"
           :paginate-single-page="false"
-          :scroll-x="2200"
+          :scroll-x="1160"
           :expandable="true"
           class="sm:h-full"
           remote
         />
-      </NFlex>
+      </NSpace>
     </NCard>
   </div>
 </template>

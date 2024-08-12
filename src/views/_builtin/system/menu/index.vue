@@ -6,6 +6,7 @@ import { enableStatusOptions } from '@/constants/business';
 import BoolTag from '@/components/custom/bool-tag.vue';
 import MenuTypeTag from '@/components/custom/menu-type-tag.vue';
 import SvgIcon from '@/components/custom/svg-icon.vue';
+import type { TableColumn } from '@/hooks/common/table';
 import MenuDetailModal from './modules/menu-detail-modal.vue';
 
 defineOptions({ name: 'SystemMenu' });
@@ -14,7 +15,7 @@ const apiParams: MenuQuery = {
   title: null,
   status: null
 };
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   {
     title: '菜单标题',
     key: 'title',
@@ -30,8 +31,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '类型',
     key: 'type',
     align: 'center',
-    width: '80px',
-    minWidth: '80px',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -42,8 +41,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '状态',
     key: 'status',
     align: 'center',
-    width: '80px',
-    minWidth: '80px',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -54,8 +51,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '路由地址',
     key: 'path',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -63,8 +58,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '组件名称',
     key: 'name',
     align: 'center',
-    width: '100px',
-    minWidth: '100px',
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -72,8 +65,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '组件路径',
     key: 'component',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -81,8 +72,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '权限标识',
     key: 'permission',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -90,8 +79,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '外链',
     key: 'isExternal',
     align: 'center',
-    width: '80px',
-    minWidth: '80px',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -102,8 +89,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '隐藏',
     key: 'isHidden',
     align: 'center',
-    width: '80px',
-    minWidth: '80px',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -114,8 +99,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '缓存',
     key: 'isCache',
     align: 'center',
-    width: '80px',
-    minWidth: '80px',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -127,8 +110,6 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '图标',
     key: 'icon',
     align: 'center',
-    width: '80px',
-    minWidth: '80px',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -139,37 +120,33 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '创建人',
     key: 'createUserString',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
+    hide: true
   },
   {
     title: '创建时间',
     key: 'createTime',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
+    hide: true
   },
   {
     title: '修改人',
     key: 'updateUserString',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
+    hide: true
   },
   {
     title: '修改时间',
     key: 'updateTime',
     align: 'center',
-    width: '180px',
-    minWidth: '180px',
     resizable: true,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
+    hide: true
   }
 ]);
 

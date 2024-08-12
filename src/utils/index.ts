@@ -1,5 +1,5 @@
 import { camelCase, upperFirst } from 'lodash-es';
-import { isExternal } from './validate';
+import { REG_EXTERNAL_LINK } from '@/constants/reg';
 
 export function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];
@@ -76,7 +76,7 @@ export function hidePhone(phone: string) {
 
 /** 检测数据是否为空数据 */
 export function isEmpty(data: unknown) {
-  if (data === '' || data === 'undefined' || data === undefined || data == null || data === 'null') {
+  if (data === '' || data === 'undefined' || data === undefined || data === null || data === 'null') {
     return true;
   }
   return JSON.stringify(data) === '{}' || JSON.stringify(data) === '[]' || JSON.stringify(data) === '[{}]';
@@ -158,36 +158,11 @@ export const isEven = (num: number) => {
   return !isOdd(num);
 };
 
-/** 将RGB转化为十六机制 */
-export const rgbToHex = (r: number, g: number, b: number) => {
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
-};
-
 /** 获取随机十六进制颜色 */
 export const randomHex = () => {
   return `#${Math.floor(Math.random() * 0xffffff)
     .toString(16)
     .padEnd(6, '0')}`;
-};
-
-/**
- * 过滤树
- *
- * @param {values} 数组
- */
-type FilterTree = <T extends { children?: T[] }>(
-  array: T[],
-  iterate: (item: T, index?: number, items?: T[]) => boolean
-) => T[];
-export const filterTree: FilterTree = (values, fn) => {
-  const arr = values.filter(fn);
-  const data = mapTree(arr, item => {
-    if (item.children && item.children.length) {
-      item.children = item.children.filter(fn);
-    }
-    return item;
-  });
-  return data;
 };
 
 /** 问候 */
@@ -230,7 +205,7 @@ export const copyText = (text: any) => {
  */
 export const transformPathToName = (path: string) => {
   if (!path) return '';
-  if (isExternal(path)) return '';
+  if (REG_EXTERNAL_LINK.test(path)) return '';
   return upperFirst(camelCase(path));
 };
 

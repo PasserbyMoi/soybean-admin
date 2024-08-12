@@ -54,14 +54,14 @@ watch(visible, () => {
       >
         <NDescriptionsItem label="日志 ID">{{ dataDetail?.id }}</NDescriptionsItem>
         <NDescriptionsItem label="Trace ID">
-          <CopyText :value="dataDetail?.traceId" />
+          <CopyText :value="dataDetail?.traceId" :show-text="true" />
         </NDescriptionsItem>
         <NDescriptionsItem label="操作人">{{ dataDetail?.createUserString }}</NDescriptionsItem>
         <NDescriptionsItem label="操作时间">{{ dataDetail?.createTime }}</NDescriptionsItem>
         <NDescriptionsItem label="操作内容">{{ dataDetail?.description }}</NDescriptionsItem>
         <NDescriptionsItem label="所属模块">{{ dataDetail?.module }}</NDescriptionsItem>
         <NDescriptionsItem label="操作 IP">
-          <CopyText :value="dataDetail?.ip" />
+          <CopyText :value="dataDetail?.ip" :show-text="true" />
         </NDescriptionsItem>
         <NDescriptionsItem label="操作地点">{{ dataDetail?.address }}</NDescriptionsItem>
         <NDescriptionsItem label="浏览器">{{ dataDetail?.browser }}</NDescriptionsItem>
@@ -80,7 +80,7 @@ watch(visible, () => {
           <NTag v-else type="success">{{ dataDetail?.timeTaken }} ms</NTag>
         </NDescriptionsItem>
         <NDescriptionsItem label="请求 URI" :span="2">
-          <CopyText :value="dataDetail?.requestUrl" max-length="100%" />
+          <CopyText :value="dataDetail?.requestUrl" :show-text="true" max-length="100%" />
         </NDescriptionsItem>
       </NDescriptions>
       <NDescriptions title="响应信息" :column="2" class="mt-20px">

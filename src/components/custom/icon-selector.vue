@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
+import { getLocalIcons } from '@/utils/icon';
 
 defineOptions({ name: 'IconSelector' });
 
@@ -17,14 +18,7 @@ const value = defineModel<string>('value', {
 
 const searchValue = ref(''); // 搜索词
 const isGridView = ref(false); // 图标列表
-const SvgIconModules = import.meta.glob('@/assets/svg-icon/*.svg'); // 自定义图标模块
-
-const iconList: string[] = [];
-for (const path in SvgIconModules) {
-  const name = path.replace('/src/assets/svg-icon/', '').replace('.svg', '');
-  iconList.push(name);
-}
-
+const iconList: string[] = getLocalIcons();
 const pageSize = 42;
 const current = ref(1);
 const total = ref(iconList.length); // 图标总数

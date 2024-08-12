@@ -1,19 +1,20 @@
 <script setup lang="tsx">
 import { listGenerator } from '@/apis/tool/generator';
 import type { TableQuery, TableResp } from '@/apis/tool/type';
+import type { TableColumn } from '@/hooks/common/table';
+import GeneratorConfigDrawer from './modules/generator-config-drawer.vue';
+import GeneratorViewModal from './modules/generator-view-modal.vue';
 
 defineOptions({
   name: 'SystemGenerator'
 });
-
-const tableRef = ref();
 
 const apiParams: Api.Common.EPaginatingSearchParams<TableQuery> = {
   page: 1,
   size: 10,
   tableName: null
 };
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   { key: 'tableName', title: '表名称', align: 'center', fixed: 'left' },
   { key: 'comment', title: '描述', align: 'center' },
   { key: 'engine', title: '存储引擎', align: 'center' },
@@ -25,17 +26,39 @@ const operations: App.Table.Operation<TableResp>[] = [
   {
     label: '配置',
     yesHandle: (_row: TableResp) => {
-      tableRef.value.handleAdd();
+      configHandle(_row.tableName);
     }
   },
   {
     label: '生成',
     disabled: (row: TableResp) => row.disabled,
     yesHandle: (_row: TableResp) => {
-      tableRef.value.drawerVisible = true;
+      viewHandle(_row.tableName);
     }
   }
 ];
+
+const tableRef = ref();
+const configRef = ref();
+const viewRef = ref();
+
+const rowId = ref<string>();
+const configVisible = ref<boolean>();
+const viewVisible = ref<boolean>();
+
+function configHandle(id: string) {
+  rowId.value = id;
+  configVisible.value = true;
+}
+
+function viewHandle(id: string) {
+  rowId.value = id;
+  viewVisible.value = true;
+}
+
+function submited() {
+  tableRef.value.getDataByPage();
+}
 </script>
 
 <template>
@@ -55,13 +78,15 @@ const operations: App.Table.Operation<TableResp>[] = [
           <NInput v-model:value="searchParams.tableName" placeholder="请输入表名" allow-clear />
         </NFormItemGi>
       </template>
-
-      <!--
- <template #drawer="{ visible, type, data, submitted }">
-        <UserOperateDrawer :visible="visible" :operate-type="type" :row-data="data" @submitted="submitted" />
-      </template>
--->
     </TableCard>
+    <GeneratorConfigDrawer
+      ref="configRef"
+      v-model:visible="configVisible"
+      v-model:row-id="rowId"
+      @submitted="submited"
+    />
+
+    <GeneratorViewModal ref="viewRef" v-model:visible="viewVisible" v-model:row-id="rowId" @submitted="submited" />
   </div>
 </template>
 

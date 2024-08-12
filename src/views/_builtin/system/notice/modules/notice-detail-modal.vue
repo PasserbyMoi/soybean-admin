@@ -132,10 +132,11 @@ watch(visible, () => {
 <template>
   <NModal
     v-model:show="visible"
+    :title="title"
     preset="card"
     class="h-90% w-80%"
-    :title="title"
     close-on-esc
+    segmented
     @after-leave="closeDrawer"
   >
     <NForm ref="formRef" :model="model" :rules="rules">
@@ -187,8 +188,8 @@ watch(visible, () => {
       </NRow>
     </NForm>
     <template #footer>
-      <NSpace :size="16">
-        <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
+      <NSpace :size="16" justify="end">
+        <NButton @click="closeDrawer(false)">{{ $t('common.cancel') }}</NButton>
         <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
       </NSpace>
     </template>

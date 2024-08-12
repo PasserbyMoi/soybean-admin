@@ -81,11 +81,25 @@ export interface RequestInstance<S = Record<string, unknown>> extends RequestIns
 }
 
 export type FlatResponseSuccessData<T = any> = {
+  option?: {
+    code?: string;
+    msg?: string;
+    success?: boolean;
+    timestamp?: string;
+    fileName?: string;
+  };
   data: T;
   error: null;
 };
 
 export type FlatResponseFailData<ResponseData = any> = {
+  option?: {
+    code?: string;
+    msg?: string;
+    success?: boolean;
+    timestamp?: string;
+    fileName?: string;
+  };
   data: null;
   error: AxiosError<ResponseData>;
 };

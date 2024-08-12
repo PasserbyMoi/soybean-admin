@@ -8,6 +8,7 @@ import EnableTag from '@/components/custom/enable-tag.vue';
 import BoolTag from '@/components/custom/bool-tag.vue';
 import GenderAvatar from '@/components/custom/gender-avatar.vue';
 import Tags from '@/components/custom/tags.vue';
+import type { TableColumn } from '@/hooks/common/table';
 import UserRestpwdModal from './modules/user-restpwd-modal.vue';
 import UserViewDrawer from './modules/user-view-drawer.vue';
 import UserDetailDrawer from './modules/user-detail-drawer.vue';
@@ -22,7 +23,7 @@ const apiParams: Api.Common.EPaginatingSearchParams<UserQuery> = {
   description: null,
   status: null
 };
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   {
     title: '用户名',
     key: 'username',
@@ -52,7 +53,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
-      return h(GenderTag, { value: row.status });
+      return h(GenderTag, { value: row.gender });
     }
   },
   { title: '所属部门', key: 'deptName', align: 'center', resizable: true, ellipsis: { tooltip: true } },
@@ -78,11 +79,25 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
       return h(BoolTag, { value: row.isSystem });
     }
   },
-  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true }, hide: true },
+  {
+    title: '创建人',
+    key: 'createUserString',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true }, hide: true },
+  {
+    title: '修改人',
+    key: 'updateUserString',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true }, hide: true }
 ]);
 
 const operations: App.Table.Operation<UserResp>[] = [

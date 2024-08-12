@@ -1,5 +1,5 @@
 import { request } from '@/service/request';
-import type { ArcoTreeNodeData, OptionQuery } from '@/apis';
+import type { ArcoTreeNodeData, OptionQuery, UploadResult } from '@/apis';
 
 const BASE_URL = '/common';
 
@@ -49,7 +49,7 @@ export function listOptionDict(query: OptionQuery) {
 
 /** 上传文件 */
 export function uploadFile(data: FormData) {
-  return request<boolean>({
+  return request<UploadResult>({
     url: `${BASE_URL}/file`,
     method: 'post',
     data

@@ -60,6 +60,7 @@ declare namespace UnionKey {
     | 'export'
     | 'refresh'
     | 'height'
+    | 'expand'
     | 'stripe'
     | 'columnSetting'
     | App.Table.Operation<T>;

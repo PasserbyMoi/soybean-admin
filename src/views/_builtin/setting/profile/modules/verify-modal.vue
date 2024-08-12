@@ -4,10 +4,10 @@ import { NButton, NSpace } from 'naive-ui';
 import { getEmailCaptcha, getSmsCaptcha, updateUserEmail, updateUserPassword, updateUserPhone } from '@/apis';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import * as Regexp from '@/utils/regexp';
 import { encryptByRsa } from '@/utils/encrypt';
 import { useAuthStore } from '@/store/modules/auth';
 import VueVerify from '@/components/custom/vue-verify/index.vue';
+import { REG_PHONE } from '@/constants/reg';
 
 defineOptions({
   name: 'VerifyModal'
@@ -58,7 +58,7 @@ function createDefaultModel() {
 const rules: Record<string, App.Global.FormRule[]> = {
   phone: [
     { key: 'phone', required: true, message: '请输入手机号' },
-    { key: 'phone', type: 'string', pattern: Regexp.Phone, message: '请输入正确的手机号' }
+    { key: 'phone', type: 'string', pattern: REG_PHONE, message: '请输入正确的手机号' }
   ],
   email: [
     { key: 'email', required: true, message: '请输入邮箱' },

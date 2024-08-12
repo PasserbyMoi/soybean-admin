@@ -6,8 +6,8 @@ import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
 import { localStg } from '@/utils/storage';
 import { $t } from '@/locales';
-import { accountLogin, getUserInfo } from '@/apis/auth';
-import type { AccountLoginReq, LoginResp, UserInfo } from '@/apis/auth/type';
+import { accountLogin, emailLogin, getUserInfo, phoneLogin, socialLogin } from '@/apis/auth';
+import type { AccountLoginReq, UserInfo } from '@/apis';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
@@ -73,9 +73,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    */
   async function login(accountLoginReq: AccountLoginReq, redirect = true) {
     startLoading();
-    const { data: loginResp, error } = await accountLogin(accountLoginReq);
+    const { data, error } = await accountLogin(accountLoginReq);
     if (!error) {
-      const pass = await loginByToken(loginResp);
+      const pass = await loginByToken(data.token);
       if (pass) {
         await routeStore.initAuthRoute();
         if (redirect) {
@@ -96,20 +96,112 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return error;
   }
 
-  async function loginByToken(loginResp: LoginResp) {
-    // 1. stored in the localStorage, the later requests need it in headers
-    localStg.set('token', loginResp.token);
-    localStg.set('refreshToken', loginResp.token);
+  /**
+   * Email Login
+   *
+   * @param userName Email
+   * @param password Captcha
+   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   */
+  async function loginByEmail(email: string, captcha: string, redirect = true) {
+    startLoading();
+    const { data, error } = await emailLogin({ email, captcha });
+    if (!error) {
+      const pass = await loginByToken(data.token);
+      if (pass) {
+        await routeStore.initAuthRoute();
+        if (redirect) {
+          await redirectFromLogin();
+        }
+        if (routeStore.isInitAuthRoute) {
+          window.$notification?.success({
+            title: $t('page.login.common.loginSuccess'),
+            content: $t('page.login.common.welcomeBack', { userName: userInfo.nickname }),
+            duration: 4500
+          });
+        }
+      }
+    } else {
+      resetStore();
+    }
+    endLoading();
+    throw error;
+  }
 
+  /**
+   * Phone Login
+   *
+   * @param userName Email
+   * @param password Captcha
+   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   */
+  async function loginByPhone(phone: string, captcha: string, redirect = true) {
+    startLoading();
+    const { data, error } = await phoneLogin({ phone, captcha });
+    if (!error) {
+      const pass = await loginByToken(data.token);
+      if (pass) {
+        await routeStore.initAuthRoute();
+        if (redirect) {
+          await redirectFromLogin();
+        }
+        if (routeStore.isInitAuthRoute) {
+          window.$notification?.success({
+            title: $t('page.login.common.loginSuccess'),
+            content: $t('page.login.common.welcomeBack', { userName: userInfo.nickname }),
+            duration: 4500
+          });
+        }
+      }
+    } else {
+      resetStore();
+    }
+    endLoading();
+    throw error;
+  }
+
+  /**
+   * Social Login
+   *
+   * @param source Social Name
+   * @param req Other params
+   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   */
+  async function loginBySocial(source: string, req: any, redirect = true) {
+    startLoading();
+    const { data, error } = await socialLogin(source, req);
+    if (!error) {
+      const pass = await loginByToken(data.token);
+      if (pass) {
+        await routeStore.initAuthRoute();
+        if (redirect) {
+          await redirectFromLogin();
+        }
+        if (routeStore.isInitAuthRoute) {
+          window.$notification?.success({
+            title: $t('page.login.common.loginSuccess'),
+            content: $t('page.login.common.welcomeBack', { userName: userInfo.nickname }),
+            duration: 4500
+          });
+        }
+      }
+    } else {
+      resetStore();
+    }
+    endLoading();
+    return error;
+  }
+
+  async function loginByToken(_token: string, _refreshToken?: string) {
+    // 1. stored in the localStorage, the later requests need it in headers
+    localStg.set('token', _token);
+    localStg.set('refreshToken', _refreshToken ?? _token);
     // 2. get user info
     const pass = await getUserAccount();
-
     if (pass) {
-      token.value = loginResp.token;
-
+      token.value = _token;
       return true;
     }
-
     return false;
   }
 
@@ -145,6 +237,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
+    loginByEmail,
+    loginByPhone,
+    loginBySocial,
     initUserInfo
   };
 });

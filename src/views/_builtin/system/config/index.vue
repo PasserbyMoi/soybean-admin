@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import BasicSetting from './modules/BasicSetting.vue';
-// import MailSetting from './modules/MailSetting.vue';
-// import SecuritySetting from './modules/SecuritySetting.vue';
+import ConfigBasic from './modules/basic.vue';
+import ConfigMail from './modules/mail.vue';
+import ConfigSecurity from './modules/security.vue';
 
 defineOptions({ name: 'SystemConfig' });
 
@@ -27,23 +27,18 @@ watch(
 </script>
 
 <template>
-  <div class="gi_page">
-    <NCard class="general-card" title="系统配置">
-      <NTabs v-model:active-key="activeKey" animated @change="change">
+  <div>
+    <NCard class="h-full" title="系统配置">
+      <NTabs v-model:active-key="activeKey" placement="right" animated @change="change">
         <NTabPane name="基础配置" table="base">
-          <BasicSetting />
+          <ConfigBasic />
         </NTabPane>
-
-        <!--
- <NTabPane name="邮件配置" table="mail">
-          <MailSetting />
+        <NTabPane name="邮件配置" table="mail">
+          <ConfigMail />
         </NTabPane>
--->
-        <!--
- <NTabPane name="安全配置" table="security">
-          <SecuritySetting />
+        <NTabPane name="安全配置" table="security">
+          <ConfigSecurity />
         </NTabPane>
--->
       </NTabs>
     </NCard>
   </div>

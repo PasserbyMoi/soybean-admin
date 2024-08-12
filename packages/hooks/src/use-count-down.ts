@@ -1,5 +1,7 @@
 import { computed, onScopeDispose, ref } from 'vue';
-import { useRafFn } from '@vueuse/core';
+import { useFps, useRafFn } from '@vueuse/core';
+
+const currentFps = useFps({ every: 2 });
 
 /**
  * count down
@@ -7,8 +9,7 @@ import { useRafFn } from '@vueuse/core';
  * @param seconds - count down seconds
  */
 export default function useCountDown(seconds: number) {
-  const FPS_PER_SECOND = 60;
-
+  const FPS_PER_SECOND = currentFps.value;
   const fps = ref(0);
 
   const count = computed(() => Math.ceil(fps.value / FPS_PER_SECOND));

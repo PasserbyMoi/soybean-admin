@@ -55,7 +55,6 @@ function createCommonRequest<ResponseData = any>(
   instance.interceptors.response.use(
     async response => {
       const responseType: ResponseType = (response.config?.responseType as ResponseType) || 'json';
-
       if (responseType !== 'json' || opts.isBackendSuccess(response)) {
         return Promise.resolve(response);
       }
@@ -164,8 +163,16 @@ export function createFlatRequest<ResponseData = any, State = Record<string, unk
       const responseType = response.config?.responseType || 'json';
 
       if (responseType === 'json') {
-        const { code, msg, success, timestamp, data } = opts.transformBackendResponse(response);
-        return { code, msg, success, timestamp, data, error: null };
+        const { option, data } = opts.transformBackendResponse(response);
+        return { option, data, error: null };
+      }
+
+      if (responseType === 'blob') {
+        const contentDisposition = response.headers['content-disposition'];
+        const pattern = /filename=([^;]+\.[^.;]+);*/;
+        const result = pattern.exec(contentDisposition) || '';
+        const fileName = window.decodeURI(result[1]);
+        return { option: { fileName }, data: response.data as MappedType<R, T>, error: null };
       }
 
       return { data: response.data as MappedType<R, T>, error: null };

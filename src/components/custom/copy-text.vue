@@ -7,6 +7,7 @@ const { copy, isSupported } = useClipboard();
 const props = defineProps<{
   maxLength?: string;
   defaultText?: string;
+  showText?: boolean;
 }>();
 const modelValue = defineModel<string | number>('value');
 
@@ -22,7 +23,7 @@ async function handleCopy() {
 
 <template>
   <div v-if="modelValue" class="inline-flex items-center gap-0.5em">
-    <NEllipsis :style="{ 'max-width': props.maxLength || '12em' }">
+    <NEllipsis v-if="showText" :style="{ 'max-width': props.maxLength || '12em' }">
       {{ modelValue }}
     </NEllipsis>
     <NTooltip trigger="hover">

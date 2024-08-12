@@ -1,9 +1,10 @@
 <script setup lang="tsx">
-import type { DictItemQuery, DictItemResp, DictResp } from '@/apis';
+import type { DictItemQuery, DictItemResp } from '@/apis';
 import { deleteDictItem, listDict, listDictItem } from '@/apis';
 import { $t } from '@/locales';
 import EnableTag from '@/components/custom/enable-tag.vue';
 import DictTag from '@/components/custom/dict-tag.vue';
+import type { TableColumn } from '@/hooks/common/table';
 import DictItemDetailDrawer from '../modules/dict-item-detail-drawer.vue';
 
 defineOptions({ name: 'SystemDict' });
@@ -15,7 +16,7 @@ const apiParams: Api.Common.EPaginatingSearchParams<DictItemQuery> = {
   description: null
 };
 
-const columns = ref<NaiveUI.TableColumn<any>[]>([
+const columns = ref<TableColumn<any>[]>([
   {
     title: '标签',
     key: 'label',
@@ -50,10 +51,38 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
   },
   { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
   { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建人', key: 'createUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '创建时间', key: 'createTime', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改人', key: 'updateUserString', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '修改时间', key: 'updateTime', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+  {
+    title: '创建人',
+    key: 'createUserString',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '修改人',
+    key: 'updateUserString',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  },
+  {
+    title: '修改时间',
+    key: 'updateTime',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    hide: true
+  }
 ]);
 
 const operations: App.Table.Operation<DictItemResp>[] = [
