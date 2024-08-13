@@ -18,7 +18,12 @@ defineOptions({
 const userStore = useAuthStore();
 const { toggleLoginModule } = useRouterPush();
 const { formRef, validateField, restoreValidation } = useNaiveForm();
-const { label, isCounting, loading, getCaptcha } = useCaptcha(currentFps.value);
+const { label, isCounting, loading, getCaptcha } = useCaptcha();
+
+const verifyRef = ref<InstanceType<any>>();
+const captchaType = ref('blockPuzzle');
+const captchaMode = ref('pop');
+const captchaLoading = ref(false);
 
 interface FormModel {
   phoneOrEmail: string;
@@ -38,11 +43,6 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   };
 });
 
-const verifyRef = ref<InstanceType<any>>();
-const captchaType = ref('blockPuzzle');
-const captchaMode = ref('pop');
-const captchaLoading = ref(false);
-
 // 弹出行为验证码
 const onPuzzleCaptcha = async () => {
   if (captchaLoading.value) return;
@@ -57,24 +57,14 @@ async function handleSubmit() {
   const valid = await validateField();
   if (valid) {
     if (REG_PHONE.test(model.phoneOrEmail)) {
-      userStore
-        .loginByPhone(model.phoneOrEmail, model.code)
-        .then(() => {
-          window.$message?.success($t('page.login.common.validateSuccess'));
-        })
-        .catch(() => {
-          window.$message?.error('0000000000000');
-        });
+      userStore.loginByPhone(model.phoneOrEmail, model.code).then(() => {
+        window.$message?.success($t('page.login.common.validateSuccess'));
+      });
     }
     if (REG_EMAIL.test(model.phoneOrEmail)) {
-      userStore
-        .loginByEmail(model.phoneOrEmail, model.code)
-        .then(() => {
-          window.$message?.success($t('page.login.common.validateSuccess'));
-        })
-        .catch(() => {
-          window.$message?.error('0000000000000');
-        });
+      userStore.loginByEmail(model.phoneOrEmail, model.code).then(() => {
+        window.$message?.success($t('page.login.common.validateSuccess'));
+      });
     }
   }
 }

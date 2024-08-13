@@ -7,6 +7,7 @@ import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAuthStore } from '@/store/modules/auth';
 import { getImageCaptcha } from '@/apis/common/captcha';
 import type { AccountLoginReq } from '@/apis/auth/type';
+import { socialAuth } from '@/apis';
 
 defineOptions({
   name: 'PwdLogin'
@@ -43,39 +44,35 @@ async function handleSubmit() {
   }
 }
 
-// type AccountKey = 'super' | 'admin' | 'user';
+type OAuthKey = 'gitee' | 'github';
 
-// interface Account {
-//   key: AccountKey;
-//   label: string;
-//   userName: string;
-//   password: string;
-// }
+interface OAuthAccount {
+  key: OAuthKey;
+  label: string;
+  icon: string;
+}
 
-// const accounts = computed<Account[]>(() => [
-//   {
-//     key: 'super',
-//     label: $t('page.login.pwdLogin.superAdmin'),
-//     userName: 'Super',
-//     password: '123456'
-//   },
-//   {
-//     key: 'admin',
-//     label: $t('page.login.pwdLogin.admin'),
-//     userName: 'Admin',
-//     password: '123456'
-//   },
-//   {
-//     key: 'user',
-//     label: $t('page.login.pwdLogin.user'),
-//     userName: 'User',
-//     password: '123456'
-//   }
-// ]);
+const oauthAccounts = computed<OAuthAccount[]>(() => [
+  {
+    key: 'gitee',
+    label: 'Gitee',
+    icon: 'gitee'
+  },
+  {
+    key: 'github',
+    label: 'Github',
+    icon: 'github'
+  }
+]);
 
-// async function handleAccountLogin(account: Account) {
-//   await authStore.login(model);
-// }
+// 第三方登录授权
+const handleOauthLogin = async (source: string) => {
+  console.log('ssss');
+  const { data, error } = await socialAuth(source);
+  if (!error) {
+    window.location.href = data.authorizeUrl;
+  }
+};
 
 const captchaImgBase64 = ref<string>();
 const expired = ref<boolean>(true);
@@ -166,15 +163,13 @@ onMounted(() => {
           {{ $t(loginModuleRecord.register) }}
         </NButton>
       </div>
-      <!--
-  TODO: 第三方登录
- <NDivider class="text-14px text-#666 !m-0">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</NDivider>
-      <div class="flex-center gap-12px">
-        <NButton v-for="item in accounts" :key="item.key" type="primary" @click="handleAccountLogin(item)">
-          {{ item.label }}
+      <!-- 第三方登录 -->
+      <NDivider class="text-14px text-#666 !m-0">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</NDivider>
+      <div class="flex-center gap-16px">
+        <NButton v-for="item in oauthAccounts" :key="item.key" quaternary circle @click="handleOauthLogin(item.key)">
+          <SvgIcon :local-icon="item.icon" class="size-26px cursor-pointer" />
         </NButton>
       </div>
--->
     </NSpace>
   </NForm>
 </template>

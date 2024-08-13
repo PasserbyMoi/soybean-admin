@@ -13,15 +13,6 @@ defineOptions({
   name: 'VerifyModal'
 });
 
-// interface Props {
-//   verifyType: CommonType.UserVerifyType;
-// }
-// const props = defineProps<Props>();
-
-// const visible = defineModel<boolean>('visible', {
-//   default: false
-// });
-
 const verifyType = ref<CommonType.UserVerifyType>('phone');
 const visible = ref<boolean>(false);
 
@@ -86,7 +77,7 @@ const rules: Record<string, App.Global.FormRule[]> = {
   ]
 };
 
-const VerifyRef = ref<InstanceType<any>>();
+const verifyRef = ref<InstanceType<any>>();
 const captchaType = ref('blockPuzzle');
 const captchaMode = ref('pop');
 const captchaTimer = ref();
@@ -101,7 +92,7 @@ const onCaptcha = async () => {
   restoreValidation();
   const valid = await validateField(['phone', 'email']);
   if (valid) {
-    VerifyRef.value.show();
+    verifyRef.value.show();
   }
 };
 
@@ -274,7 +265,7 @@ defineExpose({ open });
     </template>
   </NModal>
   <VueVerify
-    ref="VerifyRef"
+    ref="verifyRef"
     :captcha-type="captchaType"
     :mode="captchaMode"
     :img-size="{ width: '330px', height: '155px' }"

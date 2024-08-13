@@ -55,7 +55,7 @@ const initData = () => {
 
 const verifyModelRef = ref<InstanceType<typeof VerifyModel>>();
 // 修改
-const onUpdate = (type: CommonType.UserVerifyType, status: boolean) => {
+const onUpdate = (type: CommonType.UserVerifyType, _status: boolean) => {
   verifyModelRef.value?.open(type);
 };
 

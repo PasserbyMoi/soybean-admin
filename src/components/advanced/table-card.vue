@@ -121,36 +121,34 @@ defineExpose({
 
 <template>
   <div class="min-h-500px flex-col-stretch flex-auto gap-6px">
-    <NCard
-      v-if="searchVisible && $slots.search"
-      :title="$t('common.search')"
-      :bordered="false"
-      size="small"
-      class="card-wrapper"
-    >
-      <NForm v-model:mode="searchParams" label-placement="left" :label-width="80">
-        <NGrid responsive="screen" item-responsive :x-gap="10">
-          <slot name="search" :search-params="searchParams"></slot>
-          <slot name="default">
-            <NFormItemGi>
-              <NSpace class="ml-6px" :wrap="false">
-                <NButton @click="resetSearchParams">
-                  <template #icon>
-                    <icon-ic-round-refresh class="text-icon" />
-                  </template>
-                  {{ $t('common.reset') }}
-                </NButton>
-                <NButton type="primary" ghost @click="getData">
-                  <template #icon>
-                    <icon-ic-round-search class="text-icon" />
-                  </template>
-                  {{ $t('common.search') }}
-                </NButton>
-              </NSpace>
-            </NFormItemGi>
-          </slot>
-        </NGrid>
-      </NForm>
+    <NCard v-if="searchVisible && $slots.search" :bordered="false" size="small" class="card-wrapper">
+      <NCollapse default-expanded-names="search" size="small">
+        <NCollapseItem :title="$t('common.search')" name="search">
+          <NForm v-model:mode="searchParams" label-placement="left" :label-width="80">
+            <NGrid responsive="screen" item-responsive :x-gap="10">
+              <slot name="search" :search-params="searchParams"></slot>
+              <slot name="default">
+                <NFormItemGi>
+                  <NSpace class="ml-6px" :wrap="false">
+                    <NButton @click="resetSearchParams">
+                      <template #icon>
+                        <icon-ic-round-refresh class="text-icon" />
+                      </template>
+                      {{ $t('common.reset') }}
+                    </NButton>
+                    <NButton type="primary" ghost @click="getData">
+                      <template #icon>
+                        <icon-ic-round-search class="text-icon" />
+                      </template>
+                      {{ $t('common.search') }}
+                    </NButton>
+                  </NSpace>
+                </NFormItemGi>
+              </slot>
+            </NGrid>
+          </NForm>
+        </NCollapseItem>
+      </NCollapse>
     </NCard>
 
     <NCard :title="tabTitle" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">

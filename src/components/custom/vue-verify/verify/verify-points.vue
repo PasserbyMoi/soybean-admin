@@ -159,7 +159,7 @@ export default {
             token: backToken.value
           };
           checkBehaviorCaptcha(data).then(res => {
-            if (res.success && res.data.repCode === '0000') {
+            if (res.option.success && res.data.repCode === '0000') {
               barAreaColor.value = '#4cae4c';
               barAreaBorderColor.value = '#5cb85c';
               text.value = '验证成功';

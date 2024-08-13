@@ -171,7 +171,7 @@ export default {
           token: backToken.value
         };
         checkBehaviorCaptcha(data).then(res => {
-          if (res.success && res.data.repCode === '0000') {
+          if (res.option.success && res.data.repCode === '0000') {
             moveBlockBackgroundColor.value = '#5cb85c';
             leftBarBorderColor.value = '#5cb85c';
             iconColor.value = '#fff';

@@ -46,8 +46,7 @@ const noHandle = (other: App.Table.Operation<any>): void => {
       >
         <template #trigger>
           <NButton
-            strong
-            secondary
+            ghost
             :size="other.size ?? size"
             :type="other.type ?? type"
             :disabled="other.disabled && other.disabled(row)"
@@ -55,13 +54,12 @@ const noHandle = (other: App.Table.Operation<any>): void => {
             {{ other.label }}
           </NButton>
         </template>
-        {{ other.confirmText ?? $t('common.confirmOperations', other.label) }}
+        {{ other.confirmText ?? $t('common.confirmOperations', { name: other.label }) }}
       </NPopconfirm>
       <NButton
         v-else-if="other.vif === undefined || other.vif(row)"
         :disabled="other.disabled && other.disabled(row)"
-        strong
-        secondary
+        ghost
         :size="other.size ?? size"
         :type="other.type ?? type"
         @click="yesHandle(other)"
