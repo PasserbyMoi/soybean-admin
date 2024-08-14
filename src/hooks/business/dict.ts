@@ -1,5 +1,5 @@
 import { ref, toRefs } from 'vue';
-import { listCommonDict } from '@/apis';
+import { listCommonDict, listDict } from '@/apis';
 import { useDictStore } from '@/store/modules/dict';
 
 const dictStore = useDictStore();

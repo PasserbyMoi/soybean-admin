@@ -5,13 +5,13 @@ import type { OptionResp, SiteConfig } from '@/apis';
 import { listOption, resetOptionValue, updateOption, uploadFile } from '@/apis';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import { useAppStore } from '@/store/modules/app';
+import { useConfigStore } from '@/store/modules/config';
 
 defineOptions({
   name: 'ConfigBasic'
 });
 
-const appStore = useAppStore();
+const configStore = useConfigStore();
 const loading = ref<boolean>(false);
 const isEdit = ref<boolean>(false);
 const { formRef, validate, restoreValidation } = useNaiveForm();
@@ -90,7 +90,7 @@ async function handleSubmit() {
   );
   if (!error) {
     window.$message?.success($t('common.updateSuccess'));
-    // appStore.setSiteConfig(model);
+    configStore.setSiteConfig(model);
     await handleInitModel();
   }
 }
@@ -115,7 +115,7 @@ const handleResetValue = async () => {
   if (!error) {
     window.$message?.success('恢复成功');
     await handleInitModel();
-    // appStore.setSiteConfig(form);
+    configStore.setSiteConfig(model);
   }
 };
 
@@ -202,7 +202,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NForm ref="formRef" :model="model" :rules="rules" :disabled="!isEdit">
+  <NForm ref="formRef" :model="model" :rules="rules" :disabled="!isEdit" label-placement="left" label-width="100px">
     <NList :bordered="false" :loading="loading">
       <NFormItem field="SITE_LOGO" :show-label="false">
         <NSpace vertical>
@@ -236,7 +236,7 @@ onMounted(() => {
           <NText depth="3">{{ siteConfig.SITE_FAVICON?.description }}</NText>
           <div>
             <NUpload
-              ref="uploadLogRef"
+              ref="uploadFaviconRef"
               :file-list="faviconFile ? [faviconFile] : []"
               accept="image/*"
               list-type="image"

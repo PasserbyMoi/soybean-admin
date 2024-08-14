@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import type { DictItemQuery, DictItemResp } from '@/apis';
-import { deleteDictItem, listDictItem } from '@/apis';
+import { deleteDictItem, listDict, listDictItem } from '@/apis';
 import { $t } from '@/locales';
 import EnableTag from '@/components/custom/enable-tag.vue';
 import DictTag from '@/components/custom/dict-tag.vue';
@@ -38,6 +38,16 @@ const columns = ref<TableColumn<any>[]>([
     ellipsis: { tooltip: true },
     render: row => {
       return h(EnableTag, { value: row.status });
+    }
+  },
+  {
+    title: '字典',
+    key: 'dictId',
+    align: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true },
+    render: row => {
+      return dictMap.value?.filter(o => o.id === row.dictId)[0].name ?? row.dictId;
     }
   },
   { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
@@ -97,8 +107,10 @@ const tableRef = ref();
 const detailRef = ref();
 
 const rowId = ref<string>();
+const dictId = ref<string | number>();
 const visible = ref<boolean>();
 const operateType = ref<NaiveUI.TableOperateType>('add');
+const dictMap = ref<Array<{ id: string; name: string }>>([]);
 
 function addHandle() {
   rowId.value = undefined;
@@ -128,10 +140,26 @@ function submited() {
 }
 
 // 根据选中部门查询
-const handleSelectDict = (key: string) => {
+const handleSelectDict = (key: string | number) => {
+  dictId.value = key;
   tableRef.value.searchParams.dictId = key;
   tableRef.value.getDataByPage();
 };
+
+// 初始化数据
+async function handleInitModel() {
+  const { data, error } = await listDict({});
+  if (error) {
+    window.$message?.error(`获取字典数据失败：${error}`);
+  }
+  data?.forEach(dict => {
+    dictMap.value?.push({ id: dict.id, name: dict.name });
+  });
+}
+
+onBeforeMount(() => {
+  handleInitModel();
+});
 </script>
 
 <template>
@@ -163,6 +191,7 @@ const handleSelectDict = (key: string) => {
       ref="detailRef"
       v-model:visible="visible"
       v-model:row-id="rowId"
+      v-model:dict-id="dictId"
       :operate-type="operateType"
       @submitted="submited"
     />

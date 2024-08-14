@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { $t } from '@/locales';
+import { useConfigStore } from '@/store/modules/config';
 
 defineOptions({
   name: 'GlobalLogo'
@@ -13,13 +13,16 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   showTitle: true
 });
+
+const configStore = useConfigStore();
 </script>
 
 <template>
   <RouterLink to="/" class="w-full flex-center nowrap-hidden">
-    <SystemLogo class="text-32px text-primary" />
+    <!-- <SystemLogo class="text-32px text-primary" /> -->
+    <NAvatar :src="configStore.getLogo()" color="#00000000"></NAvatar>
     <h2 v-show="showTitle" class="pl-8px text-16px text-primary font-bold transition duration-300 ease-in-out">
-      {{ $t('system.title') }}
+      {{ configStore.getTitle() }}
     </h2>
   </RouterLink>
 </template>

@@ -134,7 +134,7 @@ export interface DictResp {
 
 export interface DictQuery {
   description?: string;
-  sort: Array<string>;
+  sort?: Array<string>;
 }
 
 export type DictItemResp = {

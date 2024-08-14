@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { NButton, NSpace } from 'naive-ui';
 import tinycolor from 'tinycolor2';
+import type { SelectMixedOption } from 'naive-ui/es/select/src/interface';
 import type { DictItemResp } from '@/apis';
-import { addDictItem, getDictItem, updateDictItem } from '@/apis';
+import { addDictItem, getDictItem, listDict, updateDictItem } from '@/apis';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
 import { useDept } from '@/hooks/business/useDept';
@@ -17,6 +18,9 @@ interface Props {
 }
 const props = defineProps<Props>();
 
+const dictId = defineModel<string | number | null>('dictId', {
+  default: () => null
+});
 const rowId = defineModel<string | null>('rowId', {
   default: () => null
 });
@@ -47,6 +51,7 @@ function createDefaultModel() {
   return {
     label: '',
     value: '',
+    dictId: '',
     color: '',
     sort: 999,
     status: 1,
@@ -58,10 +63,12 @@ type RuleKey = Extract<keyof DictItemResp, 'username' | 'nickname' | 'deptId' | 
 
 const rules: Record<RuleKey, App.Global.FormRule[]> = {
   label: [{ required: true, message: '请输入标签' }],
-  value: [{ required: true, message: '请输入值' }]
+  value: [{ required: true, message: '请输入标签值' }],
+  dictId: [{ required: true, message: '请选择标签字典' }]
 };
 
 const dataDetail = ref<DictItemResp>();
+const dictList = ref<SelectMixedOption[]>([]);
 const isEdit = computed(() => props.operateType === 'edit');
 
 const hex8Color = computed(() => tinycolor(model.color).toHex8String());
@@ -84,12 +91,21 @@ function handleInitModel() {
     getDataDetail().then(() => {
       Object.assign(model, dataDetail.value);
     });
+  } else {
+    model.dictId = dictId.value ?? null;
   }
   if (!deptList.value.length) {
     getDeptList();
   }
   if (!roleList.value?.length) {
     getRoleList();
+  }
+  if (!dictList.value || dictList.value.length <= 0) {
+    listDict({}).then(dicts => {
+      dicts.data?.forEach(dict => {
+        dictList.value?.push({ value: dict.id, label: dict.name });
+      });
+    });
   }
 }
 
@@ -133,6 +149,9 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" display-directive="show" :width="560" close-on-esc @after-leave="closeDrawer">
     <NDrawerContent :title="title" closable>
       <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="80px">
+        <NFormItem label="字典" path="dictId">
+          <NSelect v-model:value="model.dictId" :options="dictList"></NSelect>
+        </NFormItem>
         <NFormItem label="标签" path="label">
           <NInput v-model:value="model.label" placeholder="请输入标签" :max-length="64" />
         </NFormItem>

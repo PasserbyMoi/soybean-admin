@@ -30,13 +30,13 @@ watch(
   <div>
     <NCard class="h-full" title="系统配置">
       <NTabs v-model:active-key="activeKey" placement="right" animated @change="change">
-        <NTabPane name="基础配置" table="base">
+        <NTabPane name="基础配置" table="base" display-directive="show">
           <ConfigBasic />
         </NTabPane>
-        <NTabPane name="邮件配置" table="mail">
+        <NTabPane name="邮件配置" table="mail" display-directive="show">
           <ConfigMail />
         </NTabPane>
-        <NTabPane name="安全配置" table="security">
+        <NTabPane name="安全配置" table="security" display-directive="show">
           <ConfigSecurity />
         </NTabPane>
       </NTabs>

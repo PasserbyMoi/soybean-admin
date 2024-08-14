@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
 });
 
 interface Emits {
-  (e: 'switch', id: string): void;
+  (e: 'switch', id: string | number): void;
 }
 const emit = defineEmits<Emits>();
 
@@ -42,7 +42,7 @@ function renderSuffix(info: { option: TreeOption; checked: boolean; selected: bo
 function nodeProps({ option }: { option: TreeOption }) {
   return {
     onClick() {
-      emit('switch', `${option.id}`);
+      emit('switch', option.id as string | number);
     },
     onContextmenu(e: MouseEvent): void {
       optionsRef.value = [

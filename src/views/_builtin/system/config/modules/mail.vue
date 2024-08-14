@@ -140,7 +140,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="160" :disabled="!isEdit">
+  <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100" :disabled="!isEdit">
     <NList :bordered="false" :loading="loading">
       <NFormItem path="MAIL_PROTOCOL" :label="mailConfig?.MAIL_PROTOCOL?.name">
         <NSelect

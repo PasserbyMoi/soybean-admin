@@ -1,3 +1,4 @@
+import { log } from 'node:console';
 import { useRouter } from 'vue-router';
 import type { RouteLocationRaw } from 'vue-router';
 import type { RouteKey } from '@elegant-router/types';
@@ -38,6 +39,14 @@ export function useRouterPush(inSetup = true) {
       routeLocation.params = params;
     }
 
+    // chanbeiyu: 发生异常时跳转到 404
+    try {
+      return routerPush(routeLocation);
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('No match for')) {
+        return routerPush({ name: '404' });
+      }
+    }
     return routerPush(routeLocation);
   }
 
