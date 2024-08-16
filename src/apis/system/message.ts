@@ -5,7 +5,7 @@ const BASE_URL = '/system/message';
 
 /** 查询消息列表 */
 export function listMessage(query: Api.Common.EPaginatingSearchParams<System.MessageQuery>) {
-  return request<Api.Common.PaginatingQueryRecord<System.MessageResp[]>>({
+  return request<Api.Common.PaginatingQueryRecord<System.MessageResp>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query
@@ -25,7 +25,7 @@ export function readMessage(ids?: string | Array<string>) {
   return request({
     url: `${BASE_URL}/read`,
     method: 'patch',
-    params: ids
+    params: { ids }
   });
 }
 

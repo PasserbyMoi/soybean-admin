@@ -5,7 +5,7 @@ const BASE_URL = '/system/notice';
 
 /** 查询公告列表 */
 export function listNotice(query: Api.Common.EPaginatingSearchParams<System.NoticeQuery>) {
-  return request<Api.Common.PaginatingQueryRecord<System.NoticeResp[]>>({
+  return request<Api.Common.PaginatingQueryRecord<System.NoticeResp>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query

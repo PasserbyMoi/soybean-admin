@@ -2,6 +2,7 @@
 import { kickout, listOnlineUser } from '@/apis/monitor/online';
 import { useAuthStore } from '@/store/modules/auth';
 import type { OnlineUserQuery, OnlineUserResp } from '@/apis/monitor/type';
+import { $t } from '@/locales';
 
 const userStore = useAuthStore();
 
@@ -18,7 +19,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     title: '用户昵称',
     align: 'center',
     fixed: 'left',
-    resizable: true,
+    width: 180,
     ellipsis: {
       tooltip: true
     },
@@ -30,7 +31,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     key: 'ip',
     title: '登录 IP',
     align: 'center',
-    resizable: true,
+    width: 180,
     ellipsis: {
       tooltip: true
     }
@@ -39,7 +40,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     key: 'address',
     title: '登录地点',
     align: 'center',
-    resizable: true,
+    width: 120,
     ellipsis: {
       tooltip: true
     }
@@ -48,7 +49,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     key: 'browser',
     title: '浏览器',
     align: 'center',
-    resizable: true,
+    width: 120,
     ellipsis: {
       tooltip: true
     }
@@ -57,7 +58,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     key: 'os',
     title: '终端系统',
     align: 'center',
-    resizable: true,
+    width: 120,
     ellipsis: {
       tooltip: true
     }
@@ -66,7 +67,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     key: 'loginTime',
     title: '登录时间',
     align: 'center',
-    resizable: true,
+    width: 180,
     ellipsis: {
       tooltip: true
     }
@@ -75,7 +76,7 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
     key: 'lastActiveTime',
     title: '最后活跃时间',
     align: 'center',
-    resizable: true,
+    width: 180,
     ellipsis: {
       tooltip: true
     }
@@ -86,7 +87,7 @@ const tableRef = ref();
 
 const operations: App.Table.Operation<OnlineUserResp>[] = [
   {
-    label: '强退',
+    label: $t('common.forcedLogout'),
     confirm: true,
     disabled: (row: OnlineUserResp) => userStore.token === row.token,
     yesHandle: (row: OnlineUserResp) => {

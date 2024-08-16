@@ -22,6 +22,7 @@ interface Props {
   showTotal?: boolean;
   showSelection?: boolean;
   showIndex?: boolean;
+  scrollX?: number;
   apiFn: NaiveUI.TableApiFn | NaiveUI.TableApiFirstFn;
   apiParams: Api.Common.PaginatingSearchParams | any;
   columns: TableColumn<any>[];
@@ -36,12 +37,12 @@ const props = withDefaults(defineProps<Props>(), {
   showIndex: true,
   showTotal: true,
   loading: false,
+  scrollX: 1400,
   itemAlign: 'flex-end'
 });
 
 interface Emits {
-  (e: 'add'): void;
-  (e: 'batchDelete', ids: string[] | number[]): void;
+  (e: 'handleRead'): void;
 }
 const emit = defineEmits<Emits>();
 
@@ -115,7 +116,8 @@ function handleExport() {
 
 defineExpose({
   searchParams,
-  getDataByPage
+  getDataByPage,
+  checkedRowKeys
 });
 </script>
 
@@ -172,7 +174,7 @@ defineExpose({
         </NSpace>
       </template>
       <NSpace :wrap="false" class="sm:h-full">
-        <div v-if="$slots.sider" class="min-w-260px">
+        <div v-if="$slots.sider" class="min-w-240px">
           <slot name="sider" :params="searchParams" :search="getDataByPage"></slot>
         </div>
         <NDataTable
@@ -189,7 +191,7 @@ defineExpose({
           :flex-height="!appStore.isMobile"
           :pagination="pagination"
           :paginate-single-page="false"
-          :scroll-x="1160"
+          :scroll-x="scrollX"
           :expandable="true"
           class="sm:h-full"
           remote

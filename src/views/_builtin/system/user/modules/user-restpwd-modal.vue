@@ -29,7 +29,7 @@ async function handleSubmit() {
   }
   if (rowId.value) {
     const { error } = await resetUserPwd({ newPassword: encryptByRsa(newPassword.value) || '' }, rowId.value);
-    if (!error) window.$message?.success($t('common.updateSuccess'));
+    if (!error) window.$message?.success($t('common.updateSuccess'), { duration: 4500 });
   }
   closeDrawer();
   nextTick(() => {

@@ -18,7 +18,7 @@ function loginOrRegister() {
   toLogin();
 }
 
-type DropdownKey = 'user-center' | 'logout' | 'project_about' | 'setting_profile';
+type DropdownKey = 'user-center' | 'logout' | 'setting_about' | 'setting_profile';
 
 type DropdownOption =
   | {
@@ -36,7 +36,7 @@ const options = computed(() => {
     {
       label: $t('common.userCenter'),
       key: 'setting_profile',
-      icon: SvgIconVNode({ icon: 'ph:user-circle', fontSize: 18 })
+      icon: SvgIconVNode({ localIcon: 'user', fontSize: 18 })
     },
     {
       type: 'divider',
@@ -44,8 +44,8 @@ const options = computed(() => {
     },
     {
       label: $t('common.about'),
-      key: 'project_about',
-      icon: SvgIconVNode({ icon: 'ph:info-bold', fontSize: 18 })
+      key: 'setting_about',
+      icon: SvgIconVNode({ localIcon: 'info-circle', fontSize: 18 })
     },
     {
       type: 'divider',
@@ -54,7 +54,7 @@ const options = computed(() => {
     {
       label: $t('common.logout'),
       key: 'logout',
-      icon: SvgIconVNode({ icon: 'ph:sign-out', fontSize: 18 })
+      icon: SvgIconVNode({ localIcon: 'export', fontSize: 18 })
     }
   ];
 

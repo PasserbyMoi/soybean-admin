@@ -25,14 +25,12 @@ const model: AccountLoginReq = reactive({
 });
 
 const rules = computed<Record<keyof AccountLoginReq, App.Global.FormRule[]>>(() => {
-  // inside computed to make locale reactive, if not apply i18n, you can define it without computed
   const { formRules } = useFormRules();
-
   return {
     username: formRules.username,
     password: formRules.pwd,
     captcha: formRules.captcha,
-    uuid: formRules.uuid
+    uuid: formRules.defaultRequiredRule
   };
 });
 
@@ -67,7 +65,6 @@ const oauthAccounts = computed<OAuthAccount[]>(() => [
 
 // 第三方登录授权
 const handleOauthLogin = async (source: string) => {
-  console.log('ssss');
   const { data, error } = await socialAuth(source);
   if (!error) {
     window.location.href = data.authorizeUrl;

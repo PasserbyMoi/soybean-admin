@@ -26,13 +26,13 @@ declare module "@elegant-router/types" {
     "500": "/500";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
-    "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
+    "login": "/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?";
     "monitor": "/monitor";
     "monitor_log": "/monitor/log";
     "monitor_online": "/monitor/online";
-    "project": "/project";
-    "project_about": "/project/about";
     "setting": "/setting";
+    "setting_about": "/setting/about";
+    "setting_message": "/setting/message";
     "setting_profile": "/setting/profile";
     "system": "/system";
     "system_config": "/system/config";
@@ -42,6 +42,8 @@ declare module "@elegant-router/types" {
     "system_file": "/system/file";
     "system_menu": "/system/menu";
     "system_notice": "/system/notice";
+    "system_notice_add": "/system/notice/add";
+    "system_notice_detail": "/system/notice/detail";
     "system_role": "/system/role";
     "system_storage": "/system/storage";
     "system_user": "/system/user";
@@ -61,7 +63,7 @@ declare module "@elegant-router/types" {
 
   /**
    * custom route key
-   */ 
+   */
   export type CustomRouteKey = Extract<
     RouteKey,
     | "root"
@@ -74,7 +76,7 @@ declare module "@elegant-router/types" {
 
   /**
    * the generated route key
-   */ 
+   */
   export type GeneratedRouteKey = Exclude<RouteKey, CustomRouteKey>;
 
   /**
@@ -89,7 +91,6 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "login"
     | "monitor"
-    | "project"
     | "setting"
     | "system"
     | "tool"
@@ -117,7 +118,8 @@ declare module "@elegant-router/types" {
     | "login"
     | "monitor_log"
     | "monitor_online"
-    | "project_about"
+    | "setting_about"
+    | "setting_message"
     | "setting_profile"
     | "system_config"
     | "system_dept"
@@ -125,6 +127,8 @@ declare module "@elegant-router/types" {
     | "system_dict_item"
     | "system_file"
     | "system_menu"
+    | "system_notice_add"
+    | "system_notice_detail"
     | "system_notice"
     | "system_role"
     | "system_storage"

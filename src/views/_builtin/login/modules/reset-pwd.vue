@@ -114,7 +114,7 @@ const onPuzzleCaptcha = async () => {
         />
       </NFormItem>
       <NSpace vertical :size="18" class="w-full">
-        <NButton type="primary" size="large" round block @click="handleSubmit">
+        <NButton type="primary" round block @click="handleSubmit">
           {{ $t('common.confirm') }}
         </NButton>
         <NButton size="large" round block @click="toggleLoginModule('pwd-login')">

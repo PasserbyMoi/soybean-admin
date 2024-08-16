@@ -1,9 +1,10 @@
 import { ref, toRefs } from 'vue';
-import { listCommonDict, listDict } from '@/apis';
+import { listCommonDict } from '@/apis';
 import { useDictStore } from '@/store/modules/dict';
 
 const dictStore = useDictStore();
 const tmpCodeZone: string[] = [];
+
 export function useDict(...codes: Array<string>) {
   const res = ref<any>({});
   return (() => {

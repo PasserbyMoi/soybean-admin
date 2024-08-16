@@ -30,6 +30,9 @@ const local: App.I18n.Schema = {
     logout: '退出登录',
     logoutConfirm: '确认退出登录吗？',
     lookForward: '敬请期待',
+    modifyPassword: '修改密码',
+    generator: '生成',
+    forcedLogout: '强制退出',
     modify: '修改',
     modifySuccess: '修改成功',
     noData: '无数据',
@@ -56,6 +59,8 @@ const local: App.I18n.Schema = {
     about: '关于',
     unkonw: '未知',
     default: '默认',
+    operateSuccess: '操作成功',
+    operateFail: '操作失败',
     yesOrNo: {
       yes: '是',
       no: '否'
@@ -72,6 +77,13 @@ const local: App.I18n.Schema = {
       male: '男',
       female: '女',
       unknow: '未知'
+    },
+    read: {
+      read: '已读',
+      unread: '未读',
+      unknow: '未知',
+      viewMore: '查看更多 >',
+      allRead: '全部已读'
     }
   },
   request: {
@@ -90,6 +102,7 @@ const local: App.I18n.Schema = {
       auto: '跟随系统'
     },
     grayscale: '灰色模式',
+    colourWeakness: '色弱模式',
     layoutMode: {
       title: '布局模式',
       vertical: '左侧菜单模式',
@@ -159,6 +172,10 @@ const local: App.I18n.Schema = {
       height: '底部高度',
       right: '底部局右'
     },
+    watermark: {
+      visible: '显示全屏水印',
+      text: '水印文本'
+    },
     themeDrawerTitle: '主题配置',
     pageFunTitle: '页面功能',
     configOperation: {
@@ -223,8 +240,12 @@ const local: App.I18n.Schema = {
         phonePlaceholder: '请输入手机号',
         codePlaceholder: '请输入验证码',
         codeExpired: '已过期，请刷新',
+        passwordOldPlaceholder: '请输入旧密码',
+        passwordNewPlaceholder: '请输入新密码',
+        confirmNewPasswordPlaceholder: '请再次输入新密码',
         passwordPlaceholder: '请输入密码',
         confirmPasswordPlaceholder: '请再次输入密码',
+        modifyNotify: '密码已过期，请修改密码',
         codeLogin: '验证码登录',
         confirm: '确定',
         back: '返回',
@@ -260,8 +281,8 @@ const local: App.I18n.Schema = {
       resetPwd: {
         title: '重置密码'
       },
-      bindWeChat: {
-        title: '绑定微信'
+      modifyPwd: {
+        title: '修改密码'
       }
     },
     about: {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
-import { useFps } from '@vueuse/core';
 import { $t } from '@/locales';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
@@ -8,8 +7,6 @@ import { useCaptcha } from '@/hooks/business/captcha';
 import VueVerify from '@/components/custom/vue-verify/index.vue';
 import { useAuthStore } from '@/store/modules/auth';
 import { REG_EMAIL, REG_PHONE } from '@/constants/reg';
-
-const currentFps = useFps();
 
 defineOptions({
   name: 'CodeLogin'

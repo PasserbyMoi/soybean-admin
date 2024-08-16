@@ -20,6 +20,8 @@ declare namespace App {
       themeScheme: UnionKey.ThemeScheme;
       /** grayscale mode */
       grayscale: boolean;
+      /** colour weakness mode */
+      colourWeakness: boolean;
       /** Whether to recommend color */
       recommendColor: boolean;
       /** Theme color */
@@ -102,6 +104,13 @@ declare namespace App {
         height: number;
         /** Whether float the footer to the right when the layout is 'horizontal-mix' */
         right: boolean;
+      };
+      /** Watermark */
+      watermark?: {
+        /** Whether to show the watermark */
+        visible: boolean;
+        /** Watermark text */
+        text: string;
       };
       /** define some theme settings tokens, will transform to css variables */
       tokens: {
@@ -317,6 +326,9 @@ declare namespace App {
         logout: string;
         logoutConfirm: string;
         lookForward: string;
+        modifyPassword: string;
+        generator: string;
+        forcedLogout: string;
         modify: string;
         modifySuccess: string;
         noData: string;
@@ -343,6 +355,8 @@ declare namespace App {
         about: string;
         unkonw: string;
         default: string;
+        operateSuccess: string;
+        operateFail: string;
         yesOrNo: {
           yes: string;
           no: string;
@@ -360,6 +374,13 @@ declare namespace App {
           female: string;
           unknow: string;
         };
+        read: {
+          read: string;
+          unread: string;
+          unknow: string;
+          viewMore: string;
+          allRead: string;
+        };
       };
       request: {
         logout: string;
@@ -372,6 +393,7 @@ declare namespace App {
       theme: {
         themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
         grayscale: string;
+        colourWeakness: string;
         layoutMode: { title: string; reverseHorizontalMix: string } & Record<UnionKey.ThemeLayoutMode, string>;
         recommendColor: string;
         recommendColorDesc: string;
@@ -412,6 +434,10 @@ declare namespace App {
           height: string;
           right: string;
         };
+        watermark: {
+          visible: string;
+          text: string;
+        };
         themeDrawerTitle: string;
         pageFunTitle: string;
         configOperation: {
@@ -436,8 +462,12 @@ declare namespace App {
             phonePlaceholder: string;
             codePlaceholder: string;
             codeExpired: string;
+            passwordOldPlaceholder: string;
+            passwordNewPlaceholder: string;
+            confirmNewPasswordPlaceholder: string;
             passwordPlaceholder: string;
             confirmPasswordPlaceholder: string;
+            modifyNotify: string;
             codeLogin: string;
             confirm: string;
             back: string;
@@ -473,7 +503,7 @@ declare namespace App {
           resetPwd: {
             title: string;
           };
-          bindWeChat: {
+          modifyPwd: {
             title: string;
           };
         };

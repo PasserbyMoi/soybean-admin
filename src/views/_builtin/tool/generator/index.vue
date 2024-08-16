@@ -2,6 +2,7 @@
 import { listGenerator } from '@/apis/tool/generator';
 import type { TableQuery, TableResp } from '@/apis/tool/type';
 import type { TableColumn } from '@/hooks/common/table';
+import { $t } from '@/locales';
 import GeneratorConfigDrawer from './modules/generator-config-drawer.vue';
 import GeneratorViewModal from './modules/generator-view-modal.vue';
 
@@ -15,7 +16,7 @@ const apiParams: Api.Common.EPaginatingSearchParams<TableQuery> = {
   tableName: null
 };
 const columns = ref<TableColumn<any>[]>([
-  { key: 'tableName', title: '表名称', align: 'center', fixed: 'left' },
+  { key: 'tableName', title: '表名称', align: 'center' },
   { key: 'comment', title: '描述', align: 'center' },
   { key: 'engine', title: '存储引擎', align: 'center' },
   { key: 'charset', title: '字符集', align: 'center' },
@@ -24,13 +25,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<TableResp>[] = [
   {
-    label: '配置',
+    label: $t('common.config'),
     yesHandle: (_row: TableResp) => {
       configHandle(_row.tableName);
     }
   },
   {
-    label: '生成',
+    label: $t('common.generator'),
     disabled: (row: TableResp) => row.disabled,
     yesHandle: (_row: TableResp) => {
       viewHandle(_row.tableName);

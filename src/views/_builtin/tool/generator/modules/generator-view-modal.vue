@@ -190,7 +190,7 @@ watch(visible, () => {
     @after-leave="closeDrawer"
   >
     <template #header-extra>
-      <NButton size="small" quaternary type="info" @click="onDownload">
+      <NButton size="small" quaternary :focusable="false" type="info" @click="onDownload">
         <template #icon>
           <icon-local-link class="text-icon" />
         </template>

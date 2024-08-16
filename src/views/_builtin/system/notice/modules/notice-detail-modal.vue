@@ -8,6 +8,7 @@ import { useDict } from '@/hooks/business/dict';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
 import { useThemeStore } from '@/store/modules/theme';
+import { useAppStore } from '@/store/modules/app';
 import 'md-editor-v3/lib/style.css';
 
 defineOptions({
@@ -34,6 +35,7 @@ const emit = defineEmits<Emits>();
 const toolbarsExclude: ToolbarNames[] = ['mermaid', 'katex', 'github', 'htmlPreview', 'catalog'];
 
 const themeStore = useThemeStore();
+const appStore = useAppStore();
 const { notice_type } = useDict('notice_type');
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
@@ -182,7 +184,12 @@ watch(visible, () => {
       <NRow :gutter="16">
         <NCol :span="24">
           <NFormItem label="内容" path="content">
-            <MdEditor v-model="model.content" :theme="theme" :toolbars-exclude="toolbarsExclude" />
+            <MdEditor
+              v-model="model.content"
+              :theme="theme"
+              :language="appStore.locale"
+              :toolbars-exclude="toolbarsExclude"
+            />
           </NFormItem>
         </NCol>
       </NRow>

@@ -24,9 +24,8 @@ const columns = ref<TableColumn<any>[]>([
   {
     title: '标题',
     key: 'title',
-    align: 'center',
-    resizable: true,
-    fixed: 'left',
+    align: 'left',
+    titleAlign: 'center',
     ellipsis: { tooltip: true },
     render(row) {
       return h(NA, { size: 'small', onClick: () => viewHandle(row.id) }, { default: () => row.title });
@@ -68,13 +67,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<NoticeResp>[] = [
   {
-    label: '编辑',
+    label: $t('common.edit'),
     yesHandle(row, _index) {
       if (row.id) editHandle(row.id);
     }
   },
   {
-    label: '删除',
+    label: $t('common.delete'),
     type: 'error',
     confirm: true,
     yesHandle(row, _index) {

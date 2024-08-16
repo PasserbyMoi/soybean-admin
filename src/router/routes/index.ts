@@ -55,7 +55,6 @@ export const customRoutes: CustomRoute[] = [
 ];
 
 // @chenbeiyu: 通用 Route。抽取公共部分，静态路由和动态路由同时使用
-// @chenbeiyu: 通用 Route。抽取公共部分，静态路由和动态路由同时使用
 export const homeRoutes: GeneratedRoute[] = [
   {
     name: 'home',
@@ -103,17 +102,6 @@ export const commonConstantRoutes: GeneratedRoute[] = [
       hideInMenu: true
     }
   },
-  // {
-  //   name: 'home',
-  //   path: '/home',
-  //   component: 'layout.base$view.home',
-  //   meta: {
-  //     title: 'home',
-  //     i18nKey: 'route.home',
-  //     icon: 'mdi:monitor-dashboard',
-  //     order: 1
-  //   }
-  // },
   {
     name: 'iframe-page',
     path: '/iframe-page/:url',
@@ -129,7 +117,7 @@ export const commonConstantRoutes: GeneratedRoute[] = [
   },
   {
     name: 'login',
-    path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
+    path: '/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?',
     component: 'layout.blank$view.login',
     props: true,
     meta: {
@@ -166,18 +154,6 @@ export function createDynamicRoutes() {
   const constantDynamicRoutes: ElegantConstRoute[] = [...commonConstantRoutes];
 
   const authDynamicRoutes: ElegantConstRoute[] = [...homeRoutes];
-
-  // const allRoutes: ElegantConstRoute[] = includeGenerated
-  //   ? [...customRoutes, ...generatedRoutes, ...commonRoutes, ...fetchedRoutes]
-  //   : [...commonRoutes, ...fetchedRoutes];
-
-  // allRoutes.forEach(item => {
-  //   if (item.meta?.constant) {
-  //     constantRoutes.push(item);
-  //   } else {
-  //     authRoutes.push(item);
-  //   }
-  // });
 
   return {
     constantDynamicRoutes,

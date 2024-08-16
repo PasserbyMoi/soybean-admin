@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { MdPreview } from 'md-editor-v3';
 import { type NoticeResp, getNotice } from '@/apis';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
   name: 'NoticeViewModal'
 });
+
+const themeStore = useThemeStore();
 
 const rowId = defineModel<string | null>('rowId', {
   default: () => null
@@ -14,6 +17,7 @@ const visible = defineModel<boolean>('visible', {
 });
 
 const dataDetail = ref<NoticeResp>();
+const mdPreviewRef = ref();
 
 // 查询详情
 const getDataDetail = async () => {
@@ -56,7 +60,17 @@ watch(visible, () => {
         </span>
       </NSpace>
     </div>
-    <MdPreview :editor-id="dataDetail?.id" :model-value="dataDetail?.content" />
+    <div class="mb-20px mt-20px">
+      <NScrollbar class="h-560px">
+        <MdPreview
+          ref="mdPreviewRef"
+          :model-value="dataDetail?.content"
+          :editor-id="dataDetail?.id"
+          :theme="themeStore.darkMode ? 'dark' : 'light'"
+          preview-theme="github"
+        />
+      </NScrollbar>
+    </div>
     <NSpace v-if="dataDetail?.updateTime" justify="end">
       <div>
         <icon-icon-park-outline:time class="mb-4px mr-4px w-14px" />

@@ -23,19 +23,27 @@ const columns = ref<TableColumn<any>[]>([
     key: 'label',
     align: 'center',
     resizable: true,
+    maxWidth: 120,
     ellipsis: { tooltip: true },
     fixed: 'left',
     render: row => {
       return h(DictTag, { text: row.label, color: row.color });
     }
   },
-  { title: '值', key: 'value', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '值',
+    key: 'value',
+    align: 'center',
+    width: 110,
+    maxWidth: 110,
+    ellipsis: { tooltip: true }
+  },
   {
     title: '状态',
     key: 'status',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 110,
+    maxWidth: 110,
     render: row => {
       return h(EnableTag, { value: row.status });
     }
@@ -44,19 +52,25 @@ const columns = ref<TableColumn<any>[]>([
     title: '字典',
     key: 'dictId',
     align: 'center',
-    resizable: true,
+    maxWidth: 120,
     ellipsis: { tooltip: true },
     render: row => {
       return dictMap.value?.filter(o => o.id === row.dictId)[0].name ?? row.dictId;
     }
   },
-  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '排序', key: 'sort', align: 'center', width: 80, ellipsis: { tooltip: true } },
+  {
+    title: '描述',
+    key: 'description',
+    align: 'center',
+    maxWidth: 160,
+    ellipsis: { tooltip: true }
+  },
   {
     title: '创建人',
     key: 'createUserString',
     align: 'center',
-    resizable: true,
+    maxWidth: 120,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -64,7 +78,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '创建时间',
     key: 'createTime',
     align: 'center',
-    resizable: true,
+    maxWidth: 160,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -72,7 +86,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改人',
     key: 'updateUserString',
     align: 'center',
-    resizable: true,
+    maxWidth: 120,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -80,7 +94,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改时间',
     key: 'updateTime',
     align: 'center',
-    resizable: true,
+    maxWidth: 160,
     ellipsis: { tooltip: true },
     hide: true
   }
@@ -88,13 +102,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<DictItemResp>[] = [
   {
-    label: '编辑',
+    label: $t('common.edit'),
     yesHandle(row, _index) {
       if (row.id) editHandle(row.id);
     }
   },
   {
-    label: '删除',
+    label: $t('common.delete'),
     type: 'error',
     confirm: true,
     yesHandle(row, _index) {
@@ -171,6 +185,7 @@ onBeforeMount(() => {
       :api-params="apiParams"
       :columns="columns"
       :show-selection="false"
+      :scroll-x="1160"
       :columns-operations="operations"
       :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
       @add="addHandle"

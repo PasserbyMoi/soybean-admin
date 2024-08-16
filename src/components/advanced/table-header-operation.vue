@@ -70,7 +70,7 @@ function toggleExpand() {
         <template #icon>
           <icon-material-symbols:add class="text-icon" :class="{ 'animate-spin': loading }" />
         </template>
-        {{ $t('common.add') }}
+        <!-- {{ $t('common.add') }} -->
       </NButton>
       <NPopconfirm v-if="operations.includes('delete')" @positive-click="emit('batchDelete')">
         <template #trigger>

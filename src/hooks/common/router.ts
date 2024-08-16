@@ -1,4 +1,3 @@
-import { log } from 'node:console';
 import { useRouter } from 'vue-router';
 import type { RouteLocationRaw } from 'vue-router';
 import type { RouteKey } from '@elegant-router/types';
@@ -38,15 +37,6 @@ export function useRouterPush(inSetup = true) {
     if (params) {
       routeLocation.params = params;
     }
-
-    // chanbeiyu: 发生异常时跳转到 404
-    try {
-      return routerPush(routeLocation);
-    } catch (error) {
-      if (error instanceof Error && error.message.startsWith('No match for')) {
-        return routerPush({ name: '404' });
-      }
-    }
     return routerPush(routeLocation);
   }
 
@@ -79,6 +69,21 @@ export function useRouterPush(inSetup = true) {
   }
 
   /**
+   * Navigate to login page
+   *
+   * @param loginModule The login module
+   */
+  async function goLogin(loginModule?: UnionKey.LoginModule) {
+    const module = loginModule || 'pwd-login';
+    const options: RouterPushOptions = {
+      params: {
+        module
+      }
+    };
+    return routerPushByKey('login', options);
+  }
+
+  /**
    * Toggle login module
    *
    * @param module
@@ -104,6 +109,7 @@ export function useRouterPush(inSetup = true) {
     routerPush,
     routerBack,
     routerPushByKey,
+    goLogin,
     toLogin,
     toggleLoginModule,
     redirectFromLogin

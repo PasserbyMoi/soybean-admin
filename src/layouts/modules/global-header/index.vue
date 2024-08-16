@@ -10,6 +10,7 @@ import GlobalSearch from '../global-search/index.vue';
 import { useMixMenuContext } from '../../context';
 import ThemeButton from './components/theme-button.vue';
 import UserAvatar from './components/user-avatar.vue';
+import InformButton from './components/inform-button.vue';
 
 defineOptions({
   name: 'GlobalHeader'
@@ -55,7 +56,7 @@ const headerMenus = computed(() => {
     </div>
     <div class="h-full flex-y-center justify-end">
       <GlobalSearch />
-      <Notices />
+      <InformButton />
       <FullScreen v-if="!appStore.isMobile" :full="isFullscreen" @click="toggle" />
       <LangSwitch :lang="appStore.locale" :lang-options="appStore.localeOptions" @change-lang="appStore.changeLocale" />
       <ThemeSchemaSwitch

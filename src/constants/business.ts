@@ -34,12 +34,12 @@ export const menuIconTypeOptions = transformRecordToOption(menuIconTypeRecord);
 export const tableSelectionColumns: NaiveUI.TableColumn<any> = {
   type: 'selection',
   align: 'center',
-  resizable: true
+  width: 60
 };
 
 export const tableIndexColumns: NaiveUI.TableColumn<any> = {
   key: 'index',
   title: $t('common.index'),
   align: 'center',
-  resizable: true
+  width: 60
 };

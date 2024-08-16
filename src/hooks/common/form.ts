@@ -69,7 +69,6 @@ export function useFormRules() {
     code: [createRequiredRule($t('form.code.required'), 'code'), patternRules.code],
     email: [createRequiredRule($t('form.email.required'), 'email'), patternRules.email],
     phoneOrEmail: [createRequiredRule($t('form.phoneOrEmail.required'), 'phoneOrEmail'), patternRules.phoneOrEmail],
-    uuid: [createRequiredRule($t('form.required'))],
     defaultRequiredRule: [createRequiredRule($t('form.required'))],
     defaultPassRule: []
   } satisfies Record<string, App.Global.FormRule[]>;

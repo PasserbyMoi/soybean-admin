@@ -10,7 +10,7 @@ import PwdLogin from './modules/pwd-login.vue';
 import CodeLogin from './modules/code-login.vue';
 import Register from './modules/register.vue';
 import ResetPwd from './modules/reset-pwd.vue';
-import BindWechat from './modules/bind-wechat.vue';
+import ModifyPwd from './modules/modify-pwd.vue';
 
 interface Props {
   /** The login module */
@@ -32,7 +32,7 @@ const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
   'code-login': { label: loginModuleRecord['code-login'], component: CodeLogin },
   register: { label: loginModuleRecord.register, component: Register },
   'reset-pwd': { label: loginModuleRecord['reset-pwd'], component: ResetPwd },
-  'bind-wechat': { label: loginModuleRecord['bind-wechat'], component: BindWechat }
+  'modify-pwd': { label: loginModuleRecord['modify-pwd'], component: ModifyPwd }
 };
 
 const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);

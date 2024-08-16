@@ -1,4 +1,5 @@
 # 更新日志
+
 查询字符串拼接： https://quilljs.com/docs/installation
 富文本：https://imzbf.github.io/md-editor-v3/zh-CN/docs
 富文本：https://github.com/imzbf/md-editor-v3
@@ -10,6 +11,184 @@ https://quilljs.com/docs/installation
 https://imzbf.github.io/md-editor-v3/zh-CN/docs
 https://github.com/imzbf/md-editor-v3
 
+
+## [v1.3.2](https://github.com/honghuangdc/soybean-admin/compare/v1.3.1...v1.3.2) (2024-07-30)
+
+### &nbsp;&nbsp;&nbsp;🚀 新功能
+
+- **项目**:
+  - 添加颜色渐变模式。关闭 #567 &nbsp;-&nbsp; 由 @Azir-11 在 https://github.com/honghuangdc/soybean-admin/issues/569 和 https://github.com/honghuangdc/soybean-admin/issues/567 [<samp>(4dde4)</samp>](https://github.com/honghuangdc/soybean-admin/commit/4dde4c2)
+  - 添加全屏水印。关闭 #571 &nbsp;-&nbsp; 由 @paynezhuang 在 https://github.com/honghuangdc/soybean-admin/issues/573 和 https://github.com/honghuangdc/soybean-admin/issues/571 [<samp>(ea8aa)</samp>](https://github.com/honghuangdc/soybean-admin/commit/ea8aa6c)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug 修复
+
+- **项目**: 修复 vertical-mix 菜单选中问题 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(59f07)</samp>](https://github.com/honghuangdc/soybean-admin/commit/59f07d8)
+
+### &nbsp;&nbsp;&nbsp;🛠 优化
+
+- **项目**:
+  - 添加类型 WatermarkProps &nbsp;-&nbsp; 由 @honghuangdc [<samp>(f26d0)</samp>](https://github.com/honghuangdc/soybean-admin/commit/f26d0a6)
+  - 移除 home NAlert 可关闭 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(98b75)</samp>](https://github.com/honghuangdc/soybean-admin/commit/98b75c2)
+  - 优化响应代码比较 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(cf67d)</samp>](https://github.com/honghuangdc/soybean-admin/commit/cf67d55)
+- **类型**:
+  - 移除无用类型。 &nbsp;-&nbsp; 由 **Azir** [<samp>(eed61)</samp>](https://github.com/honghuangdc/soybean-admin/commit/eed617f)
+
+### &nbsp;&nbsp;&nbsp;📖 文档
+
+- **项目**: 更新更新日志 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(d3759)</samp>](https://github.com/honghuangdc/soybean-admin/commit/d37591d)
+
+### &nbsp;&nbsp;&nbsp;🏡 杂项
+
+- **依赖**: 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(993e9)</samp>](https://github.com/honghuangdc/soybean-admin/commit/993e9ca)
+
+### &nbsp;&nbsp;&nbsp;❤️ 贡献者
+
+[![honghuangdc](https://github.com/honghuangdc.png?size=48)](https://github.com/honghuangdc)&nbsp;&nbsp;[![paynezhuang](https://github.com/paynezhuang.png?size=48)](https://github.com/paynezhuang)&nbsp;&nbsp;[![Azir-11](https://github.com/Azir-11.png?size=48)](https://github.com/Azir-11)&nbsp;&nbsp;
+[Azir](mailto:2075125282@qq.com),&nbsp;
+
+## [v1.3.1](https://github.com/honghuangdc/soybean-admin/compare/v1.3.0...v1.3.1) (2024-07-22)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug 修复
+
+- **项目**:
+  - 修复顶部菜单混合和反向模式下侧边栏宽度异常的问题 &nbsp;-&nbsp; 由 @Azir-11 在 https://github.com/honghuangdc/soybean-admin/issues/562 修复 [<samp>(c4695)</samp>](https://github.com/honghuangdc/soybean-admin/commit/c469512)
+  - 修复水平混合菜单反转问题。修复 #563 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/honghuangdc/soybean-admin/issues/563 修复 [<samp>(4e55b)</samp>](https://github.com/honghuangdc/soybean-admin/commit/4e55b0e)
+  - 修复当布局来自移动端时垂直菜单不渲染的问题 &nbsp;-&nbsp; 由 @honghuangdc 修复 [<samp>(84027)</samp>](https://github.com/honghuangdc/soybean-admin/commit/8402734)
+
+### &nbsp;&nbsp;&nbsp;📖 文档
+
+- **项目**: 更新更新日志 &nbsp;-&nbsp; 由 @honghuangdc 更新 [<samp>(613c8)</samp>](https://github.com/honghuangdc/soybean-admin/commit/613c836)
+
+### &nbsp;&nbsp;&nbsp;🎨 样式
+
+- **其他**: 修改灰度模式的中文名称 &nbsp;-&nbsp; 由 **Azir** 修改 [<samp>(53770)</samp>](https://github.com/honghuangdc/soybean-admin/commit/5377002)
+
+### &nbsp;&nbsp;&nbsp;❤️ 贡献者
+
+[![honghuangdc](https://github.com/honghuangdc.png?size=48)](https://github.com/honghuangdc)&nbsp;&nbsp;[![Azir-11](https://github.com/Azir-11.png?size=48)](https://github.com/Azir-11)&nbsp;&nbsp;
+[Azir](mailto:2075125282@qq.com),&nbsp;
+
+
+## [v1.3.0](https://github.com/soybeanjs/soybean-admin/compare/v1.2.8...v1.3.0) (2024-07-22)
+
+### &nbsp;&nbsp;&nbsp;🚨 破坏性变更
+
+- **项目**: 重构全局菜单 & 支持 `reversed-horizontal-mix-menu`。关闭 #365 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/soybeanjs/soybean-admin/issues/365 提出 [<samp>(087e5)</samp>](https://github.com/soybeanjs/soybean-admin/commit/087e532)
+
+### &nbsp;&nbsp;&nbsp;🚀 功能
+
+- **包**:
+  - `@sa/scripts`: 命令 `gitCommit` 支持中文 &nbsp;-&nbsp; 由 @mmdapl 在 https://github.com/soybeanjs/soybean-admin/issues/548 提出 [<samp>(06971)</samp>](https://github.com/soybeanjs/soybean-admin/commit/06971f3)
+  - @sa/axios: 用 AbortController 替换 CancelTokenSource。关闭 #530, 关闭 #532 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/soybeanjs/soybean-admin/issues/530 和 https://github.com/soybeanjs/soybean-admin/issues/532 提出 [<samp>(527fd)</samp>](https://github.com/soybeanjs/soybean-admin/commit/527fd79)
+  - @sa/scripts: 为命令 `gitCommitVerify` 添加忽略模式列表。关闭 #504 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/soybeanjs/soybean-admin/issues/504 提出 [<samp>(958d0)</samp>](https://github.com/soybeanjs/soybean-admin/commit/958d0ba)
+- **项目**:
+  - 使分支 `main` 更精简 & 修改请求重试次数为 0 &nbsp;-&nbsp; 由 @Azir-11 提出 [<samp>(793b1)</samp>](https://github.com/soybeanjs/soybean-admin/commit/793b16e)
+
+### &nbsp;&nbsp;&nbsp;🐞 修复
+
+- **钩子**: 当 pagesize 返回 0 时防止程序冻结 &nbsp;-&nbsp; 由 @Azir-11 在 https://github.com/soybeanjs/soybean-admin/issues/545 提出 [<samp>(f4eeb)</samp>](https://github.com/soybeanjs/soybean-admin/commit/f4eeb2e)
+
+### &nbsp;&nbsp;&nbsp;💅 重构
+
+- **项目**:
+  - 合并 `theme tokens` 和 `theme settings`。关闭 #379 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/soybeanjs/soybean-admin/issues/379 提出 [<samp>(1d1b1)</samp>](https://github.com/soybeanjs/soybean-admin/commit/1d1b148)
+  - 将 css 变量挂载到 root &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(00f41)</samp>](https://github.com/soybeanjs/soybean-admin/commit/00f41dd)
+
+### &nbsp;&nbsp;&nbsp;📖 文档
+
+- **项目**: 更新更新日志 &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(a0b76)</samp>](https://github.com/soybeanjs/soybean-admin/commit/a0b76da)
+
+### &nbsp;&nbsp;&nbsp;🏡 杂务
+
+- **依赖**: 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(f6bd6)</samp>](https://github.com/soybeanjs/soybean-admin/commit/f6bd6b8)
+- **项目**: 添加脚本 `czh` &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(02069)</samp>](https://github.com/soybeanjs/soybean-admin/commit/0206969)
+
+### &nbsp;&nbsp;&nbsp;❤️ 贡献者
+
+[![honghuangdc](https://github.com/honghuangdc.png?size=48)](https://github.com/honghuangdc)&nbsp;&nbsp;[![mmdapl](https://github.com/mmdapl.png?size=48)](https://github.com/mmdapl)&nbsp;&nbsp;[![Azir-11](https://github.com/Azir-11.png?size=48)](https://github.com/Azir-11)&nbsp;&nbsp;
+
+
+## [v1.2.8](https://github.com/soybeanjs/soybean-admin/compare/v1.2.7...v1.2.8) (2024-07-20)
+
+### &nbsp;&nbsp;&nbsp;🐞 修复
+
+- **包**:
+  - @sa/hooks: 修复 useHookTable 的 searchParams。修复了 #552 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/soybeanjs/soybean-admin/issues/552 提出 [<samp>(96c10)</samp>](https://github.com/soybeanjs/soybean-admin/commit/96c1044)
+- **类型**:
+  - 修复了引用类型错误 &nbsp;-&nbsp; 由 **dodu2014** 在 https://github.com/soybeanjs/soybean-admin/issues/551 提出 [<samp>(3e2a9)</samp>](https://github.com/soybeanjs/soybean-admin/commit/3e2a993)
+  - 修复 useHookTable 的数据类型 &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(276ea)</samp>](https://github.com/soybeanjs/soybean-admin/commit/276ea7f)
+
+### &nbsp;&nbsp;&nbsp;💅 重构
+
+- **项目**: 用 `klona` 替换 `lodash-es` 的 `cloneDeep` &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(a9133)</samp>](https://github.com/soybeanjs/soybean-admin/commit/a91335d)
+
+### &nbsp;&nbsp;&nbsp;📖 文档
+
+- **项目**: 更新更新日志 &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(58fc0)</samp>](https://github.com/soybeanjs/soybean-admin/commit/58fc096)
+
+### &nbsp;&nbsp;&nbsp;🏡 杂务
+
+- **依赖**: 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc 提出 [<samp>(cf019)</samp>](https://github.com/soybeanjs/soybean-admin/commit/cf0192a)
+
+### &nbsp;&nbsp;&nbsp;❤️ 贡献者
+
+[![honghuangdc](https://github.com/honghuangdc.png?size=48)](https://github.com/honghuangdc)&nbsp;&nbsp;
+[dodu2014](mailto:dodu@live.cn)
+
+
+## [v1.2.7](https://github.com/honghuangdc/soybean-admin/compare/v1.2.6...v1.2.7) (2024-07-12)
+
+### &nbsp;&nbsp;&nbsp;🛠 优化
+
+- **项目**: 支持自定义菜单图标大小 &nbsp;-&nbsp; 由 @wynn-w 在 https://github.com/honghuangdc/soybean-admin/issues/534 提出 [<samp>(e035e)</samp>](https://github.com/honghuangdc/soybean-admin/commit/e035eab)
+
+### &nbsp;&nbsp;&nbsp;🏡 杂务
+
+- **依赖**:
+  - 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(72ede)</samp>](https://github.com/honghuangdc/soybean-admin/commit/72ede8b)
+  - 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(be13c)</samp>](https://github.com/honghuangdc/soybean-admin/commit/be13ca2)
+  - 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(752ec)</samp>](https://github.com/honghuangdc/soybean-admin/commit/752ec1e)
+- **项目**:
+  - 修复已弃用的配置配置 &nbsp;-&nbsp; 由 @paynezhuang 在 https://github.com/honghuangdc/soybean-admin/issues/524 提出 [<samp>(0d20e)</samp>](https://github.com/honghuangdc/soybean-admin/commit/0d20e4c)
+
+### &nbsp;&nbsp;&nbsp;❤️ 贡献者
+
+[![honghuangdc](https://github.com/honghuangdc.png?size=48)](https://github.com/honghuangdc)&nbsp;&nbsp;[![wynn-w](https://github.com/wynn-w.png?size=48)](https://github.com/wynn-w)&nbsp;&nbsp;[![paynezhuang](https://github.com/paynezhuang.png?size=48)](https://github.com/paynezhuang)&nbsp;&nbsp;
+
+## [v1.2.6](https://github.com/honghuangdc/soybean-admin/compare/v1.2.5...v1.2.6) (2024-06-21)
+
+### &nbsp;&nbsp;&nbsp;🐞 修复
+
+- **项目**:
+  - 请求模态标题使用 i18n。修复 #507 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/honghuangdc/soybean-admin/issues/507 提出 [<samp>(f7de3)</samp>](https://github.com/honghuangdc/soybean-admin/commit/f7de3fd)
+  - 为 `useTable` 添加 `getDataByPage`。修复 #499 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/honghuangdc/soybean-admin/issues/499 提出 [<samp>(425c6)</samp>](https://github.com/honghuangdc/soybean-admin/commit/425c69a)
+  - 修复登录重定向到 routeHome 时，动态路由的 routeHome 与静态路由不同的问题。修复 #511 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/honghuangdc/soybean-admin/issues/511 提出 [<samp>(49f60)</samp>](https://github.com/honghuangdc/soybean-admin/commit/49f60b2)
+
+### &nbsp;&nbsp;&nbsp;🛠 优化
+
+- **项目**: 优化 `getRouteQueryOfLoginRoute` &nbsp;-&nbsp; 由 @honghuangdc [<samp>(693f7)</samp>](https://github.com/honghuangdc/soybean-admin/commit/693f704)
+
+### &nbsp;&nbsp;&nbsp;📖 文档
+
+- **项目**:
+  - 更新更新日志 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(5c67d)</samp>](https://github.com/honghuangdc/soybean-admin/commit/5c67d06)
+  - 更新自述文件 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(1e67a)</samp>](https://github.com/honghuangdc/soybean-admin/commit/1e67ae8)
+
+### &nbsp;&nbsp;&nbsp;🏡 杂务
+
+- **依赖**:
+  - 更新依赖。关闭 #510 &nbsp;-&nbsp; 由 @honghuangdc 在 https://github.com/honghuangdc/soybean-admin/issues/510 提出 [<samp>(53143)</samp>](https://github.com/honghuangdc/soybean-admin/commit/531432d)
+  - 更新依赖 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(c7f6f)</samp>](https://github.com/honghuangdc/soybean-admin/commit/c7f6f2a)
+
+### &nbsp;&nbsp;&nbsp;🤖 CI
+
+- **项目**:
+  - 添加 github 问题模板 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(b5027)</samp>](https://github.com/honghuangdc/soybean-admin/commit/b5027c8)
+  - 更新 github 问题模板 &nbsp;-&nbsp; 由 @honghuangdc [<samp>(ff1d5)</samp>](https://github.com/honghuangdc/soybean-admin/commit/ff1d504)
+
+### &nbsp;&nbsp;&nbsp;❤️ 贡献者
+
+[![honghuangdc](https://github.com/honghuangdc.png?size=48)](https://github.com/honghuangdc)&nbsp;&nbsp;
 
 ## [v1.2.5](https://github.com/soybeanjs/soybean-admin/compare/v1.2.4...v1.2.5) (2024-06-15)
 

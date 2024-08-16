@@ -49,10 +49,10 @@ watch(visible, () => {
         <NDescriptionsItem label="用户名">{{ dataDetail?.username }}</NDescriptionsItem>
         <NDescriptionsItem label="昵称">{{ dataDetail?.nickname }}</NDescriptionsItem>
         <NDescriptionsItem label="性别">
-          <GenderTag :value="dataDetail?.gender"></GenderTag>
+          <GenderTag :value="dataDetail?.gender" :show-text="true"></GenderTag>
         </NDescriptionsItem>
         <NDescriptionsItem label="状态">
-          <EnableTag :value="dataDetail?.status"></EnableTag>
+          <EnableTag :value="dataDetail?.status" :show-text="true"></EnableTag>
         </NDescriptionsItem>
         <NDescriptionsItem label="手机号">
           <CopyText :value="dataDetail?.phone" default-text="暂无"></CopyText>

@@ -40,8 +40,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '状态',
     key: 'status',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 50,
     render: row => {
       return h(EnableTag, { value: row.status });
     }
@@ -50,8 +49,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '性别',
     key: 'gender',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 50,
     render: row => {
       return h(GenderTag, { value: row.gender });
     }
@@ -102,13 +100,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<UserResp>[] = [
   {
-    label: '编辑',
+    label: $t('common.edit'),
     yesHandle(row, _index) {
       if (row.id) editHandle(row.id);
     }
   },
   {
-    label: '删除',
+    label: $t('common.delete'),
     type: 'error',
     confirm: true,
     disabled: row => row.isSystem ?? false,
@@ -117,7 +115,7 @@ const operations: App.Table.Operation<UserResp>[] = [
     }
   },
   {
-    label: '修改密码',
+    label: $t('common.modifyPassword'),
     type: 'default',
     yesHandle(row, _index) {
       if (row.id) resetPwdHandle(row.id);
@@ -188,6 +186,7 @@ const handleSelectDept = (key: string) => {
       :api-params="apiParams"
       :columns="columns"
       :show-selection="false"
+      :scroll-x="1000"
       :columns-operations="operations"
       :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
       @add="addHandle"

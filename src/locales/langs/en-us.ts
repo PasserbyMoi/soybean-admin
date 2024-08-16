@@ -30,6 +30,9 @@ const local: App.I18n.Schema = {
     logout: 'Logout',
     logoutConfirm: 'Are you sure you want to log out?',
     lookForward: 'Coming soon',
+    modifyPassword: 'Modify password',
+    generator: 'Generator',
+    forcedLogout: 'Forced logout',
     modify: 'Modify',
     modifySuccess: 'Modify Success',
     noData: 'No Data',
@@ -56,6 +59,8 @@ const local: App.I18n.Schema = {
     about: 'About',
     unkonw: 'Unkonw',
     default: 'Default',
+    operateSuccess: 'Operate success',
+    operateFail: 'Operate fail',
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
@@ -72,6 +77,13 @@ const local: App.I18n.Schema = {
       male: 'Male',
       female: 'Female',
       unknow: 'Unknow'
+    },
+    read: {
+      read: 'Read',
+      unread: 'Unread',
+      unknow: 'Unknow',
+      viewMore: 'View More >',
+      allRead: 'All Read'
     }
   },
   request: {
@@ -90,6 +102,7 @@ const local: App.I18n.Schema = {
       auto: 'Follow System'
     },
     grayscale: 'Grayscale',
+    colourWeakness: 'Colour Weakness',
     layoutMode: {
       title: 'Layout Mode',
       vertical: 'Vertical Menu Mode',
@@ -159,6 +172,10 @@ const local: App.I18n.Schema = {
       height: 'Footer Height',
       right: 'Right Footer'
     },
+    watermark: {
+      visible: 'Watermark Full Screen Visible',
+      text: 'Watermark Text'
+    },
     themeDrawerTitle: 'Theme Configuration',
     pageFunTitle: 'Page Function',
     configOperation: {
@@ -223,8 +240,12 @@ const local: App.I18n.Schema = {
         phonePlaceholder: 'Please enter phone number',
         codePlaceholder: 'Please enter verification code',
         codeExpired: 'Expired, Please refresh',
+        passwordOldPlaceholder: 'Please enter old password',
+        passwordNewPlaceholder: 'Please enter new password',
+        confirmNewPasswordPlaceholder: 'Please enter new password again',
         passwordPlaceholder: 'Please enter password',
         confirmPasswordPlaceholder: 'Please enter password again',
+        modifyNotify: 'Password expired, please modify new password',
         codeLogin: 'Verification code login',
         confirm: 'Confirm',
         back: 'Back',
@@ -260,8 +281,8 @@ const local: App.I18n.Schema = {
       resetPwd: {
         title: 'Reset Password'
       },
-      bindWeChat: {
-        title: 'Bind WeChat'
+      modifyPwd: {
+        title: 'Modify Password'
       }
     },
     about: {

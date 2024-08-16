@@ -16,7 +16,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const route = useRoute();
   const routeStore = useRouteStore();
   const tabStore = useTabStore();
-  const { toLogin, redirectFromLogin } = useRouterPush(false);
+  const { toLogin, goLogin, redirectFromLogin, toggleLoginModule } = useRouterPush(false);
   const { loading: loginLoading, startLoading, endLoading } = useLoading();
 
   const token = ref(getToken());
@@ -48,18 +48,27 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   /** Is login */
   const isLogin = computed(() => Boolean(token.value));
 
+  /** Reset PWD */
+  async function modifyPassword() {
+    const authStore = useAuthStore();
+    clearAuthStorage();
+    authStore.$reset();
+    tabStore.cacheTabs();
+    routeStore.resetStore();
+    toggleLoginModule('modify-pwd');
+  }
+
   /** Reset auth store */
   async function resetStore() {
     const authStore = useAuthStore();
-
     clearAuthStorage();
-
     authStore.$reset();
-
     if (!route.meta.constant) {
       await toLogin();
     }
-
+    if (route.path === '/login/modify-pwd') {
+      await goLogin();
+    }
     tabStore.cacheTabs();
     routeStore.resetStore();
   }
@@ -74,7 +83,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function login(accountLoginReq: AccountLoginReq, redirect = true) {
     startLoading();
     const { data, error } = await accountLogin(accountLoginReq);
-    if (!error) {
+    if (!error && data?.token) {
       const pass = await loginByToken(data.token);
       if (pass) {
         await routeStore.initAuthRoute();
@@ -106,7 +115,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function loginByEmail(email: string, captcha: string, redirect = true) {
     startLoading();
     const { data, error } = await emailLogin({ email, captcha });
-    if (!error) {
+    if (!error && data?.token) {
       const pass = await loginByToken(data.token);
       if (pass) {
         await routeStore.initAuthRoute();
@@ -138,7 +147,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function loginByPhone(phone: string, captcha: string, redirect = true) {
     startLoading();
     const { data, error } = await phoneLogin({ phone, captcha });
-    if (!error) {
+    if (!error && data?.token) {
       const pass = await loginByToken(data.token);
       if (pass) {
         await routeStore.initAuthRoute();
@@ -170,7 +179,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function loginBySocial(source: string, req: any, redirect = true) {
     startLoading();
     const { data, error } = await socialLogin(source, req);
-    if (!error) {
+    if (!error && data?.token) {
       const pass = await loginByToken(data.token);
       if (pass) {
         await routeStore.initAuthRoute();
@@ -206,14 +215,15 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   async function getUserAccount() {
-    const { data: info, error } = await getUserInfo();
+    const { data, error } = await getUserInfo();
     if (!error) {
+      if (data.pwdExpired) {
+        modifyPassword();
+      }
       // update store
-      Object.assign(userInfo, info);
-
+      Object.assign(userInfo, data);
       return true;
     }
-
     return false;
   }
 
@@ -236,6 +246,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     isLogin,
     loginLoading,
     resetStore,
+    modifyPassword,
     login,
     loginByEmail,
     loginByPhone,

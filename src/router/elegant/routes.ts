@@ -57,7 +57,7 @@ export const generatedRoutes: GeneratedRoute[] = [
   },
   {
     name: 'login',
-    path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
+    path: '/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?',
     component: 'layout.base$view.login',
     props: true,
     meta: {
@@ -96,26 +96,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
-    name: 'project',
-    path: '/project',
-    component: 'layout.base',
-    meta: {
-      title: 'project',
-      i18nKey: 'route.project'
-    },
-    children: [
-      {
-        name: 'project_about',
-        path: '/project/about',
-        component: 'view.project_about',
-        meta: {
-          title: 'project_about',
-          i18nKey: 'route.project_about'
-        }
-      }
-    ]
-  },
-  {
     name: 'setting',
     path: '/setting',
     component: 'layout.base',
@@ -124,6 +104,24 @@ export const generatedRoutes: GeneratedRoute[] = [
       i18nKey: 'route.setting'
     },
     children: [
+      {
+        name: 'setting_about',
+        path: '/setting/about',
+        component: 'view.setting_about',
+        meta: {
+          title: 'setting_about',
+          i18nKey: 'route.setting_about'
+        }
+      },
+      {
+        name: 'setting_message',
+        path: '/setting/message',
+        component: 'view.setting_message',
+        meta: {
+          title: 'setting_message',
+          i18nKey: 'route.setting_message'
+        }
+      },
       {
         name: 'setting_profile',
         path: '/setting/profile',
@@ -207,7 +205,27 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'system_notice',
           i18nKey: 'route.system_notice'
-        }
+        },
+        children: [
+          {
+            name: 'system_notice_add',
+            path: '/system/notice/add',
+            component: 'view.system_notice_add',
+            meta: {
+              title: 'system_notice_add',
+              i18nKey: 'route.system_notice_add'
+            }
+          },
+          {
+            name: 'system_notice_detail',
+            path: '/system/notice/detail',
+            component: 'view.system_notice_detail',
+            meta: {
+              title: 'system_notice_detail',
+              i18nKey: 'route.system_notice_detail'
+            }
+          }
+        ]
       },
       {
         name: 'system_role',

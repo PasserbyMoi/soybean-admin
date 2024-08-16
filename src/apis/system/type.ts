@@ -317,10 +317,9 @@ export interface MessageResp {
 }
 
 export interface MessageQuery {
-  title?: string;
-  type?: number;
-  isRead?: boolean;
-  sort: Array<string>;
+  title?: string | null;
+  type?: number | null;
+  isRead?: boolean | null;
 }
 
 /** Arco Design 节点 */

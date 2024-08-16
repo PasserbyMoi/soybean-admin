@@ -97,10 +97,13 @@ function transformElegantRouteToVueRoute(
     if (component) {
       if (isSingleLevelRoute(route)) {
         const { layout, view } = getSingleLevelRouteComponent(component);
-  
+
         const singleLevelRoute: RouteRecordRaw = {
           path,
           component: layouts[layout],
+          meta: {
+            title: route.meta?.title || ''
+          },
           children: [
             {
               name,
@@ -110,36 +113,35 @@ function transformElegantRouteToVueRoute(
             } as RouteRecordRaw
           ]
         };
-  
+
         return [singleLevelRoute];
       }
-  
+
       if (isLayout(component)) {
         const layoutName = getLayoutName(component);
-  
+
         vueRoute.component = layouts[layoutName];
       }
-  
+
       if (isView(component)) {
         const viewName = getViewName(component);
-  
+
         vueRoute.component = views[viewName];
       }
-  
+
     }
   } catch (error: any) {
     console.error(`Error transforming route "${route.name}": ${error.toString()}`);
     return [];
   }
 
-  
   // add redirect to child
   if (children?.length && !vueRoute.redirect) {
     vueRoute.redirect = {
       name: children[0].name
     };
   }
-  
+
   if (children?.length) {
     const childRoutes = children.flatMap(child => transformElegantRouteToVueRoute(child, layouts, views));
 
@@ -170,13 +172,13 @@ const routeMap: RouteMap = {
   "500": "/500",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
-  "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
+  "login": "/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?",
   "monitor": "/monitor",
   "monitor_log": "/monitor/log",
   "monitor_online": "/monitor/online",
-  "project": "/project",
-  "project_about": "/project/about",
   "setting": "/setting",
+  "setting_about": "/setting/about",
+  "setting_message": "/setting/message",
   "setting_profile": "/setting/profile",
   "system": "/system",
   "system_config": "/system/config",
@@ -186,6 +188,8 @@ const routeMap: RouteMap = {
   "system_file": "/system/file",
   "system_menu": "/system/menu",
   "system_notice": "/system/notice",
+  "system_notice_add": "/system/notice/add",
+  "system_notice_detail": "/system/notice/detail",
   "system_role": "/system/role",
   "system_storage": "/system/storage",
   "system_user": "/system/user",

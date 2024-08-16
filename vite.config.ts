@@ -45,13 +45,10 @@ export default defineConfig(configEnv => {
       sourcemap: viteEnv.VITE_SOURCE_MAP === 'Y',
       commonjsOptions: {
         ignoreTryCatch: false
-      },
-      optimizeDeps: {
-        include: ['md-editor-v3', 'quill'] // 'echarts',
       }
     },
     optimizeDeps: {
-      include: ['md-editor-v3', 'quill'] // 'echarts',
+      include: ['md-editor-v3'] // 'echarts',
     }
   };
 });

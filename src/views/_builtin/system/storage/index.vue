@@ -25,8 +25,9 @@ const columns = ref<TableColumn<any>[]>([
     title: '名称',
     key: 'name',
     fixed: 'left',
-    width: '180px',
-    align: 'center',
+    width: 180,
+    align: 'left',
+    titleAlign: 'center',
     resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
@@ -47,7 +48,9 @@ const columns = ref<TableColumn<any>[]>([
   {
     title: '编码',
     key: 'code',
-    align: 'center',
+    align: 'left',
+    titleAlign: 'center',
+    maxWidth: 120,
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -55,7 +58,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '状态',
     key: 'status',
     align: 'center',
-    resizable: true,
+    maxWidth: 100,
     render: row => {
       return h(EnableTag, { value: row.status });
     }
@@ -64,7 +67,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '类型',
     key: 'type',
     align: 'center',
-    resizable: true,
+    width: 160,
     render: row => {
       return h(TableTag, { value: row.type, options: storage_type_enum.value }, { default: () => row.type });
     }
@@ -72,41 +75,50 @@ const columns = ref<TableColumn<any>[]>([
   {
     title: '访问密钥',
     key: 'accessKey',
-    align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true }
+    align: 'left',
+    titleAlign: 'center',
+    maxWidth: 180,
+    ellipsis: { tooltip: true },
+    hide: true
   },
   {
     title: '终端节点',
     key: 'endpoint',
-    align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true }
+    align: 'left',
+    titleAlign: 'center',
+    maxWidth: 180,
+    ellipsis: { tooltip: true },
+    hide: true
   },
   {
     title: '桶名称',
     key: 'bucketName',
-    align: 'center',
-    resizable: true,
+    align: 'left',
+    titleAlign: 'center',
+    maxWidth: 180,
     ellipsis: { tooltip: true }
   },
   {
     title: '域名',
     key: 'domain',
-    align: 'center',
-    resizable: true,
+    align: 'left',
+    titleAlign: 'center',
+    maxWidth: 180,
     ellipsis: { tooltip: true }
   },
   {
     title: '描述',
     key: 'description',
-    align: 'center',
+    align: 'left',
+    titleAlign: 'center',
+    maxWidth: 180,
     ellipsis: { tooltip: true }
   },
   {
     title: '创建人',
     key: 'createUserString',
     align: 'center',
+    maxWidth: 100,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -114,6 +126,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '创建时间',
     key: 'createTime',
     align: 'center',
+    maxWidth: 160,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -121,6 +134,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改人',
     key: 'updateUserString',
     align: 'center',
+    maxWidth: 100,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -128,6 +142,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改时间',
     key: 'updateTime',
     align: 'center',
+    maxWidth: 160,
     ellipsis: { tooltip: true },
     hide: true
   }
@@ -135,13 +150,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<StorageResp>[] = [
   {
-    label: '编辑',
+    label: $t('common.edit'),
     yesHandle(row, _index) {
       if (row.id) editHandle(row.id);
     }
   },
   {
-    label: '删除',
+    label: $t('common.delete'),
     type: 'error',
     confirm: true,
     disabled: (row: StorageResp) => row.isDefault ?? true,
@@ -195,6 +210,7 @@ function submited() {
       :api-params="apiParams"
       :columns="columns"
       :show-selection="false"
+      :scroll-x="1600"
       :columns-operations="operations"
       :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
       @add="addHandle"

@@ -90,13 +90,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<RoleResp>[] = [
   {
-    label: '编辑',
+    label: $t('common.edit'),
     yesHandle(row, _index) {
       if (row.id) editHandle(row.id);
     }
   },
   {
-    label: '删除',
+    label: $t('common.delete'),
     type: 'error',
     confirm: true,
     disabled: row => row.isSystem,

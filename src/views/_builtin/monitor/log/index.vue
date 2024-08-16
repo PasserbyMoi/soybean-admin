@@ -18,34 +18,44 @@ const apiParams: Api.Common.EPaginatingSearchParams<LogQuery> = {
 };
 const columns = ref<NaiveUI.TableColumn<any>[]>([
   {
-    key: 'id',
-    title: 'ID',
+    key: 'createTime',
+    title: '操作时间',
     align: 'center',
     fixed: 'left',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 180,
     render(row) {
-      return h(NA, { size: 'small', onClick: () => handleOnClick(row.id) }, { default: () => row.id });
+      return h(NA, { size: 'small', onClick: () => handleOnClick(row.id) }, { default: () => row.createTime });
     }
   },
-  { key: 'createUserString', title: '用户昵称', align: 'center', resizable: true },
-  { key: 'description', title: '行为', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { key: 'createUserString', title: '用户昵称', align: 'center', width: 180, ellipsis: { tooltip: true } },
+  { key: 'description', title: '行为', align: 'center', width: 180, ellipsis: { tooltip: true } },
   {
     key: 'status',
     title: '状态',
+    width: 80,
     align: 'center',
-    resizable: true,
     render: row => {
       return h(StatusTag, { value: row.status });
     }
   },
-  { key: 'ip', title: 'IP', align: 'center', resizable: true },
-  { key: 'address', title: '地点', align: 'center', resizable: true },
+  {
+    key: 'ip',
+    title: 'IP',
+    align: 'center',
+    width: 180,
+    ellipsis: { tooltip: true }
+  },
+  {
+    key: 'address',
+    title: '地点',
+    align: 'center',
+    width: 120
+  },
   {
     key: 'timeTaken',
     title: '耗时',
     align: 'center',
-    resizable: true,
+    width: 80,
     render: row => {
       return h(
         NTag,
@@ -60,9 +70,20 @@ const columns = ref<NaiveUI.TableColumn<any>[]>([
       );
     }
   },
-  { key: 'browser', title: '浏览器', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { key: 'os', title: '终端系统', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { key: 'createTime', title: '操作时间', align: 'center', resizable: true, ellipsis: { tooltip: true } }
+  {
+    key: 'browser',
+    title: '浏览器',
+    align: 'center',
+    width: 120,
+    ellipsis: { tooltip: true }
+  },
+  {
+    key: 'os',
+    title: '终端系统',
+    align: 'center',
+    width: 180,
+    ellipsis: { tooltip: true }
+  }
 ]);
 
 const tableRef = ref();

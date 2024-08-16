@@ -31,8 +31,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '类型',
     key: 'type',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    minWidth: 80,
     render: row => {
       return h(MenuTypeTag, { value: row.type });
     }
@@ -41,8 +40,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '状态',
     key: 'status',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    minWidth: 120,
     render: row => {
       return h(EnableTag, { value: row.status });
     }
@@ -51,6 +49,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '路由地址',
     key: 'path',
     align: 'center',
+    minWidth: 120,
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -58,6 +57,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '组件名称',
     key: 'name',
     align: 'center',
+    minWidth: 120,
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -65,6 +65,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '组件路径',
     key: 'component',
     align: 'center',
+    minWidth: 120,
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -72,6 +73,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '权限标识',
     key: 'permission',
     align: 'center',
+    minWidth: 180,
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -79,8 +81,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '外链',
     key: 'isExternal',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 60,
     render: row => {
       return h(BoolTag, { value: row.isExternal });
     }
@@ -89,8 +90,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '隐藏',
     key: 'isHidden',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 60,
     render: row => {
       return h(BoolTag, { value: row.isHidden });
     }
@@ -99,19 +99,17 @@ const columns = ref<TableColumn<any>[]>([
     title: '缓存',
     key: 'isCache',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 60,
     render: row => {
       return h(BoolTag, { value: row.isCache });
     }
   },
-  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '排序', key: 'sort', align: 'center', width: 60 },
   {
     title: '图标',
     key: 'icon',
     align: 'center',
-    resizable: true,
-    ellipsis: { tooltip: true },
+    width: 60,
     render: row => {
       return row.icon ? h(SvgIcon, { localIcon: row.icon }) : '';
     }
@@ -120,7 +118,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '创建人',
     key: 'createUserString',
     align: 'center',
-    resizable: true,
+    minWidth: 100,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -128,7 +126,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '创建时间',
     key: 'createTime',
     align: 'center',
-    resizable: true,
+    minWidth: 160,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -136,7 +134,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改人',
     key: 'updateUserString',
     align: 'center',
-    resizable: true,
+    minWidth: 100,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -144,7 +142,7 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改时间',
     key: 'updateTime',
     align: 'center',
-    resizable: true,
+    minWidth: 160,
     ellipsis: { tooltip: true },
     hide: true
   }
@@ -152,13 +150,13 @@ const columns = ref<TableColumn<any>[]>([
 
 const operations: App.Table.Operation<MenuResp>[] = [
   {
-    label: '编辑',
+    label: $t('common.edit'),
     yesHandle(row, _index) {
       if (row.id) editHandle(row.id);
     }
   },
   {
-    label: '新增',
+    label: $t('common.add'),
     type: 'success',
     disabled: row => row.type === 3,
     yesHandle(row, _index) {
@@ -166,7 +164,7 @@ const operations: App.Table.Operation<MenuResp>[] = [
     }
   },
   {
-    label: '删除',
+    label: $t('common.delete'),
     type: 'error',
     confirm: true,
     yesHandle(row, _index) {

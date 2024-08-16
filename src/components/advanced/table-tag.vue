@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 defineOptions({
-  name: 'TableTag'
+  name: 'TableTag',
+  inheritAttrs: false
 });
 
 interface Props {
@@ -14,6 +15,7 @@ defineProps<Props>();
   <template v-for="option in options" :key="option.value">
     <NTag
       v-if="value == option.value"
+      v-bind="$attrs"
       :bordered="false"
       class="justify-center"
       :type="
