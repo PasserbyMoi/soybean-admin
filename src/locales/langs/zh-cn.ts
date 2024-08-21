@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: 'Soybean 管理系统',
+    title: 'beiyu 管理系统',
     updateTitle: '系统版本更新通知',
     updateContent: '检测到系统有新版本发布，是否立即刷新页面？',
     updateConfirm: '立即刷新',
@@ -22,6 +22,8 @@ const local: App.I18n.Schema = {
     delete: '删除',
     deleteSuccess: '删除成功',
     confirmDelete: '确认删除吗？',
+    confirmDeletes: '确认删除所选的 {count} 个文件吗？',
+    confirmDeleteWhat: '确认删除 {name} 吗？',
     edit: '编辑',
     warning: '警告',
     error: '错误',
@@ -54,13 +56,34 @@ const local: App.I18n.Schema = {
     copyNotSupported: '您的浏览器不支持 Clipboard API',
     dataList: '数据列表',
     list: '列表',
-    confirmOperations: '确认执行 {name} 操作吗？',
-    userCenter: '个人中心',
+    upload: '上传',
+    uploadSuccess: '上传成功',
+    uploadCancel: '取消上传',
+    downlond: '下载',
+    downlondSuccess: '下载成功',
+    downlondCancel: '取消下载',
+    profile: '个人中心',
     about: '关于',
     unkonw: '未知',
     default: '默认',
-    operateSuccess: '操作成功',
+    bulkOperations: '批量操作',
+    bulkOperationsCancel: '取消批量操作',
     operateFail: '操作失败',
+    operateSuccess: '操作成功',
+    confirmOperations: '确认执行 {name} 操作吗？',
+    preview: '预览',
+    previewFile: '文件预览',
+    view: {
+      label: '视图',
+      table: '表格',
+      board: '看板',
+      list: '列表',
+      grid: '网格',
+      card: '卡片',
+      album: '画册',
+      form: '表单',
+      calendar: '日历'
+    },
     yesOrNo: {
       yes: '是',
       no: '否'
@@ -70,10 +93,12 @@ const local: App.I18n.Schema = {
       disabled: '禁用'
     },
     status: {
+      label: '状态',
       succeed: '成功',
       failed: '失败'
     },
     gender: {
+      label: '性别',
       male: '男',
       female: '女',
       unknow: '未知'
@@ -84,6 +109,20 @@ const local: App.I18n.Schema = {
       unknow: '未知',
       viewMore: '查看更多 >',
       allRead: '全部已读'
+    },
+    bind: {
+      bind: '绑定',
+      unbind: '解绑',
+      bindWhat: '绑定 {name}',
+      bound: '已绑定',
+      unbound: '未绑定',
+      bindSuccess: '绑定成功',
+      unbindSuccess: '解绑成功'
+    },
+    setting: {
+      label: '设置',
+      isSet: '已设置',
+      isNotSet: '未设置'
     }
   },
   request: {
@@ -213,24 +252,29 @@ const local: App.I18n.Schema = {
     monitor: '系统监控',
     monitor_log: '系统日志',
     monitor_online: '在线用户',
-    project: '关于项目',
-    project_about: '关于',
-    setting: '设置',
-    setting_profile: '个人中心',
+    about: '关于',
+    profile: '个人中心',
     system: '系统管理',
     system_config: '系统配置',
     system_dept: '部门管理',
     system_dict: '字典管理',
     system_file: '文件管理',
-    system_file_main: '文件管理|类型',
-    system_file_main_filemain: '文件管理|文件列表',
     system_menu: '菜单管理',
     system_notice: '通知公告',
     system_role: '角色管理',
     system_storage: '存储管理',
     system_user: '用户管理',
     tool: '系统工具',
-    tool_generator: '代码生成'
+    tool_generator: '代码生成',
+    expired: '密码过期',
+    message: '消息中心',
+    system_dict_item: '字典项管理',
+    system_notice_add: '添加公告通知',
+    system_notice_detail: '修改公告通知',
+    project: '关于项目',
+    schedule: '任务调度',
+    schedule_job: '任务管理',
+    schedule_log: '任务日志'
   },
   page: {
     login: {
@@ -304,8 +348,9 @@ const local: App.I18n.Schema = {
       greeting: '早安，{userName}, 今天又是充满活力的一天!',
       weatherDesc: '今日多云转晴，20℃ - 25℃!',
       projectCount: '项目数',
-      todo: '待办',
+      notice: '通知',
       message: '消息',
+      todo: '待办',
       downloadCount: '下载量',
       registerCount: '注册量',
       schedule: '作息安排',
@@ -326,45 +371,6 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       },
       creativity: '创意'
-    },
-    function: {
-      tab: {
-        tabOperate: {
-          title: '标签页操作',
-          addTab: '添加标签页',
-          addTabDesc: '跳转到关于页面',
-          closeTab: '关闭标签页',
-          closeCurrentTab: '关闭当前标签页',
-          closeAboutTab: '关闭"关于"标签页',
-          addMultiTab: '添加多标签页',
-          addMultiTabDesc1: '跳转到多标签页页面',
-          addMultiTabDesc2: '跳转到多标签页页面(带有查询参数)'
-        },
-        tabTitle: {
-          title: '标签页标题',
-          changeTitle: '修改标题',
-          change: '修改',
-          resetTitle: '重置标题',
-          reset: '重置'
-        }
-      },
-      multiTab: {
-        routeParam: '路由参数',
-        backTab: '返回 function_tab'
-      },
-      toggleAuth: {
-        toggleAccount: '切换账号',
-        authHook: '权限钩子函数 `hasAuth`',
-        superAdminVisible: '超级管理员可见',
-        adminVisible: '管理员可见',
-        adminOrUserVisible: '管理员和用户可见'
-      },
-      request: {
-        repeatedErrorOccurOnce: '重复请求错误只出现一次',
-        repeatedError: '重复请求错误',
-        repeatedErrorMsg1: '自定义请求错误 1',
-        repeatedErrorMsg2: '自定义请求错误 2'
-      }
     },
     manage: {
       common: {
@@ -573,6 +579,38 @@ const local: App.I18n.Schema = {
           DELETE: 'DELETE'
         }
       }
+    },
+    profile: {
+      base: {
+        title: '基本信息',
+        username: '用户名',
+        phone: '手机',
+        mail: '邮箱',
+        dept: '部门',
+        role: '角色',
+        registeredIn: '注册于 ',
+        notYet: '暂无 ',
+        edit: {
+          title: '编辑基础信息',
+          nickname: '昵称',
+          nicknamePlaceholder: '请输入昵称'
+        }
+      },
+      security: {
+        title: '安全设置',
+        phone: '安全手机',
+        mail: '安全邮箱',
+        password: '登录密码',
+        accountTip: '{prefix} 可用于登录、身份验证、密码找回、通知接收',
+        passwordUpdateTip: '为了您的账号安全，建议定期修改密码',
+        passwordSettingTip: '请设置密码，可通过账号+密码登录'
+      },
+      social: {
+        title: '第三方账号',
+        bind: '已绑定',
+        unbind: '绑定后',
+        bindTip: '{prefix}，可通过 {name} 进行登录'
+      }
     }
   },
   form: {
@@ -630,11 +668,6 @@ const local: App.I18n.Schema = {
   },
   datatable: {
     itemCount: '共 {total} 条'
-  },
-  notifications: {
-    notice: '通知',
-    message: '消息',
-    todo: '待办'
   }
 };
 

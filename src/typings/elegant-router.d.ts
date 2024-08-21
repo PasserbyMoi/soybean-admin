@@ -24,16 +24,20 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
+    "about": "/about";
+    "expired": "/expired";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
-    "login": "/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?";
+    "login": "/login/:module(pwd-login|code-login|register|reset-pwd)?";
+    "message": "/message";
     "monitor": "/monitor";
     "monitor_log": "/monitor/log";
     "monitor_online": "/monitor/online";
-    "setting": "/setting";
-    "setting_about": "/setting/about";
-    "setting_message": "/setting/message";
-    "setting_profile": "/setting/profile";
+    "profile": "/profile";
+    "project": "/project";
+    "schedule": "/schedule";
+    "schedule_job": "/schedule/job";
+    "schedule_log": "/schedule/log";
     "system": "/system";
     "system_config": "/system/config";
     "system_dept": "/system/dept";
@@ -87,11 +91,16 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
+    | "about"
+    | "expired"
     | "home"
     | "iframe-page"
     | "login"
+    | "message"
     | "monitor"
-    | "setting"
+    | "profile"
+    | "project"
+    | "schedule"
     | "system"
     | "tool"
   >;
@@ -118,9 +127,9 @@ declare module "@elegant-router/types" {
     | "login"
     | "monitor_log"
     | "monitor_online"
-    | "setting_about"
-    | "setting_message"
-    | "setting_profile"
+    | "project"
+    | "schedule_job"
+    | "schedule_log"
     | "system_config"
     | "system_dept"
     | "system_dict"
@@ -134,6 +143,10 @@ declare module "@elegant-router/types" {
     | "system_storage"
     | "system_user"
     | "tool_generator"
+    | "about"
+    | "expired"
+    | "message"
+    | "profile"
     | "home"
   >;
 

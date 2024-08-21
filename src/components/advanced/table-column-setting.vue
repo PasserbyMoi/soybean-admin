@@ -20,7 +20,7 @@ const columns = defineModel<NaiveUI.TableColumnCheck[]>('columns', {
     <template #trigger>
       <NButton size="small">
         <template #icon>
-          <icon-ant-design-setting-outlined class="text-icon" :class="{ 'animate-spin': loading }" />
+          <icon-mdi:auto-fix class="text-icon" :class="{ 'animate-spin': loading }" />
         </template>
       </NButton>
     </template>

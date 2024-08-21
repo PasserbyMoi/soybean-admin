@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { UploadFileInfo } from 'naive-ui';
 import { useAuthStore } from '@/store/modules/auth';
+import { $t } from '@/locales';
 import ProfileBaseModal from './profile-base-modal.vue';
 import ProfileAvatarModal from './profile-avatar-modal.vue';
 
@@ -35,14 +36,14 @@ const options = reactive({
 // 打开裁剪框
 const onBeforeUpload = (option: { file: UploadFileInfo; fileList: UploadFileInfo[] }): boolean => {
   if (!option.file || !option.file.name || !option.file.file) {
-    window.$message?.error('取消上传');
+    window.$message?.error($t('common.uploadCancel'));
   } else {
     avatarFiles.value[0].name = option.file.name;
     const reader = new FileReader();
     reader.readAsDataURL(option.file.file);
     reader.onload = () => {
-      window.$message?.error('上传成功');
-      options.img = reader.result;
+      window.$message?.success($t('common.uploadSuccess'));
+      options.img = reader.result as string;
     };
     visibleAvatar.value = true;
   }
@@ -56,7 +57,7 @@ const onUpdateBase = async () => {
 </script>
 
 <template>
-  <NCard title="基本信息" bordered size="small" segmented>
+  <NCard :title="$t('page.profile.base.title')" bordered size="small" segmented>
     <NFlex vertical justify="center" class="h-300px items-center">
       <div>
         <NUpload
@@ -86,16 +87,17 @@ const onUpdateBase = async () => {
       :column="1"
       size="large"
       label-placement="left"
-      label-align="right"
       separator="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-      label-class="text-color-#666666 text-size-14px"
-      label-style="width: 100px"
       class="mb-24px ml-12px"
     >
-      <NDescriptionsItem :span="1" label-class="w-100px">
+      <NDescriptionsItem :span="1">
         <template #label>
-          <icon-local-user />
-          <span class="ml-5px">用户名</span>
+          <th class="th-label">
+            <icon-local-user />
+            <span>
+              {{ $t('page.profile.base.username') }}
+            </span>
+          </th>
         </template>
         {{ userInfo.username }}
         <icon-local-man v-if="userInfo.gender === 1" class="text-#19bbf1" />
@@ -103,36 +105,44 @@ const onUpdateBase = async () => {
       </NDescriptionsItem>
       <NDescriptionsItem :span="1">
         <template #label>
-          <icon-local-mobile />
-          <span class="ml-5px">手&nbsp;&nbsp;&nbsp;机</span>
+          <th class="th-label">
+            <icon-local-mobile />
+            <span>{{ $t('page.profile.base.phone') }}</span>
+          </th>
         </template>
-        {{ userInfo.phone || '暂无' }}
+        {{ userInfo.phone || $t('page.profile.base.notYet') }}
       </NDescriptionsItem>
       <NDescriptionsItem :span="1">
         <template #label>
-          <icon-local-email />
-          <span class="ml-5px">邮&nbsp;&nbsp;&nbsp;箱</span>
+          <th class="th-label">
+            <icon-local-email />
+            <span>{{ $t('page.profile.base.mail') }}</span>
+          </th>
         </template>
-        {{ userInfo.email || '暂无' }}
+        {{ userInfo.email || $t('page.profile.base.notYet') }}
       </NDescriptionsItem>
       <NDescriptionsItem :span="1">
         <template #label>
-          <icon-local-mind-mapping />
-          <span class="ml-5px">部&nbsp;&nbsp;&nbsp;门</span>
+          <th class="th-label">
+            <icon-local-mind-mapping />
+            <span>{{ $t('page.profile.base.dept') }}</span>
+          </th>
         </template>
         {{ userInfo.deptName }}
       </NDescriptionsItem>
       <NDescriptionsItem :span="1">
         <template #label>
-          <icon-local-user-group />
-          <span class="ml-5px">角&nbsp;&nbsp;&nbsp;色</span>
+          <th class="th-label">
+            <icon-local-user-group />
+            <span>{{ $t('page.profile.base.role') }}</span>
+          </th>
         </template>
         {{ userInfo.roles.join('，') }}
       </NDescriptionsItem>
     </NDescriptions>
     <template #footer>
       <NFlex justify="center" class="h-40px items-center">
-        <div class="text-size-12px">注册于 {{ userInfo.registrationDate }}</div>
+        <div class="text-size-12px">{{ $t('page.profile.base.registeredIn') + userInfo.registrationDate }}</div>
       </NFlex>
     </template>
   </NCard>
@@ -141,4 +151,17 @@ const onUpdateBase = async () => {
   <ProfileAvatarModal v-model:visible="visibleAvatar" v-model:options="options" v-model:avatar-files="avatarFiles" />
 </template>
 
-<style scoped></style>
+<style lang="css" scoped>
+.th-label {
+  min-width: 95px;
+}
+.th-label span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #666666;
+  margin-left: 5px;
+}
+.th-label svg {
+  margin-bottom: 3px;
+}
+</style>

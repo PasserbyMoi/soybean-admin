@@ -10,7 +10,6 @@ import PwdLogin from './modules/pwd-login.vue';
 import CodeLogin from './modules/code-login.vue';
 import Register from './modules/register.vue';
 import ResetPwd from './modules/reset-pwd.vue';
-import ModifyPwd from './modules/modify-pwd.vue';
 
 interface Props {
   /** The login module */
@@ -31,8 +30,7 @@ const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
   'pwd-login': { label: loginModuleRecord['pwd-login'], component: PwdLogin },
   'code-login': { label: loginModuleRecord['code-login'], component: CodeLogin },
   register: { label: loginModuleRecord.register, component: Register },
-  'reset-pwd': { label: loginModuleRecord['reset-pwd'], component: ResetPwd },
-  'modify-pwd': { label: loginModuleRecord['modify-pwd'], component: ModifyPwd }
+  'reset-pwd': { label: loginModuleRecord['reset-pwd'], component: ResetPwd }
 };
 
 const activeModule = computed(() => moduleMap[props.module || 'pwd-login']);

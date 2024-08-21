@@ -51,7 +51,9 @@ onMounted(() => {
     </NList>
     <NDivider class="!mb-8px !mt-0" />
     <NFlex justify="space-between" class="m-4px mt-10px">
-      <NButton text :focusable="false" size="small" type="primary" @click="viewMore()">查看更多&nbsp;&gt;</NButton>
+      <NButton text :focusable="false" size="small" type="primary" @click="viewMore()">
+        {{ $t('common.read.viewMore') }}
+      </NButton>
     </NFlex>
   </NScrollbar>
   <NoticeViewModal ref="viewRef" v-model:visible="visible" v-model:row-id="rowId" :operate-type="operateType" />

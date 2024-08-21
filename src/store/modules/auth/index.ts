@@ -16,7 +16,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const route = useRoute();
   const routeStore = useRouteStore();
   const tabStore = useTabStore();
-  const { toLogin, goLogin, redirectFromLogin, toggleLoginModule } = useRouterPush(false);
+  const { toLogin, redirectFromLogin, routerPushByKey } = useRouterPush(false);
   const { loading: loginLoading, startLoading, endLoading } = useLoading();
 
   const token = ref(getToken());
@@ -50,12 +50,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   /** Reset PWD */
   async function modifyPassword() {
-    const authStore = useAuthStore();
-    clearAuthStorage();
-    authStore.$reset();
+    await routerPushByKey('expired');
     tabStore.cacheTabs();
     routeStore.resetStore();
-    toggleLoginModule('modify-pwd');
   }
 
   /** Reset auth store */
@@ -65,9 +62,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     authStore.$reset();
     if (!route.meta.constant) {
       await toLogin();
-    }
-    if (route.path === '/login/modify-pwd') {
-      await goLogin();
     }
     tabStore.cacheTabs();
     routeStore.resetStore();

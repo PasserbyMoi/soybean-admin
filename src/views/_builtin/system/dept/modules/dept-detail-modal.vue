@@ -42,7 +42,7 @@ const model = reactive(createDefaultModel());
 
 function createDefaultModel() {
   return {
-    parentId: null,
+    parentId: '',
     name: '',
     sort: 1,
     description: '',
@@ -64,7 +64,7 @@ const isEdit = computed(() => props.operateType === 'edit');
 // 查询详情
 const getDataDetail = async () => {
   if (rowId.value) {
-    const { data, error } = await getDept(rowId.value);
+    const { data, error } = await getDept(rowId.value as string);
     if (error) {
       throw error;
     }
@@ -84,7 +84,7 @@ function handleInitModel() {
     getDeptList();
   }
   if (rowId.value) {
-    model.parentId = rowId.value;
+    model.parentId = rowId.value as string;
   }
 }
 
@@ -92,7 +92,7 @@ function handleInitModel() {
 async function handleSubmit() {
   await validate();
   if (isEdit.value && rowId.value) {
-    const { error } = await updateDept(model, rowId.value);
+    const { error } = await updateDept(model, rowId.value as string);
     if (!error) {
       window.$message?.success($t('common.updateSuccess'));
       closeDrawer(true);

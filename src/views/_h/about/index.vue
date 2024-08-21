@@ -40,7 +40,7 @@ const latestBuildTime = BUILD_TIME;
 </script>
 
 <template>
-  <NSpace vertical :size="16">
+  <NSpace vertical :size="8">
     <NCard :title="$t('page.about.title')" :bordered="false" size="small" segmented class="card-wrapper">
       <p>{{ $t('page.about.introduction') }}</p>
     </NCard>

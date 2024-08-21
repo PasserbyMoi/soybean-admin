@@ -4,7 +4,7 @@ import { layouts, views } from '../elegant/imports';
 import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
 
 /**
- * custom routes
+ * static common custom routes
  *
  * @link https://github.com/soybeanjs/elegant-router?tab=readme-ov-file#custom-route
  */
@@ -54,8 +54,8 @@ export const customRoutes: CustomRoute[] = [
   }
 ];
 
-// @chenbeiyu: 通用 Route。抽取公共部分，静态路由和动态路由同时使用
-export const homeRoutes: GeneratedRoute[] = [
+// dynamic common auth routes
+export const commonAuthRoutes: GeneratedRoute[] = [
   {
     name: 'home',
     path: '/home',
@@ -66,8 +66,58 @@ export const homeRoutes: GeneratedRoute[] = [
       icon: 'mdi:monitor-dashboard',
       order: 0
     }
+  },
+  {
+    name: 'expired',
+    path: '/expired',
+    component: 'layout.blank$view.expired',
+    meta: {
+      title: 'expired',
+      i18nKey: 'route.expired',
+      localIcon: 'lock',
+      order: 0,
+      hideInMenu: true
+    }
+  },
+  {
+    name: 'message',
+    path: '/message',
+    component: 'layout.base$view.message',
+    meta: {
+      title: 'message',
+      i18nKey: 'route.message',
+      localIcon: 'message',
+      order: 0,
+      hideInMenu: true
+    }
+  },
+  {
+    name: 'profile',
+    path: '/profile',
+    component: 'layout.base$view.profile',
+    meta: {
+      title: 'profile',
+      i18nKey: 'route.profile',
+      localIcon: 'user',
+      order: 0,
+      hideInMenu: true
+    }
+  },
+  {
+    name: 'about',
+    path: '/about',
+    component: 'layout.base$view.about',
+    meta: {
+      title: 'about',
+      i18nKey: 'route.about',
+      localIcon: 'info-circle',
+      order: 0,
+      hideInMenu: true
+    }
   }
 ];
+
+// dynamic common constant routes
 export const commonConstantRoutes: GeneratedRoute[] = [
   {
     name: '403',
@@ -117,7 +167,7 @@ export const commonConstantRoutes: GeneratedRoute[] = [
   },
   {
     name: 'login',
-    path: '/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?',
+    path: '/login/:module(pwd-login|code-login|register|reset-pwd)?',
     component: 'layout.blank$view.login',
     props: true,
     meta: {
@@ -153,7 +203,7 @@ export function createStaticRoutes() {
 export function createDynamicRoutes() {
   const constantDynamicRoutes: ElegantConstRoute[] = [...commonConstantRoutes];
 
-  const authDynamicRoutes: ElegantConstRoute[] = [...homeRoutes];
+  const authDynamicRoutes: ElegantConstRoute[] = [...commonAuthRoutes];
 
   return {
     constantDynamicRoutes,

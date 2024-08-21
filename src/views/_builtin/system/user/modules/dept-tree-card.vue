@@ -29,10 +29,57 @@ const rowId = ref<string>();
 const visible = ref<boolean>();
 const operateType = ref<NaiveUI.TableOperateType>('add');
 
-const xRef = ref(0);
-const yRef = ref(0);
-const showDropdownRef = ref(false);
-const optionsRef = ref<DropdownOption[]>([]);
+const menuSelectOption = ref<TreeOption>();
+const menuRef = ref();
+const menuOptions = ref<DropdownOption[]>([
+  {
+    key: 'add',
+    label: '新增',
+    icon: () => {
+      return h(SvgIcon, { icon: 'material-symbols:edit-outline' });
+    },
+    props: {
+      onClick: () => {
+        addHandle(menuSelectOption.value?.id as string);
+      }
+    }
+  },
+  {
+    key: 'edit',
+    label: '修改',
+    icon: () => {
+      return h(SvgIcon, { icon: 'material-symbols:edit-outline' });
+    },
+    props: {
+      onClick: () => {
+        editHandle(menuSelectOption.value?.id as string);
+      }
+    }
+  },
+  {
+    key: 'delete',
+    label: '删除',
+    disabled: menuSelectOption.value?.isSystem as boolean,
+    icon: () => {
+      return h(SvgIcon, { icon: 'material-symbols:delete-outline' });
+    },
+    props: {
+      onClick: () => {
+        window.$dialog?.warning({
+          title: $t('common.warning'),
+          content: $t('common.confirmDeleteWhat', { name: menuSelectOption.value?.name }),
+          positiveText: $t('common.confirm'),
+          negativeText: $t('common.cancel'),
+          maskClosable: false,
+          closeOnEsc: true,
+          onPositiveClick() {
+            deleteHandle(menuSelectOption.value?.id as string);
+          }
+        });
+      }
+    }
+  }
+]);
 
 function nodeProps({ option }: { option: TreeOption }) {
   return {
@@ -40,67 +87,11 @@ function nodeProps({ option }: { option: TreeOption }) {
       emit('switch', `${option.id}`);
     },
     onContextmenu(e: MouseEvent): void {
-      optionsRef.value = [
-        {
-          key: 'add',
-          label: '新增',
-          icon: () => {
-            return h(SvgIcon, { icon: 'material-symbols:edit-outline' });
-          },
-          props: {
-            onClick: () => {
-              addHandle(option.id as string);
-            }
-          }
-        },
-        {
-          key: 'edit',
-          label: '修改',
-          icon: () => {
-            return h(SvgIcon, { icon: 'material-symbols:edit-outline' });
-          },
-          props: {
-            onClick: () => {
-              editHandle(option.id as string);
-            }
-          }
-        },
-        {
-          key: 'delete',
-          label: '删除',
-          disabled: option.isSystem as boolean,
-          icon: () => {
-            return h(SvgIcon, { icon: 'material-symbols:delete-outline' });
-          },
-          props: {
-            onClick: () => {
-              window.$dialog?.warning({
-                title: $t('common.warning'),
-                content: `确认删除 ${option.name} 吗？`,
-                positiveText: $t('common.confirm'),
-                negativeText: $t('common.cancel'),
-                maskClosable: false,
-                closeOnEsc: true,
-                onPositiveClick() {
-                  deleteHandle(option.id as string);
-                }
-              });
-            }
-          }
-        }
-      ];
-      showDropdownRef.value = true;
-      xRef.value = e.clientX;
-      yRef.value = e.clientY;
+      menuSelectOption.value = option;
+      menuRef.value.show(e);
       e.preventDefault();
     }
   };
-}
-function handleSelect() {
-  showDropdownRef.value = false;
-}
-function handleClickoutside() {
-  showDropdownRef.value = false;
 }
 
 function addHandle(id: string) {
@@ -163,7 +154,8 @@ onMounted(() => {
       class="h-full"
     ></NTree>
   </NFlex>
-  <NDropdown
+  <!--
+ <NDropdown
     trigger="manual"
     placement="bottom-start"
     :show="showDropdownRef"
@@ -174,6 +166,8 @@ onMounted(() => {
     @select="handleSelect"
     @clickoutside="handleClickoutside"
   />
+-->
+  <ContextMenu ref="menuRef" :options="menuOptions" class="w-120px"></ContextMenu>
   <DeptDetailModal v-model:visible="visible" v-model:row-id="rowId" :operate-type="operateType" @submitted="submited" />
 </template>
 

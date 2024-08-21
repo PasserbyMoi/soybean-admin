@@ -25,7 +25,7 @@ export const themeVars: App.Theme.ThemeSettingToken = {
     container: 'rgb(var(--container-bg-color))',
     layout: 'rgb(var(--layout-bg-color))',
     inverted: 'rgb(var(--inverted-bg-color))',
-    base_text: 'rgb(var(--base-text-color))'
+    'base-text': 'rgb(var(--base-text-color))'
   },
   boxShadow: {
     header: 'var(--header-box-shadow)',

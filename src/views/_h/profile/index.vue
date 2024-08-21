@@ -7,12 +7,12 @@ defineOptions({ name: 'SettingProfile' });
 </script>
 
 <template>
-  <NGrid :cols="24" item-responsive responsive="screen" :x-gap="16" :y-gap="16">
+  <NGrid :cols="24" item-responsive responsive="screen" :x-gap="8" :y-gap="8">
     <NGridItem span="24 m:12 l:8">
       <ProfileBasicInfo />
     </NGridItem>
     <NGridItem span="24 m:12 l:16">
-      <NFlex vertical :size="[16, 16]">
+      <NFlex vertical :size="[8, 8]">
         <ProfileSecurity />
         <ProfileSocial />
       </NFlex>

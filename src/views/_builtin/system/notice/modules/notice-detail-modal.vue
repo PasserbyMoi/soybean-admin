@@ -7,8 +7,7 @@ import { addNotice, getNotice, updateNotice } from '@/apis';
 import { useDict } from '@/hooks/business/dict';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import { useThemeStore } from '@/store/modules/theme';
-import { useAppStore } from '@/store/modules/app';
+import { useMdEditor } from '@/hooks/business/useMdEditor';
 import 'md-editor-v3/lib/style.css';
 
 defineOptions({
@@ -32,12 +31,9 @@ interface Emits {
 }
 const emit = defineEmits<Emits>();
 
-const toolbarsExclude: ToolbarNames[] = ['mermaid', 'katex', 'github', 'htmlPreview', 'catalog'];
-
-const themeStore = useThemeStore();
-const appStore = useAppStore();
 const { notice_type } = useDict('notice_type');
 const { formRef, validate, restoreValidation } = useNaiveForm();
+const { theme, language, toolbarsExclude } = useMdEditor();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
@@ -60,7 +56,6 @@ function createDefaultModel(): NoticeResp {
 }
 
 type RuleKey = Extract<keyof NoticeResp, 'title' | 'type' | 'content'>;
-
 const rules: Record<RuleKey, App.Global.FormRule[]> = {
   title: [{ required: true, message: '请输入标题' }],
   type: [{ required: true, message: '选择类型' }],
@@ -68,11 +63,7 @@ const rules: Record<RuleKey, App.Global.FormRule[]> = {
 };
 
 const dataDetail = ref<NoticeResp>();
-
 const isEdit = computed(() => props.operateType === 'edit');
-const theme = computed(() => {
-  return themeStore.darkMode ? 'dark' : 'light';
-});
 
 // 查询详情
 const getDataDetail = async () => {
@@ -184,12 +175,7 @@ watch(visible, () => {
       <NRow :gutter="16">
         <NCol :span="24">
           <NFormItem label="内容" path="content">
-            <MdEditor
-              v-model="model.content"
-              :theme="theme"
-              :language="appStore.locale"
-              :toolbars-exclude="toolbarsExclude"
-            />
+            <MdEditor v-model="model.content" :theme="theme" :language="language" :toolbars-exclude="toolbarsExclude" />
           </NFormItem>
         </NCol>
       </NRow>

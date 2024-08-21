@@ -22,6 +22,8 @@ const local: App.I18n.Schema = {
     delete: 'Delete',
     deleteSuccess: 'Delete Success',
     confirmDelete: 'Are you sure you want to delete?',
+    confirmDeletes: 'Do you confirm the deletion of the {count} files selected?',
+    confirmDeleteWhat: 'Are you sure you want to delete {name}?',
     edit: 'Edit',
     warning: 'Warning',
     error: 'Error',
@@ -54,13 +56,34 @@ const local: App.I18n.Schema = {
     copyNotSupported: "Your browser don't support Clipboard API",
     dataList: 'Data list',
     list: 'List',
-    confirmOperations: 'Are you sure you want {name} ?',
-    userCenter: 'User Center',
+    upload: 'Upload',
+    uploadSuccess: 'Upload success',
+    uploadCancel: 'Cancel upload',
+    downlond: 'Download',
+    downlondSuccess: 'Download success',
+    downlondCancel: 'Cancel download',
+    profile: 'Profile',
     about: 'About',
     unkonw: 'Unkonw',
     default: 'Default',
-    operateSuccess: 'Operate success',
+    bulkOperations: 'Bulk operate',
+    bulkOperationsCancel: 'Cancel bulk operate',
     operateFail: 'Operate fail',
+    operateSuccess: 'Operate success',
+    confirmOperations: 'Are you sure you want {name} ?',
+    preview: 'Preview',
+    previewFile: 'File Preview',
+    view: {
+      label: 'View',
+      table: 'Table',
+      board: 'Board',
+      list: 'List',
+      grid: 'Grid',
+      card: 'Card',
+      album: 'Album',
+      form: 'Form',
+      calendar: 'Calendar'
+    },
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
@@ -70,10 +93,12 @@ const local: App.I18n.Schema = {
       disabled: 'Disabled'
     },
     status: {
+      label: 'Status',
       succeed: 'Succeed',
       failed: 'Failed'
     },
     gender: {
+      label: 'Gender',
       male: 'Male',
       female: 'Female',
       unknow: 'Unknow'
@@ -82,8 +107,22 @@ const local: App.I18n.Schema = {
       read: 'Read',
       unread: 'Unread',
       unknow: 'Unknow',
-      viewMore: 'View More >',
+      viewMore: 'More >',
       allRead: 'All Read'
+    },
+    bind: {
+      bind: 'Bind',
+      unbind: 'Unbind',
+      bindWhat: 'Bind {name}',
+      bound: 'Bound',
+      unbound: 'Unbound',
+      bindSuccess: 'Bind success',
+      unbindSuccess: 'Unbind success'
+    },
+    setting: {
+      label: 'Setting',
+      isSet: 'Is Setting',
+      isNotSet: 'Not Setting'
     }
   },
   request: {
@@ -210,27 +249,32 @@ const local: App.I18n.Schema = {
     exception_403: '403',
     exception_404: '404',
     exception_500: '500',
-    monitor: 'System monitor',
-    monitor_log: 'System log',
-    monitor_online: 'Online user',
-    project: 'About system',
-    project_about: 'About',
-    setting: 'System setting',
-    setting_profile: 'User profile',
-    system: 'System manage',
-    system_config: 'System config',
-    system_dept: 'Department manage',
-    system_dict: 'Dict manage',
-    system_file: 'File manage',
-    system_file_main: 'File manage|Type',
-    system_file_main_filemain: 'File manage|List',
-    system_menu: 'Menu manage',
-    system_notice: 'Notice manage',
-    system_role: 'Role manage',
-    system_storage: 'Storage manage',
-    system_user: 'User manage',
-    tool: 'System tool',
-    tool_generator: 'Code generator'
+    monitor: 'System Monitor',
+    monitor_log: 'System Log',
+    monitor_online: 'Online User',
+    about: 'About',
+    profile: 'User Profile',
+    system: 'System Manage',
+    system_config: 'System Config',
+    system_dept: 'Department Manage',
+    system_dict: 'Dict Manage',
+    system_file: 'File Manage',
+    system_menu: 'Menu Manage',
+    system_notice: 'Notice Manage',
+    system_role: 'Role Manage',
+    system_storage: 'Storage Manage',
+    system_user: 'User Manage',
+    tool: 'System Tool',
+    tool_generator: 'Code Generator',
+    expired: 'Password Expired',
+    message: 'Message',
+    system_dict_item: 'Dict Item Manage',
+    system_notice_add: 'Dict Add',
+    system_notice_detail: 'Dict View',
+    project: 'About Project',
+    schedule: 'Schedule',
+    schedule_job: 'Schedule Manage',
+    schedule_log: 'Schedule Log'
   },
   page: {
     login: {
@@ -304,8 +348,9 @@ const local: App.I18n.Schema = {
       greeting: 'Good morning, {userName}, today is another day full of vitality!',
       weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
       projectCount: 'Project Count',
-      todo: 'Todo',
+      notice: 'Notice',
       message: 'Message',
+      todo: 'Todo',
       downloadCount: 'Download Count',
       registerCount: 'Register Count',
       schedule: 'Work and rest Schedule',
@@ -326,45 +371,6 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean just wrote some of the workbench pages casually, and it was enough to see!'
       },
       creativity: 'Creativity'
-    },
-    function: {
-      tab: {
-        tabOperate: {
-          title: 'Tab Operation',
-          addTab: 'Add Tab',
-          addTabDesc: 'To about page',
-          closeTab: 'Close Tab',
-          closeCurrentTab: 'Close Current Tab',
-          closeAboutTab: 'Close "About" Tab',
-          addMultiTab: 'Add Multi Tab',
-          addMultiTabDesc1: 'To MultiTab page',
-          addMultiTabDesc2: 'To MultiTab page(with query params)'
-        },
-        tabTitle: {
-          title: 'Tab Title',
-          changeTitle: 'Change Title',
-          change: 'Change',
-          resetTitle: 'Reset Title',
-          reset: 'Reset'
-        }
-      },
-      multiTab: {
-        routeParam: 'Route Param',
-        backTab: 'Back function_tab'
-      },
-      toggleAuth: {
-        toggleAccount: 'Toggle Account',
-        authHook: 'Auth Hook Function `hasAuth`',
-        superAdminVisible: 'Super Admin Visible',
-        adminVisible: 'Admin Visible',
-        adminOrUserVisible: 'Admin and User Visible'
-      },
-      request: {
-        repeatedErrorOccurOnce: 'Repeated Request Error Occurs Once',
-        repeatedError: 'Repeated Request Error',
-        repeatedErrorMsg1: 'Custom Request Error 1',
-        repeatedErrorMsg2: 'Custom Request Error 2'
-      }
     },
     manage: {
       common: {
@@ -574,6 +580,38 @@ const local: App.I18n.Schema = {
           DELETE: 'DELETE'
         }
       }
+    },
+    profile: {
+      base: {
+        title: 'Base Information',
+        username: 'Username',
+        phone: 'Phone',
+        mail: 'Email',
+        dept: 'Department',
+        role: 'Role',
+        registeredIn: 'Registered In ',
+        notYet: 'Not yet ',
+        edit: {
+          title: 'Edit the basic information',
+          nickname: 'Nickname',
+          nicknamePlaceholder: 'Please enter a nickname'
+        }
+      },
+      security: {
+        title: 'Security Setting',
+        phone: 'Security phone',
+        mail: 'Security mail',
+        password: 'Security password',
+        accountTip: '{prefix} can be used for login, authentication, password retrieval, and notification receiving',
+        passwordUpdateTip: 'For the security of your account, it is recommended to change your password regularly',
+        passwordSettingTip: 'Please set a password, you can log in with account + password'
+      },
+      social: {
+        title: 'Social Account',
+        bind: 'Unbound',
+        unbind: 'After binding',
+        bindTip: '{prefix}, you can log in via {name}'
+      }
     }
   },
   form: {
@@ -631,11 +669,6 @@ const local: App.I18n.Schema = {
   },
   datatable: {
     itemCount: 'Total {total} items'
-  },
-  notifications: {
-    notice: 'Notice',
-    message: 'Message',
-    todo: 'Todo'
   }
 };
 

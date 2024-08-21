@@ -6,6 +6,8 @@
 declare namespace Env {
   /** The router history mode */
   type RouterHistoryMode = 'hash' | 'history' | 'memory';
+  /** The preview file mode kk: kkFileView */
+  type PreviewMode = 'kk' | 'local';
 
   /** Interface for import.meta */
   interface ImportMeta extends ImportMetaEnv {
@@ -112,6 +114,16 @@ declare namespace Env {
     readonly VITE_ICONIFY_URL?: string;
     /** Used to differentiate storage across different domains */
     readonly VITE_STORAGE_PREFIX?: string;
+
+    /** websocket service base url */
+    readonly VITE_BASE_WS_URL?: string;
+
+    /** use kkfileview preview file */
+    readonly VITE_FILE_PREVIEW_MODE?: PreviewMode;
+    /** kkfileview preview file extension */
+    readonly VITE_FILE_KKFV_EXTENSION?: string;
+    /** kkfileview server url */
+    readonly VITE_FILE_KKFV_SERVER_URL?: string;
   }
 }
 

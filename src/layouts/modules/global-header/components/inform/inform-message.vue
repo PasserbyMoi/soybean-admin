@@ -15,7 +15,7 @@ interface Emits {
 const emit = defineEmits<Emits>();
 
 function viewMore() {
-  routerPush.routerPushByKey('setting_message');
+  routerPush.routerPushByKey('message');
 }
 
 onMounted(() => {

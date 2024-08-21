@@ -51,7 +51,7 @@ async function handleSubmit() {
     uploadAvatar(formData).then(res => {
       userInfo.value.avatar = res.data.avatar;
       avatarFiles.value[0].url = res.data.avatar;
-      window.$message?.success('更新成功');
+      window.$message?.success($t('common.uploadSuccess'));
       closeDrawer();
     });
   });
@@ -61,7 +61,6 @@ async function handleSubmit() {
 function closeDrawer() {
   visible.value = false;
   options.value.img = null;
-  // previews.value = null;
 }
 </script>
 
@@ -69,7 +68,7 @@ function closeDrawer() {
   <NModal
     v-model:show="visible"
     preset="card"
-    title="上传头像"
+    :title="$t('common.upload')"
     class="w-500px"
     close-on-esc
     segmented
@@ -93,16 +92,6 @@ function closeDrawer() {
           :output-size="options.outputSize"
         />
       </div>
-      <!--
-          @real-time="handleRealTime"
- <div class="h-200px w-200px">
-        <div :style="previewStyle">
-          <div :style="previews.div">
-            <img :src="previews.url" :style="previews.img" />
-          </div>
-        </div>
-      </div>
--->
     </NSpace>
     <template #footer>
       <NSpace :size="16" justify="end">

@@ -11,7 +11,7 @@ export function useDept(options?: { onSuccess?: () => void }) {
   const getDeptList = async (name?: string) => {
     try {
       loading.value = true;
-      const { data, error } = await listDeptTree({ description: name });
+      const { data, error } = await listDeptTree({ description: name ?? '' });
       if (!error) {
         deptList.value = data;
         options?.onSuccess && options.onSuccess();

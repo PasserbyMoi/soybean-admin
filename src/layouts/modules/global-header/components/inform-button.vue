@@ -67,21 +67,21 @@ onMounted(() => {
       <NTabPane key="message" name="message">
         <template #tab>
           <NSpace class="w-130px" justify="center">
-            {{ $t('notifications.message') }}
+            {{ $t('page.home.message') }}
             <NBadge type="error" :value="messageCount" :max="99" />
           </NSpace>
         </template>
-        <NEmpty v-if="messageList?.length === 0">暂无{{ $t('notifications.message') }}</NEmpty>
+        <NEmpty v-if="messageList?.length === 0">暂无{{ $t('page.home.message') }}</NEmpty>
         <InformMessage v-else :list="messageList" @read="handleRead" />
       </NTabPane>
       <NTabPane key="notice" name="notice">
         <template #tab>
           <NSpace class="w-130px" justify="center">
-            {{ $t('notifications.notice') }}
+            {{ $t('page.home.notice') }}
             <NBadge type="success" :value="noticeList?.length" :max="99" />
           </NSpace>
         </template>
-        <NEmpty v-if="noticeList?.length === 0">暂无{{ $t('notifications.notice') }}</NEmpty>
+        <NEmpty v-if="noticeList?.length === 0">暂无{{ $t('page.home.notice') }}</NEmpty>
         <InformNotice v-else :list="noticeList" />
       </NTabPane>
     </NTabs>

@@ -66,7 +66,7 @@ watch(visible, () => {
   <NModal
     v-model:show="visible"
     preset="card"
-    class="w-500pxpx w-120"
+    class="w-120 w-500px"
     title="重置密码"
     segmented
     close-on-esc

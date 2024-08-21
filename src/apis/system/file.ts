@@ -5,7 +5,7 @@ const BASE_URL = '/system/file';
 
 /** 查询文件列表 */
 export function listFile(query: Api.Common.EPaginatingSearchParams<System.FileQuery>) {
-  return request<Api.Common.PaginatingQueryRecord<System.FileItem[]>>({
+  return request<Api.Common.PaginatingQueryRecord<System.FileItem>>({
     url: `${BASE_URL}`,
     method: 'get',
     params: query

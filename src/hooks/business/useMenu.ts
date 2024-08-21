@@ -11,7 +11,7 @@ export function useMenu(options?: { onSuccess?: () => void }) {
   const getMenuList = async (name?: string) => {
     try {
       loading.value = true;
-      const { data, error } = await listMenuTree({ description: name });
+      const { data, error } = await listMenuTree({ description: name ?? '' });
       if (!error) {
         menuList.value = data;
         options?.onSuccess && options.onSuccess();

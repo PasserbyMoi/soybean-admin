@@ -68,7 +68,7 @@ function toggleExpand() {
     <slot name="default">
       <NButton v-if="operations.includes('add')" size="small" ghost type="primary" @click="emit('add')">
         <template #icon>
-          <icon-material-symbols:add class="text-icon" :class="{ 'animate-spin': loading }" />
+          <icon-mdi:plus class="text-icon" :class="{ 'animate-spin': loading }" />
         </template>
         <!-- {{ $t('common.add') }} -->
       </NButton>
@@ -76,7 +76,7 @@ function toggleExpand() {
         <template #trigger>
           <NButton size="small" ghost type="error" :disabled="deleteDisabled">
             <template #icon>
-              <icon-material-symbols:delete class="text-icon" :class="{ 'animate-spin': loading }" />
+              <icon-mdi:delete-outline class="text-icon" :class="{ 'animate-spin': loading }" />
             </template>
             <!-- {{ $t('common.delete') }} -->
           </NButton>
@@ -87,7 +87,7 @@ function toggleExpand() {
         <template #trigger>
           <NButton size="small" ghost type="warning">
             <template #icon>
-              <icon-material-symbols:arrow-downward class="text-icon" :class="{ 'animate-spin': loading }" />
+              <icon-mdi:download class="text-icon" :class="{ 'animate-spin': loading }" />
             </template>
             <!-- {{ $t('common.export') }} -->
           </NButton>
@@ -97,7 +97,7 @@ function toggleExpand() {
     </slot>
     <NButton size="small" @click="emit('refresh')">
       <template #icon>
-        <icon-material-symbols:refresh class="text-icon" :class="{ 'animate-spin': loading }" />
+        <icon-mdi:refresh class="text-icon" :class="{ 'animate-spin': loading }" />
       </template>
     </NButton>
     <NDropdown
@@ -109,14 +109,14 @@ function toggleExpand() {
     >
       <NButton size="small">
         <template #icon>
-          <icon-material-symbols:expand class="text-icon" :class="{ 'animate-spin': loading }" />
+          <icon-mdi:arrow-expand-vertical class="text-icon" :class="{ 'animate-spin': loading }" />
         </template>
       </NButton>
     </NDropdown>
     <NButton v-if="operations.includes('expand')" size="small" @click="toggleExpand">
       <template #icon>
-        <icon-material-symbols:arrow-right-alt v-if="expand" title=" $t('icon.collapseList')" />
-        <icon-material-symbols:arrow-split v-else title=" $t('icon.expandList')" />
+        <icon-mdi:set-merge v-if="expand" title=" $t('icon.collapseList')" />
+        <icon-mdi:set-split v-else title=" $t('icon.expandList')" />
       </template>
     </NButton>
     <NSwitch v-if="operations.includes('stripe')" v-model:value="appStore.isStriped" size="small" />
@@ -127,8 +127,8 @@ function toggleExpand() {
     />
     <NButton size="small" @click="toggleTableFullScreen">
       <template #icon>
-        <icon-gridicons-fullscreen-exit v-if="!searchVisible" title=" $t('icon.fullscreenExit')" />
-        <icon-gridicons-fullscreen v-else title=" $t('icon.fullscreen')" />
+        <icon-mdi:fullscreen-exit v-if="!searchVisible" title=" $t('icon.fullscreenExit')" />
+        <icon-mdi:fullscreen v-else title=" $t('icon.fullscreen')" />
       </template>
     </NButton>
   </NSpace>

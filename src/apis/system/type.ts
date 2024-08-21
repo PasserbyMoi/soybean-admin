@@ -206,8 +206,8 @@ export interface FileStatisticsResp {
 }
 
 export interface FileQuery {
-  name?: string;
-  type?: string;
+  name?: string | null;
+  type?: string | null;
   sort: Array<string>;
 }
 

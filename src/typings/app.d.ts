@@ -318,6 +318,8 @@ declare namespace App {
         delete: string;
         deleteSuccess: string;
         confirmDelete: string;
+        confirmDeletes: string;
+        confirmDeleteWhat: string;
         edit: string;
         warning: string;
         error: string;
@@ -349,14 +351,25 @@ declare namespace App {
         copy: string;
         copySuccess: string;
         copyNotSupported: string;
-        confirmOperations: string;
         list: string;
-        userCenter: string;
+        upload: string;
+        uploadSuccess: string;
+        uploadCancel: string;
+        downlond: string;
+        downlondSuccess: string;
+        downlondCancel: string;
+        profile: string;
         about: string;
         unkonw: string;
         default: string;
-        operateSuccess: string;
+        bulkOperations: string;
+        bulkOperationsCancel: string;
         operateFail: string;
+        operateSuccess: string;
+        confirmOperations: string;
+        preview: string;
+        previewFile: string;
+        view: { label: string } & Record<NaiveUI.ViewMode, string>;
         yesOrNo: {
           yes: string;
           no: string;
@@ -366,10 +379,12 @@ declare namespace App {
           disabled: string;
         };
         status: {
+          label: string;
           succeed: string;
           failed: string;
         };
         gender: {
+          label: string;
           male: string;
           female: string;
           unknow: string;
@@ -380,6 +395,20 @@ declare namespace App {
           unknow: string;
           viewMore: string;
           allRead: string;
+        };
+        bind: {
+          bind: string;
+          unbind: string;
+          bindWhat: string;
+          bound: string;
+          unbound: string;
+          bindSuccess: string;
+          unbindSuccess: string;
+        };
+        setting: {
+          label: string;
+          isSet: string;
+          isNotSet: string;
         };
       };
       request: {
@@ -520,13 +549,46 @@ declare namespace App {
           prdDep: string;
           devDep: string;
         };
+        profile: {
+          base: {
+            title: string;
+            username: string;
+            phone: string;
+            mail: string;
+            dept: string;
+            role: string;
+            registeredIn: string;
+            notYet: string;
+            edit: {
+              title: string;
+              nickname: string;
+              nicknamePlaceholder: string;
+            };
+          };
+          security: {
+            title: string;
+            phone: string;
+            mail: string;
+            password: string;
+            accountTip: string;
+            passwordUpdateTip: string;
+            passwordSettingTip: string;
+          };
+          social: {
+            title: string;
+            bind: string;
+            unbind: string;
+            bindTip: string;
+          };
+        };
         home: {
           branchDesc: string;
           greeting: string;
           weatherDesc: string;
           projectCount: string;
-          todo: string;
+          notice: string;
           message: string;
+          todo: string;
           downloadCount: string;
           registerCount: string;
           schedule: string;
@@ -547,45 +609,6 @@ declare namespace App {
             desc5: string;
           };
           creativity: string;
-        };
-        function: {
-          tab: {
-            tabOperate: {
-              title: string;
-              addTab: string;
-              addTabDesc: string;
-              closeTab: string;
-              closeCurrentTab: string;
-              closeAboutTab: string;
-              addMultiTab: string;
-              addMultiTabDesc1: string;
-              addMultiTabDesc2: string;
-            };
-            tabTitle: {
-              title: string;
-              changeTitle: string;
-              change: string;
-              resetTitle: string;
-              reset: string;
-            };
-          };
-          multiTab: {
-            routeParam: string;
-            backTab: string;
-          };
-          toggleAuth: {
-            toggleAccount: string;
-            authHook: string;
-            superAdminVisible: string;
-            adminVisible: string;
-            adminOrUserVisible: string;
-          };
-          request: {
-            repeatedErrorOccurOnce: string;
-            repeatedError: string;
-            repeatedErrorMsg1: string;
-            repeatedErrorMsg2: string;
-          };
         };
         manage: {
           common: {
@@ -825,11 +848,6 @@ declare namespace App {
       datatable: {
         itemCount: string;
       };
-      notifications: {
-        notice: string;
-        message: string;
-        todo: string;
-      };
     };
 
     type GetI18nKey<T extends Record<string, unknown>, K extends keyof T = keyof T> = K extends string
@@ -883,13 +901,13 @@ declare namespace App {
 
     /** The backend service response data */
     type Response<T = unknown> = {
+      success: boolean;
       /** The backend service response code */
       code: string;
       /** The backend service response message */
       msg: string;
       /** The backend service response data */
       data: T;
-      success: boolean;
       /** The backend service response timestamp */
       timestamp: Date | string | number;
     };

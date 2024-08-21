@@ -70,20 +70,25 @@ watch(visible, () => {
     v-model:show="visible"
     preset="card"
     segmented
-    title="编辑基础信息"
+    :title="$t('page.profile.base.edit.title')"
     class="w-500px"
     close-on-esc
     @after-leave="closeDrawer"
   >
-    <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="80px">
-      <NFormItem label="昵称" path="nickname">
-        <NInput v-model:value="model.nickname" placeholder="请输入昵称" :max-length="150" clearable />
+    <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="100px">
+      <NFormItem :label="$t('page.profile.base.edit.nickname')" path="nickname">
+        <NInput
+          v-model:value="model.nickname"
+          :placeholder="$t('page.profile.base.edit.nicknamePlaceholder')"
+          :max-length="150"
+          clearable
+        />
       </NFormItem>
-      <NFormItem label="类型" path="gender">
+      <NFormItem :label="$t('common.gender.label')" path="gender">
         <NRadioGroup v-model:value="model.gender" name="gender" size="small" :default-value="model.gender">
-          <NRadio :value="1" name="gender-1">男</NRadio>
-          <NRadio :value="2" name="gender-2">女</NRadio>
-          <NRadio :value="0" name="gender-0" disabled>未知</NRadio>
+          <NRadio :value="1" name="gender-1">{{ $t('common.gender.male') }}</NRadio>
+          <NRadio :value="2" name="gender-2">{{ $t('common.gender.female') }}</NRadio>
+          <NRadio :value="0" name="gender-0" disabled>{{ $t('common.gender.unknow') }}</NRadio>
         </NRadioGroup>
       </NFormItem>
     </NForm>

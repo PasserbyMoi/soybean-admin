@@ -44,7 +44,7 @@ const model = reactive(createDefaultModel());
 
 function createDefaultModel() {
   return {
-    parentId: null,
+    parentId: '',
     title: '',
     path: '',
     name: '',
@@ -120,7 +120,7 @@ function handleInitModel() {
     getMenuList();
   }
   if (rowId.value) {
-    model.parentId = rowId.value;
+    model.parentId = rowId.value as string;
   }
 }
 

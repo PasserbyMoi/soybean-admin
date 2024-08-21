@@ -37,6 +37,24 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'about',
+    path: '/about',
+    component: 'layout.base$view.about',
+    meta: {
+      title: 'about',
+      i18nKey: 'route.about'
+    }
+  },
+  {
+    name: 'expired',
+    path: '/expired',
+    component: 'layout.base$view.expired',
+    meta: {
+      title: 'expired',
+      i18nKey: 'route.expired'
+    }
+  },
+  {
     name: 'home',
     path: '/home',
     component: 'layout.base$view.home',
@@ -57,13 +75,22 @@ export const generatedRoutes: GeneratedRoute[] = [
   },
   {
     name: 'login',
-    path: '/login/:module(pwd-login|code-login|register|reset-pwd|modify-pwd)?',
+    path: '/login/:module(pwd-login|code-login|register|reset-pwd)?',
     component: 'layout.base$view.login',
     props: true,
     meta: {
       title: 'login',
       i18nKey: 'route.login',
       constant: true
+    }
+  },
+  {
+    name: 'message',
+    path: '/message',
+    component: 'layout.base$view.message',
+    meta: {
+      title: 'message',
+      i18nKey: 'route.message'
     }
   },
   {
@@ -96,39 +123,48 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
-    name: 'setting',
-    path: '/setting',
+    name: 'profile',
+    path: '/profile',
+    component: 'layout.base$view.profile',
+    meta: {
+      title: 'profile',
+      i18nKey: 'route.profile'
+    }
+  },
+  {
+    name: 'project',
+    path: '/project',
+    component: 'layout.base$view.project',
+    meta: {
+      title: 'project',
+      i18nKey: 'route.project'
+    }
+  },
+  {
+    name: 'schedule',
+    path: '/schedule',
     component: 'layout.base',
     meta: {
-      title: 'setting',
-      i18nKey: 'route.setting'
+      title: 'schedule',
+      i18nKey: 'route.schedule'
     },
     children: [
       {
-        name: 'setting_about',
-        path: '/setting/about',
-        component: 'view.setting_about',
+        name: 'schedule_job',
+        path: '/schedule/job',
+        component: 'view.schedule_job',
         meta: {
-          title: 'setting_about',
-          i18nKey: 'route.setting_about'
+          title: 'schedule_job',
+          i18nKey: 'route.schedule_job'
         }
       },
       {
-        name: 'setting_message',
-        path: '/setting/message',
-        component: 'view.setting_message',
+        name: 'schedule_log',
+        path: '/schedule/log',
+        component: 'view.schedule_log',
         meta: {
-          title: 'setting_message',
-          i18nKey: 'route.setting_message'
-        }
-      },
-      {
-        name: 'setting_profile',
-        path: '/setting/profile',
-        component: 'view.setting_profile',
-        meta: {
-          title: 'setting_profile',
-          i18nKey: 'route.setting_profile'
+          title: 'schedule_log',
+          i18nKey: 'route.schedule_log'
         }
       }
     ]
@@ -163,7 +199,6 @@ export const generatedRoutes: GeneratedRoute[] = [
       {
         name: 'system_dict',
         path: '/system/dict',
-        component: 'view.system_dict',
         meta: {
           title: 'system_dict',
           i18nKey: 'route.system_dict'
@@ -201,7 +236,6 @@ export const generatedRoutes: GeneratedRoute[] = [
       {
         name: 'system_notice',
         path: '/system/notice',
-        component: 'view.system_notice',
         meta: {
           title: 'system_notice',
           i18nKey: 'route.system_notice'

@@ -42,7 +42,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 interface Emits {
-  (e: 'handleRead'): void;
+  (e: 'add'): void;
+  (e: 'batchDelete', ids: string[] | number[]): void;
 }
 const emit = defineEmits<Emits>();
 
@@ -134,13 +135,13 @@ defineExpose({
                   <NSpace class="ml-6px" :wrap="false">
                     <NButton @click="resetSearchParams">
                       <template #icon>
-                        <icon-ic-round-refresh class="text-icon" />
+                        <icon-mdi:refresh class="text-icon" />
                       </template>
                       {{ $t('common.reset') }}
                     </NButton>
                     <NButton type="primary" ghost @click="getData">
                       <template #icon>
-                        <icon-ic-round-search class="text-icon" />
+                        <icon-mdi:search class="text-icon" />
                       </template>
                       {{ $t('common.search') }}
                     </NButton>
@@ -180,7 +181,7 @@ defineExpose({
         <NDataTable
           ref="tableRef"
           v-model:checked-row-keys="checkedRowKeys"
-          :row-key="row => row[rowKey]"
+          :row-key="(row: any) => row[rowKey]"
           :data="data"
           :columns="columns"
           :loading="loading"

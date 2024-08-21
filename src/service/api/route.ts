@@ -33,6 +33,7 @@ function convert(routeItems: RouteItem[]): Api.Route.MenuRoute[] {
           component: routeItem.component,
           meta: {
             title: routeItem.title,
+            i18nKey: null,
             constant: false,
             keepAlive: routeItem.isCache,
             localIcon: routeItem.icon,
@@ -41,6 +42,7 @@ function convert(routeItems: RouteItem[]): Api.Route.MenuRoute[] {
           }
         };
         const revName = routeItem.path.substring(1).split('/').join('_').toLowerCase();
+        const i18nKey = `route.${revName}`;
         let revComponent: string;
         if (routeItem.isExternal) {
           revComponent = 'view.iframe-page';
@@ -49,8 +51,10 @@ function convert(routeItems: RouteItem[]): Api.Route.MenuRoute[] {
           }
         } else if (routeItem.path.substring(1).includes('/')) {
           revComponent = `view.${revName}`;
+          route.meta.i18nKey = i18nKey as App.I18n.I18nKey;
         } else {
           revComponent = 'layout.base';
+          route.meta.i18nKey = i18nKey as App.I18n.I18nKey;
         }
         route.name = revName;
         route.component = revComponent;

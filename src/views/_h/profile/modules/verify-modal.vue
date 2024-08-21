@@ -29,7 +29,9 @@ const title = computed(() => {
   const titles: Record<CommonType.UserVerifyType, string> = {
     phone: '修改手机号',
     password: '修改密码',
-    email: '修改邮箱'
+    email: '修改邮箱',
+    github: '',
+    gitee: ''
   };
   return titles[verifyType.value];
 });

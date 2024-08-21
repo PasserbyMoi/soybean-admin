@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { listUserSocial } from '@/apis';
 import { useAuthStore } from '@/store/modules/auth';
+import { $t } from '@/locales';
 import type { ModeItem } from '../type';
 import VerifyModel from './verify-modal.vue';
 
@@ -19,35 +20,39 @@ const initData = () => {
     socialList.value = res.data?.map(el => el.source);
     modeList.value = [
       {
-        title: '安全手机',
+        title: 'phone',
         icon: 'phone-color',
         value: userInfo.value.phone,
-        subtitle: `${userInfo.value.phone ? '' : '手机号'}可用于登录、身份验证、密码找回、通知接收`,
+        subtitle: $t('page.profile.security.accountTip', {
+          account: userInfo.value.phone ? '' : $t('page.profile.base.phone')
+        }),
         type: 'phone',
         jumpMode: 'modal',
-        status: Boolean(userInfo.value.phone),
-        statusString: userInfo.value.phone ? '已绑定' : '未绑定'
+        status: Boolean(userInfo.value.phone)
+        // statusString: userInfo.value.phone ? $t('common.bind.bound') : $t('common.bind.unbound')
       },
       {
-        title: '安全邮箱',
+        title: 'mail',
         icon: 'email-color',
         value: userInfo.value.email,
-        subtitle: `${userInfo.value.email ? '' : '邮箱'}可用于登录、身份验证、密码找回、通知接收`,
+        subtitle: $t('page.profile.security.accountTip', {
+          account: userInfo.value.email ? '' : $t('page.profile.base.mail')
+        }),
         type: 'email',
         jumpMode: 'modal',
-        status: Boolean(userInfo.value.email),
-        statusString: userInfo.value.email ? '已绑定' : '未绑定'
+        status: Boolean(userInfo.value.email)
+        // statusString: userInfo.value.email ? $t('common.bind.bound') : $t('common.bind.unbound')
       },
       {
-        title: '登录密码',
+        title: 'password',
         icon: 'password-color',
         subtitle: userInfo.value.pwdResetTime
-          ? `为了您的账号安全，建议定期修改密码`
-          : '请设置密码，可通过账号+密码登录',
+          ? $t('page.profile.security.passwordUpdateTip')
+          : $t('page.profile.security.passwordSettingTip'),
         type: 'password',
         jumpMode: 'modal',
-        status: Boolean(userInfo.value.pwdResetTime),
-        statusString: userInfo.value.pwdResetTime ? '已设置' : '未设置'
+        status: Boolean(userInfo.value.pwdResetTime)
+        // statusString: userInfo.value.pwdResetTime ? $t('common.setting.isSet') : $t('common.setting.isNotSet')
       }
     ];
   });
@@ -65,7 +70,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NCard title="安全设置" bordered size="small">
+  <NCard :title="$t('page.profile.security.title')" bordered size="small">
     <NList :bordered="false">
       <NListItem v-for="item in modeList" :key="item.title">
         <template #prefix>
@@ -80,21 +85,28 @@ onMounted(() => {
             :type="item.status ? 'default' : 'primary'"
             @click="onUpdate(item.type, item.status)"
           >
-            {{ ['password'].includes(item.type) || item.status ? '修改' : '绑定' }}
+            {{ ['password'].includes(item.type) || item.status ? $t('common.modify') : $t('common.bind.bind') }}
           </NButton>
         </template>
         <div>
           <div class="mb-6px">
-            <NText>{{ item.title }}</NText>
+            <NText>{{ $t('page.profile.security.' + item.title) }}</NText>
             <NText :type="item.status ? 'success' : 'warning'" class="ml-10px font-size-12px">
               <icon-local-check-circle v-if="item.status" class="success" />
               <icon-local-exclamation-circle v-else class="warning" />
-              {{ item.status ? '已绑定' : '未绑定' }}
+              {{ item.status ? $t('common.bind.bound') : $t('common.bind.unbound') }}
             </NText>
           </div>
           <div class="font-size-12px color-#666666">
-            <span class="value">{{ item.value }}</span>
-            {{ item.subtitle }}
+            {{
+              item.title === 'password'
+                ? item.status
+                  ? $t('page.profile.security.passwordUpdateTip')
+                  : $t('page.profile.security.passwordSettingTip')
+                : $t('page.profile.security.accountTip', {
+                    prefix: item.status ? item.value : $t('page.profile.base.' + item.title)
+                  })
+            }}
           </div>
         </div>
       </NListItem>

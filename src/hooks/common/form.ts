@@ -69,6 +69,7 @@ export function useFormRules() {
     code: [createRequiredRule($t('form.code.required'), 'code'), patternRules.code],
     email: [createRequiredRule($t('form.email.required'), 'email'), patternRules.email],
     phoneOrEmail: [createRequiredRule($t('form.phoneOrEmail.required'), 'phoneOrEmail'), patternRules.phoneOrEmail],
+    defaultNoFormRequiredRule: [createNoFormRequiredRule($t('form.required'))],
     defaultRequiredRule: [createRequiredRule($t('form.required'))],
     defaultPassRule: []
   } satisfies Record<string, App.Global.FormRule[]>;
@@ -82,6 +83,21 @@ export function useFormRules() {
       required: true,
       trigger: 'input',
       message
+    };
+  }
+
+  function createNoFormRequiredRule(message: string, key?: string): App.Global.FormRule {
+    return {
+      key,
+      trigger: 'input',
+      message,
+      validator: (_rule: FormItemRule, value: any) => {
+        if (value === null || value === undefined || value === '') {
+          throw new Error(message);
+        } else {
+          return true;
+        }
+      }
     };
   }
 

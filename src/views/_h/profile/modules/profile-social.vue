@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { listUserSocial, socialAuth, unbindSocialAccount } from '@/apis';
+import { $t } from '@/locales';
 import type { ModeItem } from '../type';
 import VerifyModel from './verify-modal.vue';
 
@@ -16,17 +17,17 @@ const initData = () => {
     socialList.value = res.data?.map(el => el.source);
     modeList.value = [
       {
-        title: '绑定 Gitee',
+        title: 'Gitee',
         icon: 'gitee',
-        subtitle: `${socialList.value.includes('GITEE') ? '' : '绑定后，'}可通过 Gitee 进行登录`,
+        // subtitle: `${socialList.value.includes('GITEE') ? '' : '绑定后，'}可通过 GitHub 进行登录`,
         jumpMode: 'link',
         type: 'gitee',
         status: socialList.value.includes('GITEE')
       },
       {
-        title: '绑定 GitHub',
+        title: 'Github',
         icon: 'github',
-        subtitle: `${socialList.value.includes('GITHUB') ? '' : '绑定后，'}可通过 GitHub 进行登录`,
+        // subtitle: `${socialList.value.includes('GITHUB') ? '' : '绑定后，'}可通过 GitHub 进行登录`,
         type: 'github',
         jumpMode: 'link',
         status: socialList.value.includes('GITHUB')
@@ -44,7 +45,7 @@ const onBinding = (type: string, status: boolean) => {
   } else {
     unbindSocialAccount(type).then(() => {
       initData();
-      window.$message?.success('解绑成功');
+      window.$message?.success($t('common.bind.bindSuccess'));
     });
   }
 };
@@ -61,7 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NCard title="第三方账号" bordered size="small">
+  <NCard :title="$t('page.profile.security.title')" bordered size="small">
     <NList :bordered="false">
       <NListItem v-for="item in modeList" :key="item.title">
         <template #prefix>
@@ -76,7 +77,7 @@ onMounted(() => {
             size="small"
             @click="onUpdate(item.type, item.status)"
           >
-            {{ item.status ? '修改' : '绑定' }}
+            {{ item.status ? $t('common.modify') : $t('common.bind.bind') }}
           </NButton>
           <NButton
             v-else-if="item.jumpMode === 'link'"
@@ -84,21 +85,25 @@ onMounted(() => {
             :type="item.status ? 'default' : 'primary'"
             @click="onBinding(item.type, item.status)"
           >
-            {{ item.status ? '解绑' : '绑定' }}
+            {{ item.status ? $t('common.bind.unbind') : $t('common.bind.bind') }}
           </NButton>
         </template>
         <div>
           <div class="mb-6px">
-            <NText>{{ item.title }}</NText>
+            <NText>{{ $t('common.bind.bindWhat', { name: item.title }) }}</NText>
             <NText :type="item.status ? 'success' : 'warning'" class="ml-10px font-size-12px">
               <icon-local-check-circle v-if="item.status" class="success" />
               <icon-local-exclamation-circle v-else class="warning" />
-              {{ item.status ? '已绑定' : '未绑定' }}
+              {{ item.status ? $t('common.bind.bound') : $t('common.bind.unbound') }}
             </NText>
           </div>
           <div class="font-size-12px color-#666666">
-            <span class="value">{{ item.value }}</span>
-            {{ item.subtitle }}
+            {{
+              $t('page.profile.social.bindTip', {
+                name: item.status ? item.value : 'Gitee',
+                prefix: item.status ? $t('page.profile.social.bind') : $t('page.profile.social.unbind')
+              })
+            }}
           </div>
         </div>
       </NListItem>

@@ -1,6 +1,7 @@
 declare namespace NaiveUI {
   type ThemeColor = 'default' | 'error' | 'primary' | 'info' | 'success' | 'warning';
   type Align = 'stretch' | 'baseline' | 'start' | 'end' | 'center' | 'flex-end' | 'flex-start';
+  type ViewMode = 'table' | 'board' | 'list' | 'album' | 'form' | 'calendar' | 'grid' | 'card';
 
   type DataTableBaseColumn<T> = import('naive-ui').DataTableBaseColumn<T>;
   type DataTableExpandColumn<T> = import('naive-ui').DataTableExpandColumn<T>;
@@ -10,6 +11,11 @@ declare namespace NaiveUI {
   type TableColumnCheck = import('@sa/hooks').TableColumnCheck;
   type TableDataWithIndex<T> = import('@sa/hooks').TableDataWithIndex<T>;
   type FlatResponseData<T> = import('@sa/axios').FlatResponseData<T>;
+
+  type View = {
+    mode: ViewMode;
+    initPageSize: number;
+  };
 
   /**
    * the custom column key
@@ -53,5 +59,7 @@ declare namespace NaiveUI {
      * @default false
      */
     showTotal?: boolean;
+  } & {
+    views?: Array<View>;
   };
 }
