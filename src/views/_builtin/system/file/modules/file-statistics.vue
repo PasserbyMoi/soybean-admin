@@ -99,7 +99,7 @@ onMounted(() => {
             <div class="text-center">存储量</div>
           </template>
           <template #default>
-            <div class="text-center font-size-0.9rem text-color-#5856D6">{{ totalData.size }} {{ totalData.unit }}</div>
+            <div class="statistic">{{ totalData.size }} {{ totalData.unit }}</div>
           </template>
         </NStatistic>
       </NGridItem>
@@ -112,7 +112,7 @@ onMounted(() => {
             <div class="text-center">数量</div>
           </template>
           <template #default>
-            <div class="text-center font-size-0.9rem text-color-#5856D6">{{ totalData.number }}</div>
+            <div class="statistic">{{ totalData.number }}</div>
           </template>
         </NStatistic>
       </NGridItem>
@@ -124,4 +124,10 @@ onMounted(() => {
   </NCard>
 </template>
 
-<style scoped></style>
+<style scoped>
+.statistic {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #5856d6;
+}
+</style>

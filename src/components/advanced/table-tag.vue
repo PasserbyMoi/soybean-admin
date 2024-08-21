@@ -1,4 +1,6 @@
 <script setup lang="tsx">
+import tinycolor from 'tinycolor2';
+
 defineOptions({
   name: 'TableTag',
   inheritAttrs: false
@@ -6,7 +8,7 @@ defineOptions({
 
 interface Props {
   value: string | number;
-  options?: Array<any>;
+  options?: Array<CommonType.EOption>;
 }
 defineProps<Props>();
 </script>
@@ -17,11 +19,11 @@ defineProps<Props>();
       v-if="value == option.value"
       v-bind="$attrs"
       :bordered="false"
+      :color="{
+        color: tinycolor(option.extend).setAlpha(0.08).toString(),
+        textColor: tinycolor(option.extend).lighten(16).toString()
+      }"
       class="justify-center"
-      :type="
-        option.type ??
-        (option.value == 0 ? 'warning' : option.value == 1 ? 'primary' : option.value == 2 ? 'error' : 'info')
-      "
     >
       {{ option.label }}
     </NTag>

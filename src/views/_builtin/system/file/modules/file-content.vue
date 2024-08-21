@@ -34,7 +34,6 @@ const selectFileItem = ref<FileItem>();
 
 const menuRef = ref();
 const previewRef = ref();
-const previewVisible = ref<boolean>();
 const renameRef = ref<boolean>();
 const renameVisible = ref<boolean>();
 const detailRef = ref<boolean>();
@@ -201,7 +200,9 @@ const handleClickFile = (item: FileItem, _e?: MouseEvent) => {
   if (import.meta.env.VITE_FILE_PREVIEW_MODE === 'kk') {
     // filePreviewRef.value.show(item);
   } else {
-    previewVisible.value = true;
+    // previewRef.value.close();
+    console.log(JSON.stringify(selectFileItem.value));
+    previewRef.value.show(selectFileItem.value);
   }
 };
 
@@ -379,7 +380,7 @@ watch(type, newValue => {
     />
   </NCard>
   <FileDetailModal ref="detailRef" v-model:visible="detailVisible" v-model:file-item="selectFileItem" />
-  <FilePreview ref="previewRef" v-model:visible="previewVisible" v-model:files="data" v-model:init="selectFileItem" />
+  <FilePreview ref="previewRef" v-model:files="data" />
   <!-- <FilePreviewModal ref="filePreviewRef" /> -->
 </template>
 
