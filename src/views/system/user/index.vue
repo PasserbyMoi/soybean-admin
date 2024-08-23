@@ -12,6 +12,7 @@ import type { TableColumn } from '@/hooks/common/table';
 import UserRestpwdModal from './modules/user-restpwd-modal.vue';
 import UserViewDrawer from './modules/user-view-drawer.vue';
 import UserDetailDrawer from './modules/user-detail-drawer.vue';
+import UserImportDrawer from './modules/user-import-drawer.vue';
 import DictTreeCard from './modules/dept-tree-card.vue';
 
 defineOptions({ name: 'SystemStorage' });
@@ -27,7 +28,8 @@ const columns = ref<TableColumn<any>[]>([
   {
     title: '用户名',
     key: 'username',
-    align: 'center',
+    align: 'left',
+    titleAlign: 'center',
     resizable: true,
     ellipsis: { tooltip: true },
     fixed: 'left',
@@ -35,12 +37,18 @@ const columns = ref<TableColumn<any>[]>([
       return h(GenderAvatar, { name: row.username, gender: row.gender, onClick: () => viewHandle(row.id) });
     }
   },
-  { title: '昵称', key: 'nickname', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '昵称',
+    key: 'nickname',
+    align: 'left',
+    titleAlign: 'center',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
   {
     title: '状态',
     key: 'status',
     align: 'center',
-    width: 50,
     render: row => {
       return h(EnableTag, { value: row.status });
     }
@@ -49,7 +57,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '性别',
     key: 'gender',
     align: 'center',
-    width: 50,
     render: row => {
       return h(GenderTag, { value: row.gender });
     }
@@ -124,14 +131,21 @@ const operations: App.Table.Operation<UserResp>[] = [
 ];
 
 const tableRef = ref();
+const importRef = ref();
 const detailRef = ref();
 const viewRef = ref();
 
 const rowId = ref<string>();
 const visible = ref<boolean>();
+const visibleImport = ref<boolean>();
 const visibleView = ref<boolean>();
 const visibleRepwd = ref<boolean>();
 const operateType = ref<NaiveUI.TableOperateType>('add');
+
+function importHandle() {
+  visibleImport.value = true;
+  operateType.value = 'add';
+}
 
 function addHandle() {
   rowId.value = undefined;
@@ -179,52 +193,36 @@ const handleSelectDept = (key: string) => {
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <TableCard
-      ref="tableRef"
-      row-key="id"
-      :api-fn="listUser"
-      :api-params="apiParams"
-      :columns="columns"
-      :show-selection="false"
-      :scroll-x="1000"
-      :columns-operations="operations"
-      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']"
-      @add="addHandle"
-      @edit="editHandle"
-      @delete="deleteHandle"
-    >
+    <TableCard ref="tableRef" row-key="id" :api-fn="listUser" :api-params="apiParams" :columns="columns"
+      :show-selection="false" :scroll-x="1000" :columns-operations="operations"
+      :header-operations="['add', 'export', 'refresh', 'height', 'stripe', 'columnSetting']" @add="addHandle"
+      @edit="editHandle" @delete="deleteHandle">
       <template #search="{ searchParams }">
         <NFormItemGi span="24 s:12 m:5" label="标题" path="description">
           <NInput v-model:value="searchParams.description" placeholder="请输入关键词" clearable />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:5" label="类型" path="status">
-          <NSelect
-            v-model:value="searchParams.status"
-            :options="enableNextOptions"
-            placeholder="请选择状态"
-            clearable
-          />
+          <NSelect v-model:value="searchParams.status" :options="enableNextOptions" placeholder="请选择状态" clearable />
         </NFormItemGi>
       </template>
       <template #sider>
         <DictTreeCard placeholder="请输入关键词" @switch="handleSelectDept" />
       </template>
+      <template #operations>
+        <NButton size="small" ghost type="error" @click="importHandle">
+          <template #icon>
+            <icon-mdi:upload class="text-icon" />
+          </template>
+          {{ $t('common.import') }}
+        </NButton>
+      </template>
     </TableCard>
     <UserRestpwdModal ref="detailRef" v-model:visible="visibleRepwd" v-model:row-id="rowId" @submitted="submited" />
-    <UserDetailDrawer
-      ref="detailRef"
-      v-model:visible="visible"
-      v-model:row-id="rowId"
-      :operate-type="operateType"
-      @submitted="submited"
-    />
-    <UserViewDrawer
-      ref="viewRef"
-      v-model:visible="visibleView"
-      v-model:row-id="rowId"
-      :operate-type="operateType"
-      @submitted="submited"
-    />
+    <UserImportDrawer ref="importRef" v-model:visible="visibleImport" @submitted="submited" />
+    <UserDetailDrawer ref="detailRef" v-model:visible="visible" v-model:row-id="rowId" :operate-type="operateType"
+      @submitted="submited" />
+    <UserViewDrawer ref="viewRef" v-model:visible="visibleView" v-model:row-id="rowId" :operate-type="operateType"
+      @submitted="submited" />
   </div>
 </template>
 

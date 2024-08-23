@@ -111,7 +111,7 @@ const columns = ref<TableColumn<any>[]>([
     align: 'center',
     width: 60,
     render: row => {
-      return row.icon ? h(SvgIcon, { localIcon: row.icon }) : '';
+      return row.icon ? h(SvgIcon, { localIcon: row.icon, class: 'size-20px' }) : '';
     }
   },
   {

@@ -25,7 +25,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '名称',
     key: 'name',
     fixed: 'left',
-    width: 180,
     align: 'left',
     titleAlign: 'center',
     resizable: true,
@@ -50,7 +49,6 @@ const columns = ref<TableColumn<any>[]>([
     key: 'code',
     align: 'left',
     titleAlign: 'center',
-    maxWidth: 120,
     resizable: true,
     ellipsis: { tooltip: true }
   },
@@ -58,7 +56,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '状态',
     key: 'status',
     align: 'center',
-    maxWidth: 100,
     render: row => {
       return h(EnableTag, { value: row.status });
     }
@@ -67,7 +64,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '类型',
     key: 'type',
     align: 'center',
-    width: 160,
     render: row => {
       return h(TableTag, { value: row.type, options: storage_type_enum.value }, { default: () => row.type });
     }
@@ -77,7 +73,6 @@ const columns = ref<TableColumn<any>[]>([
     key: 'accessKey',
     align: 'left',
     titleAlign: 'center',
-    maxWidth: 180,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -86,7 +81,6 @@ const columns = ref<TableColumn<any>[]>([
     key: 'endpoint',
     align: 'left',
     titleAlign: 'center',
-    maxWidth: 180,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -95,7 +89,6 @@ const columns = ref<TableColumn<any>[]>([
     key: 'bucketName',
     align: 'left',
     titleAlign: 'center',
-    maxWidth: 180,
     ellipsis: { tooltip: true }
   },
   {
@@ -103,7 +96,6 @@ const columns = ref<TableColumn<any>[]>([
     key: 'domain',
     align: 'left',
     titleAlign: 'center',
-    maxWidth: 180,
     ellipsis: { tooltip: true }
   },
   {

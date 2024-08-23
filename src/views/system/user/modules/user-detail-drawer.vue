@@ -45,17 +45,16 @@ const model = reactive(createDefaultModel());
 
 function createDefaultModel() {
   return {
-    username: '',
-    nickname: '',
+    username: null,
+    nickname: null,
     gender: 0,
-    phone: '',
-    email: '',
-    password: '',
-    rowPassword: '',
+    phone: null,
+    email: null,
+    password: null,
     status: 1,
     isSystem: false,
-    description: '',
-    deptId: '',
+    description: null,
+    deptId: null,
     roleIds: []
   };
 }
@@ -65,7 +64,7 @@ type RuleKey = Extract<keyof UserDetailResp, 'username' | 'nickname' | 'deptId' 
 const rules: Record<RuleKey, App.Global.FormRule[]> = {
   username: [{ required: true, message: '请输入用户名' }],
   nickname: [{ required: true, message: '请输入昵称' }],
-  rowPassword: [{ required: true, message: '请输入密码' }],
+  password: [{ required: true, message: '请输入密码' }],
   deptId: [{ required: true, message: '请选择所属部门' }],
   roleIds: [{ required: true, message: '请选择角色' }]
 };
@@ -111,19 +110,24 @@ function handleInitModel() {
 
 // 提交
 async function handleSubmit() {
+  const rawPassword = model.password;
   await validate();
   if (isEdit.value && rowId.value) {
     const { error } = await updateUser(model, rowId.value);
     if (!error) {
       window.$message?.success($t('common.updateSuccess'));
       closeDrawer(true);
+    } else {
+      model.password = rawPassword;
     }
   } else {
-    model.password = encryptByRsa(model.rowPassword) || '';
+    model.password = encryptByRsa(model.password) || '';
     const { error } = await addUser(model);
     if (!error) {
       window.$message?.success($t('common.addSuccess'));
       closeDrawer(true);
+    } else {
+      model.password = rawPassword;
     }
   }
 }

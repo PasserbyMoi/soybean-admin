@@ -7,6 +7,7 @@ import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
 import { useDept } from '@/hooks/business/useDept';
 import { useMenu } from '@/hooks/business/useMenu';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
   name: 'RoleDetailDrawer'
@@ -29,6 +30,7 @@ interface Emits {
 }
 const emit = defineEmits<Emits>();
 
+const themeStore = useThemeStore();
 const { data_scope_enum } = useDict('data_scope_enum');
 const { deptList, deptKeys, getDeptList } = useDept();
 const { menuList, menuKeys, getMenuList } = useMenu();
@@ -182,29 +184,26 @@ watch(visible, () => {
     <NDrawerContent :title="title" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
         <NAlert v-if="isEdit" type="warning" class="mb-15px">变更功能权限或数据权限后，关联在线用户会自动下线！</NAlert>
-        <fieldset>
-          <legend>基础信息</legend>
-          <NFormItem label="名称" path="name">
-            <NInput v-model:value="model.name" placeholder="请输入名称" />
-          </NFormItem>
-          <NFormItem label="编码" path="code">
-            <NInput v-model:value="model.code" placeholder="请输入编码" :disabled="isEdit" />
-          </NFormItem>
-          <NFormItem label="排序" path="sort">
-            <NInputNumber v-model:value="model.sort" placeholder="请输入排序" :min="1" mode="button" />
-          </NFormItem>
-          <NFormItem label="描述" path="description">
-            <NInput
-              v-model:value="model.description"
-              type="textarea"
-              placeholder="请输入描述"
-              show-count
-              :maxlength="200"
-              :auto-size="{ minRows: 3, maxRows: 5 }"
-            />
-          </NFormItem>
-        </fieldset>
-        <fieldset>
+        <NFormItem label="名称" path="name">
+          <NInput v-model:value="model.name" placeholder="请输入名称" />
+        </NFormItem>
+        <NFormItem label="编码" path="code">
+          <NInput v-model:value="model.code" placeholder="请输入编码" :disabled="isEdit" />
+        </NFormItem>
+        <NFormItem label="排序" path="sort">
+          <NInputNumber v-model:value="model.sort" placeholder="请输入排序" :min="1" mode="button" />
+        </NFormItem>
+        <NFormItem label="描述" path="description">
+          <NInput
+            v-model:value="model.description"
+            type="textarea"
+            placeholder="请输入描述"
+            show-count
+            :maxlength="200"
+            :auto-size="{ minRows: 3, maxRows: 5 }"
+          />
+        </NFormItem>
+        <fieldset :class="'fieldset-' + themeStore.themeScheme">
           <legend>功能权限</legend>
           <NFormItem :disabled="model.isSystem" :show-label="false">
             <NSpace class="mt-0px">
@@ -228,7 +227,7 @@ watch(visible, () => {
             />
           </NFormItem>
         </fieldset>
-        <fieldset>
+        <fieldset :class="'fieldset-' + themeStore.themeScheme">
           <legend>数据权限</legend>
           <NFormItem hide-label path="dataScope">
             <NSelect
@@ -271,16 +270,45 @@ watch(visible, () => {
 </template>
 
 <style lang="scss" scoped>
-fieldset {
-  padding: 15px 15px 0 15px;
-  margin-bottom: 15px;
+.fieldset-light {
+  padding: 15px 15px 10px 15px;
+  margin-bottom: 25px;
   border: 1px solid #efeff5;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
-fieldset legend {
+.fieldset-light legend {
   padding: 2px 5px 2px 5px;
   border: 1px solid #efeff5;
-  border-radius: 3px;
+  border-radius: 4px;
+}
+
+.fieldset-dark {
+  padding: 15px 15px 10px 15px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 4px;
+}
+
+.fieldset-dark legend {
+  padding: 2px 5px 2px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 4px;
+}
+
+.selection-light {
+  margin-bottom: 16px;
+  padding: 10px;
+  border-radius: 2px;
+  align-items: center;
+  background-color: #efeff5;
+}
+
+.selection-dark {
+  margin-bottom: 16px;
+  padding: 10px;
+  border-radius: 2px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.06);
 }
 </style>

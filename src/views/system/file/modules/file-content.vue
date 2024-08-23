@@ -208,6 +208,7 @@ const handleClickFile = (item: FileItem, _e?: MouseEvent) => {
 
 // 上传
 const handleUpload = ({ file, onFinish, onError, onProgress }: UploadCustomRequestOptions) => {
+  window.$loadingBar?.start();
   const controller = new AbortController();
   (async function requestWrap() {
     onProgress({ percent: 20 });
@@ -217,14 +218,17 @@ const handleUpload = ({ file, onFinish, onError, onProgress }: UploadCustomReque
       .then(_res => {
         onFinish();
         submited();
+        window.$loadingBar?.finish();
         window.$message?.success($t('common.uploadSuccess'));
       })
       .catch(_error => {
         onError();
+        window.$loadingBar?.finish();
       });
   })();
   return {
     abort() {
+      window.$loadingBar?.finish();
       controller.abort();
     }
   };

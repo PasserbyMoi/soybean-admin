@@ -4,6 +4,7 @@ import { getRole } from '@/apis';
 import { useDict } from '@/hooks/business/dict';
 import { useDept } from '@/hooks/business/useDept';
 import { useMenu } from '@/hooks/business/useMenu';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
   name: 'RoleDetailDrawer'
@@ -16,6 +17,7 @@ const visible = defineModel<boolean>('visible', {
   default: false
 });
 
+const themeStore = useThemeStore();
 const { data_scope_enum } = useDict('data_scope_enum');
 const { deptList, getDeptList } = useDept();
 const { menuList, getMenuList } = useMenu();
@@ -59,23 +61,13 @@ watch(visible, () => {
 <template>
   <NDrawer v-model:show="visible" display-directive="show" :width="560" close-on-esc @after-leave="closeDrawer">
     <NDrawerContent title="角色信息" closable>
-      <fieldset>
-        <legend>基础信息</legend>
-        <NDescriptions
-          :column="3"
-          size="small"
-          label-placement="left"
-          label-align="right"
-          label-style="w-180px"
-          class="mb-10px"
-        >
-          <NDescriptionsItem label="名称">{{ dataDetail?.name }}</NDescriptionsItem>
-          <NDescriptionsItem label="编码">{{ dataDetail?.code }}</NDescriptionsItem>
-          <NDescriptionsItem label="排序">{{ dataDetail?.sort }}</NDescriptionsItem>
-          <NDescriptionsItem label="描述" :span="3">{{ dataDetail?.description }}</NDescriptionsItem>
-        </NDescriptions>
-      </fieldset>
-      <fieldset>
+      <NDescriptions title="基础信息" :column="2" size="small" bordered label-placement="left" class="mb-10px">
+        <NDescriptionsItem label="名称" :span="2">{{ dataDetail?.name }}</NDescriptionsItem>
+        <NDescriptionsItem label="编码">{{ dataDetail?.code }}</NDescriptionsItem>
+        <NDescriptionsItem label="排序">{{ dataDetail?.sort }}</NDescriptionsItem>
+        <NDescriptionsItem label="描述" :span="2">{{ dataDetail?.description }}</NDescriptionsItem>
+      </NDescriptions>
+      <fieldset :class="'fieldset-' + themeStore.themeScheme">
         <legend>功能权限</legend>
         <NTree
           :checked-keys="dataDetail?.menuIds"
@@ -86,7 +78,7 @@ watch(visible, () => {
           checkable
         />
       </fieldset>
-      <fieldset>
+      <fieldset :class="'fieldset-' + themeStore.themeScheme">
         <legend>数据权限</legend>
         <NSelect
           :value="dataDetail?.dataScope"
@@ -110,16 +102,45 @@ watch(visible, () => {
 </template>
 
 <style lang="scss" scoped>
-fieldset {
-  padding: 15px 15px 0 15px;
-  margin-bottom: 15px;
+.fieldset-light {
+  padding: 15px 15px 10px 15px;
+  margin-bottom: 25px;
   border: 1px solid #efeff5;
   border-radius: 4px;
 }
 
-fieldset legend {
+.fieldset-light legend {
   padding: 2px 5px 2px 5px;
   border: 1px solid #efeff5;
   border-radius: 4px;
+}
+
+.fieldset-dark {
+  padding: 15px 15px 10px 15px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 4px;
+}
+
+.fieldset-dark legend {
+  padding: 2px 5px 2px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 4px;
+}
+
+.selection-light {
+  margin-bottom: 16px;
+  padding: 10px;
+  border-radius: 2px;
+  align-items: center;
+  background-color: #efeff5;
+}
+
+.selection-dark {
+  margin-bottom: 16px;
+  padding: 10px;
+  border-radius: 2px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.06);
 }
 </style>

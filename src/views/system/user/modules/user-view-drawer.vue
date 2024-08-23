@@ -44,7 +44,7 @@ watch(visible, () => {
       <template #header>用户信息</template>
       <NDescriptions :column="2" label-placement="left" label-align="right" label-style="w-180px" size="small" bordered>
         <NDescriptionsItem label="ID" :span="2">
-          <CopyText :value="dataDetail?.id"></CopyText>
+          <CopyText :value="dataDetail?.id" :show-text="true"></CopyText>
         </NDescriptionsItem>
         <NDescriptionsItem label="用户名">{{ dataDetail?.username }}</NDescriptionsItem>
         <NDescriptionsItem label="昵称">{{ dataDetail?.nickname }}</NDescriptionsItem>
@@ -55,10 +55,10 @@ watch(visible, () => {
           <EnableTag :value="dataDetail?.status" :show-text="true"></EnableTag>
         </NDescriptionsItem>
         <NDescriptionsItem label="手机号">
-          <CopyText :value="dataDetail?.phone" default-text="暂无"></CopyText>
+          <CopyText :value="dataDetail?.phone" default-text="暂无" :show-text="true"></CopyText>
         </NDescriptionsItem>
         <NDescriptionsItem label="邮箱">
-          <CopyText :value="dataDetail?.email" default-text="暂无"></CopyText>
+          <CopyText :value="dataDetail?.email" default-text="暂无" :show-text="true"></CopyText>
         </NDescriptionsItem>
         <NDescriptionsItem label="所属部门">{{ dataDetail?.deptName }}</NDescriptionsItem>
         <NDescriptionsItem label="角色">

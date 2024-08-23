@@ -237,34 +237,6 @@ watch(visible, () => {
           </NCard>
         </template>
       </NSplit>
-      <!--
- <NLayout :has-sider="true">
-        <NLayoutSider class="h-750px w-320px" :native-scrollbar="false" bordered>
-          <NTree ref="treeRef" :data="treeData" :default-expand-all="true" :default-selected-keys="selectedKeys"
-            :default-checked-keys="selectedKeys" :render-prefix="renderPrefix"
-            :override-default-node-click-behavior="nodeClick" :on-update:expanded-keys="updatePrefixWithExpaned"
-            label-field="title" show-line expand-on-click class="w-320px"></NTree>
-        </NLayoutSider>
-        <NLayoutContent>
-          <NCard :bordered="false" segmented>
-            <template #header>
-              <div class="m-0px pa-0px font-size-0.9rem">
-                {{
-                currentPreview?.path +
-                (currentPreview?.path.indexOf('/') !== -1 ? '/' : '\\') +
-                currentPreview?.fileName
-                }}
-              </div>
-            </template>
-            <NScrollbar class="h-650px overflow-auto">
-              <CopyText :value="currentPreview?.content" class="position-absolute right-20px z-999" />
-              <CodeView :type="'vue' === currentPreview?.fileName.split('.')[1] ? 'vue' : 'javascript'"
-                :code-json="currentPreview?.content" />
-            </NScrollbar>
-          </NCard>
-        </NLayoutContent>
-      </NLayout>
--->
     </div>
   </NModal>
 </template>

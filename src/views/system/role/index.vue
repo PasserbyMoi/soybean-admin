@@ -24,41 +24,49 @@ const columns = ref<TableColumn<any>[]>([
   {
     title: '名称',
     key: 'name',
-    align: 'center',
-    resizable: true,
+    align: 'left',
+    titleAlign: 'center',
     ellipsis: { tooltip: true },
     render(row) {
       return h(NA, { size: 'small', onClick: () => viewHandle(row.id) }, { default: () => row.name });
     }
   },
-  { title: '编码', key: 'code', width: '180px', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: '编码',
+    key: 'code',
+    width: '180px',
+    align: 'left',
+    titleAlign: 'center',
+    ellipsis: { tooltip: true }
+  },
   {
     title: '数据权限',
     key: 'dataScope',
     align: 'center',
-    resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
-      return h(TableTag, { value: row.dataScope, options: data_scope_enum.value }, { default: () => row.dataScope });
+      return h(
+        TableTag,
+        { value: row.dataScope, options: data_scope_enum.value, round: true, size: 'small' },
+        { default: () => row.dataScope }
+      );
     }
   },
   {
     title: '系统内置',
     key: 'isSystem',
     align: 'center',
-    resizable: true,
     ellipsis: { tooltip: true },
     render: row => {
       return h(BoolTag, { value: row.isSystem });
     }
   },
-  { title: '排序', key: 'sort', align: 'center', resizable: true, ellipsis: { tooltip: true } },
-  { title: '描述', key: 'description', align: 'center', resizable: true, ellipsis: { tooltip: true } },
+  { title: '排序', key: 'sort', align: 'center', ellipsis: { tooltip: true } },
+  { title: '描述', key: 'description', align: 'center', ellipsis: { tooltip: true } },
   {
     title: '创建人',
     key: 'createUserString',
     align: 'center',
-    resizable: true,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -66,7 +74,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '创建时间',
     key: 'createTime',
     align: 'center',
-    resizable: true,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -74,7 +81,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改人',
     key: 'updateUserString',
     align: 'center',
-    resizable: true,
     ellipsis: { tooltip: true },
     hide: true
   },
@@ -82,7 +88,6 @@ const columns = ref<TableColumn<any>[]>([
     title: '修改时间',
     key: 'updateTime',
     align: 'center',
-    resizable: true,
     ellipsis: { tooltip: true },
     hide: true
   }
