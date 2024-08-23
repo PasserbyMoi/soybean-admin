@@ -63,3 +63,29 @@ export function resetUserPwd(data: any, id: string) {
     data
   });
 }
+
+/** 下载用户导入模板 */
+export function downloadImportUserTemplate() {
+  return request<any, 'stream'>({
+    url: `${BASE_URL}/downloadImportUserTemplate`,
+    method: 'get'
+  });
+}
+
+/** 解析用户导入数据 */
+export function parseImportUser(data: FormData) {
+  return request({
+    url: `${BASE_URL}/parseImportUser`,
+    method: 'post',
+    data
+  });
+}
+
+/** 导入用户 */
+export function importUser(data: any) {
+  return request({
+    url: `${BASE_URL}/import`,
+    method: 'post',
+    data
+  });
+}

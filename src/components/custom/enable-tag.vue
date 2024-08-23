@@ -8,7 +8,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   value: false,
-  showText: false
+  showText: true
 });
 </script>
 

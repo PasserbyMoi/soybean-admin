@@ -6,15 +6,6 @@ import { listDashboardNotice, listMessage, readMessage } from '@/apis';
 import InformMessage from './inform/inform-message.vue';
 import InformNotice from './inform/inform-notice.vue';
 
-setTimeout(() => {
-  // const noticeTypes = dictStore.getDict('notice_type');
-  // const messageTypes = dictStore.getDict('message_type');
-  // import('@/hooks/business/dict').then(useDict => {
-  //   const { noticeTypes } = useDict.useDict('notice_type');
-  //   console.log(JSON.stringify(noticeTypes));
-  // });
-}, 10000);
-
 const noticeList = ref<DashboardNoticeResp[]>([]);
 const messageList = ref<MessageResp[]>([]);
 const messageCount = computed(() => {
@@ -63,7 +54,7 @@ onMounted(() => {
         </ButtonIcon>
       </NBadge>
     </template>
-    <NTabs default-value="message" type="line" size="small" animated justify-content="space-evenly" class="w-360px">
+    <NTabs default-value="message" type="line" size="small" animated justify-content="space-evenly" class="w-300px">
       <NTabPane key="message" name="message">
         <template #tab>
           <NSpace class="w-130px" justify="center">

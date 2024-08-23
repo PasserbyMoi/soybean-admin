@@ -123,8 +123,13 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
+    | "about"
+    | "expired"
     | "iframe-page"
     | "login"
+    | "message"
+    | "profile"
+    | "home"
     | "monitor_log"
     | "monitor_online"
     | "project"
@@ -143,11 +148,6 @@ declare module "@elegant-router/types" {
     | "system_storage"
     | "system_user"
     | "tool_generator"
-    | "about"
-    | "expired"
-    | "message"
-    | "profile"
-    | "home"
   >;
 
   /**

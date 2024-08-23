@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type DashboardNoticeResp, listCommonDict } from '@/apis';
 import { useRouterPush } from '@/hooks/common/router';
-import NoticeViewModal from '@/views/_builtin/system/notice/modules/notice-view-modal.vue';
+import NoticeViewModal from '@/views/system/notice/modules/notice-view-modal.vue';
 
 interface Props {
   list?: DashboardNoticeResp[];

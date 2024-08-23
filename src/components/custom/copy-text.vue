@@ -3,6 +3,10 @@ import { useClipboard } from '@vueuse/core';
 import { isBoolean } from 'lodash-es';
 import { $t } from '@/locales';
 
+defineOptions({
+  name: 'CopyText'
+});
+
 const { copy, isSupported } = useClipboard();
 
 const props = defineProps<{

@@ -5,6 +5,7 @@ export default defineConfig(
   {
     rules: {
       complexity: ['error', { max: 50 }],
+      'max-params': ["error", 5],
       'no-nested-ternary': 'off',
       'no-use-before-define': 'off',
       // 'allow-all-properties-on-same-line': true,

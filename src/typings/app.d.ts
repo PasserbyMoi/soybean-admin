@@ -321,6 +321,11 @@ declare namespace App {
         confirmDeletes: string;
         confirmDeleteWhat: string;
         edit: string;
+        editSuccess: string;
+        import: string;
+        importSuccess: string;
+        importBatch: string;
+        importBatchSuccess: string;
         warning: string;
         error: string;
         index: string;
